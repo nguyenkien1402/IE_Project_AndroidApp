@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168752747380",
+    "firebase_url": "https://tiamo-a3b2c.firebaseio.com",
+    "project_id": "tiamo-a3b2c",
+    "storage_bucket": "tiamo-a3b2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168752747380:android:b41b9bfdeb60491f",
+        "android_client_info": {
+          "package_name": "com.mobile.tiamo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168752747380-4okqpp1pk78net2juaine5cbuftsmtri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA35uqwQvWQtATliAYJyZWEW9lwizatxB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168752747380-4okqpp1pk78net2juaine5cbuftsmtri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
