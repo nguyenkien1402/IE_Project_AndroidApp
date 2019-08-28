@@ -91,6 +91,7 @@
     
     <com.google.android.material.button.MaterialButton
         android:layout_marginTop="16dp"
+        android:id="@+id/adding_schedule_btn_add"
         android:text="Add"
         android:layout_gravity="right"
         android:layout_width="wrap_content"

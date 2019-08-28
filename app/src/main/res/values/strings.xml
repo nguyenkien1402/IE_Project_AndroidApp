@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_schedule">Schedule</string>
     <string name="title_activity_main2">Adding Schedule</string>
     
     <string-array name="day_of_week">

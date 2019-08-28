@@ -2,6 +2,7 @@ package com.mobile.tiamo.activities;
 
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -23,13 +24,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.adapters.ScheduleModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
+import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.Tasks;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class AddingScheduleActivity extends AppCompatActivity {
@@ -39,7 +47,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
     List<Tasks> tasks;
     View popupInputDialogView = null;
     EditText popup_ed_title;
-    Button btnCancel, btnAdd;
+    Button btnCancel, btnAdd, btnAddSchedule;
     ArrayAdapter<String> adaper;
     TimePickerDialog timePickerDialog;
     TextView timeStart,timeEnd, daySelected;
@@ -47,7 +55,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
     String[] listDaysAbb;
     boolean[] checkedDays;
     ArrayList<Integer> mItems = new ArrayList<>();
-
+    String currentTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_adding_schedule);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = SQLiteDatabase.getTiamoDatabase(getApplicationContext());
 
@@ -99,8 +108,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = tasks.get(position).getTitle();
-                Toast.makeText(getApplicationContext(),"Selected:"+text,Toast.LENGTH_SHORT).show();
+                currentTitle = tasks.get(position).getTitle();
             }
 
             @Override
@@ -108,12 +116,64 @@ public class AddingScheduleActivity extends AppCompatActivity {
 
             }
         });
+
+        btnAddSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String timeS = timeStart.getText().toString();
+                String timeE = timeEnd.getText().toString();
+                String days = daySelected.getText().toString();
+                AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
+                addingScheduleAsync.execute(new String[]{currentTitle,timeS,timeE,days});
+            }
+        });
     }
+
+    private class AddingScheduleAsync extends AsyncTask<String,Void,Long>{
+        @Override
+        protected Long doInBackground(String... strings) {
+            String title = strings[0];
+            String timeStart = strings[1];
+            String timeEnd  = strings[2];
+            String days = strings[3];
+
+            Schedule schedule = new Schedule();
+            schedule.setTimeStart(timeStart);
+            schedule.setTimeEnd(timeEnd);
+            schedule.setTitle(title);
+            schedule.setOperationDay(days);
+
+            DateFormat df = new SimpleDateFormat("hh:mm");
+            try {
+                Date d1 = df.parse(timeStart);
+                Date d2 = df.parse(timeEnd);
+                long diff = d2.getTime() - d1.getTime();
+                String hours = new SimpleDateFormat("hh:mm").format(new Date(diff));
+                schedule.setHours(hours);
+                long uid = db.scheduleDao().insert(schedule);
+                return uid;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            if(aLong != null){
+                Toast.makeText(getApplicationContext(),"Add Schedule Successfully",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void initComponent(){
         timeStart = (TextView) findViewById(R.id.adding_schedule_time_start);
-        timeEnd = (TextView) findViewById(R.id.adding_schedule_time_start);
+        timeEnd = (TextView) findViewById(R.id.adding_schedule_time_end);
         daySelected = (TextView) findViewById(R.id.adding_schedule_day);
+        btnAddSchedule = (Button) findViewById(R.id.adding_schedule_btn_add);
+
         listDays = getResources().getStringArray(R.array.day_of_week);
         listDaysAbb = getResources().getStringArray(R.array.day_of_week_abb);
         checkedDays = new boolean[listDays.length];
@@ -275,6 +335,14 @@ public class AddingScheduleActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = mBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
+        return true;
     }
 
 }

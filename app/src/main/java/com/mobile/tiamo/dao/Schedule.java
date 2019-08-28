@@ -10,6 +10,9 @@ public class Schedule {
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
+    @ColumnInfo(name="title")
+    private String title;
+
     @ColumnInfo(name="time_start")
     private String timeStart;
 
@@ -17,7 +20,7 @@ public class Schedule {
     private String timeEnd;
 
     @ColumnInfo(name="hours")
-    private double hours;
+    private String hours;
 
     @ColumnInfo(name="operation_day")
     private String operationDay;
@@ -25,8 +28,9 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(int uid, String timeStart, String timeEnd, double hours, String operationDay) {
+    public Schedule(int uid, String title, String timeStart, String timeEnd, String hours, String operationDay) {
         this.uid = uid;
+        this.title = title;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.hours = hours;
@@ -39,6 +43,14 @@ public class Schedule {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTimeStart() {
@@ -57,11 +69,11 @@ public class Schedule {
         this.timeEnd = timeEnd;
     }
 
-    public double getHours() {
+    public String getHours() {
         return hours;
     }
 
-    public void setHours(double hours) {
+    public void setHours(String hours) {
         this.hours = hours;
     }
 
