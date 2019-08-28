@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/schedule_menu_add"
+        android:icon="@drawable/icon_time_schedule_add_color_64"
+        app:showAsAction="ifRoom"
+        android:title="Compose">
+    </item>
+</menu>

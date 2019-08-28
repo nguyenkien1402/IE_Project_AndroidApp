@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Enter Title"
+        android:textSize="26dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/popup_ed_title"
+        android:hint="Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:theme="@style/AppTheme"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/popup_btn_add"
+            android:layout_alignParentRight="true"
+            android:text="Add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:theme="@style/AppTheme"
+            android:id="@+id/popup_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/popup_btn_add"
+            android:layout_marginStart="0dp"
+            android:text="Cancel" />
+    </RelativeLayout>
+
+</LinearLayout>
