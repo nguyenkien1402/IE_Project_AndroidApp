@@ -15,4 +15,10 @@ public interface ScheduleDao {
     @Insert
     long insert(Schedule schedule);
 
+    @Query("SELECT * FROM schedule where specific_day LIKE :day")
+    List<Schedule> getScheduleByDay(String day);
+
+    @Query("SELECT * FROM schedule where uid = :uid")
+    Schedule getScheduleById(int uid);
+
 }

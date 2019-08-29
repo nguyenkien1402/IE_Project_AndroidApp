@@ -10,19 +10,31 @@ public class DailyActivities {
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
-    @ColumnInfo(name = "day")
-    private String day;
+    @ColumnInfo(name = "date")
+    private String date;
 
     @ColumnInfo(name = "schedule_id")
     private int scheduleId;
 
+    @ColumnInfo(name = "is_done")
+    private int isDone;
+
+    @ColumnInfo(name = "hours")
+    private String hours;
+
+    @ColumnInfo(name = "title")
+    private String title;
+
     public DailyActivities() {
     }
 
-    public DailyActivities(int uid, String day, int scheduleId) {
+    public DailyActivities(int uid, String date, int scheduleId, int isDone, String hours, String title) {
         this.uid = uid;
-        this.day = day;
+        this.date = date;
         this.scheduleId = scheduleId;
+        this.isDone = isDone;
+        this.hours = hours;
+        this.title = title;
     }
 
     public int getUid() {
@@ -34,11 +46,11 @@ public class DailyActivities {
     }
 
     public String getDay() {
-        return day;
+        return date;
     }
 
     public void setDay(String day) {
-        this.day = day;
+        this.date = day;
     }
 
     public int getScheduleId() {
@@ -47,5 +59,37 @@ public class DailyActivities {
 
     public void setScheduleId(int scheduleId) {
         this.scheduleId = scheduleId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(int isDone) {
+        this.isDone = isDone;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -94,7 +94,6 @@ public class ScheduleFragment extends Fragment {
         int itemId = item.getItemId();
         if(itemId == R.id.schedule_menu_add){
             Intent intent = new Intent(getActivity(), AddingScheduleActivity.class);
-//            startActivity(intent);
             startActivityForResult(intent,1);
         }
         return super.onOptionsItemSelected(item);

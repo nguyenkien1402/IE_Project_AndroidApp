@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,7 +56,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
     String[] listDaysAbb;
     boolean[] checkedDays;
     ArrayList<Integer> mItems = new ArrayList<>();
-    String currentTitle;
+    String currentTitle, specificDay="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
             schedule.setTimeEnd(timeEnd);
             schedule.setTitle(title);
             schedule.setOperationDay(days);
+            schedule.setSpecificDay(specificDay);
 
             DateFormat df = new SimpleDateFormat("hh:mm");
             try {
@@ -162,7 +164,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             if(aLong != null){
-                Toast.makeText(getApplicationContext(),"Add Schedule Successfully",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Add Schedule Successfully: "+aLong,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -291,26 +293,47 @@ public class AddingScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String item = "";
+                List s1=new ArrayList();
+                s1.add(null);
+                mItems.removeAll(s1);
+                Collections.sort(mItems);
                 if(mItems.size()==7){
                     daySelected.setText("All Day");
+                    for(int i = 0 ; i < mItems.size();i++){
+                        specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
+                    }
+                    specificDay = specificDay.trim();
                     return;
                 }
                 if(mItems.size()==2 && mItems.contains(5) && mItems.contains(6)){
                     daySelected.setText("Weekends");
+                    for(int i = 0 ; i < mItems.size();i++){
+                        specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
+                    }
+                    specificDay = specificDay.trim();
                     return;
                 }
                 if(mItems.size()==5 && mItems.contains(0) && mItems.contains(1) && mItems.contains(2) &&
                         mItems.contains(3) && mItems.contains(4)){
                     daySelected.setText("Weekdays");
+                    for(int i = 0 ; i < mItems.size();i++){
+                        specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
+                    }
+                    specificDay = specificDay.trim();
                     return;
                 }
-                Collections.sort(mItems);
+
+                // remove null value
+
                 for(int i = 0 ; i < mItems.size();i++){
                     item = item + " "+ listDaysAbb[mItems.get(i)];
+                    specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
 //                    if(i != mItems.size()-1){
 //                        item = item +",";
 //                    }
                 }
+                item = item.trim();
+                specificDay = specificDay.trim();
                 daySelected.setText(item);
             }
         });

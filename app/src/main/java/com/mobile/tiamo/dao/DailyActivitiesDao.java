@@ -14,4 +14,13 @@ public interface DailyActivitiesDao {
 
     @Insert
     long insert(DailyActivities dailyActivities);
+
+    @Query("Select * from DailyActivities WHERE date = :date")
+    List<DailyActivities> getDailyActivities(String date);
+
+    @Insert
+    void insertAll(List<DailyActivities> dailyActivities);
+
+
+
 }
