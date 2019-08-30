@@ -29,6 +29,9 @@
 
         <receiver android:name=".services.ReminderNotificationStart" android:enabled="true"></receiver>
         <receiver android:name=".services.ReminderNotificationEnd" android:enabled="true"></receiver>
+        <receiver android:name=".services.ReminderNotificationStartAction" android:enabled="true"></receiver>
+        <receiver android:name=".services.ReminderNotificationEndAction" android:enabled="true"></receiver>
+        <receiver android:name=".services.NotificationActionBroadcastReceiver" android:enabled="true"></receiver>
     </application>
 
 </manifest>
