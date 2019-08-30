@@ -25,6 +25,13 @@ public class DailyActivities {
     @ColumnInfo(name = "title")
     private String title;
 
+    @ColumnInfo(name = "time_start")
+    private String timeStart;
+
+    @ColumnInfo(name = "time_end")
+    private String timeEnd;
+
+
     public DailyActivities() {
     }
 
@@ -91,5 +98,21 @@ public class DailyActivities {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }

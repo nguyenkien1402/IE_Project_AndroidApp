@@ -21,6 +21,9 @@ public interface DailyActivitiesDao {
     @Insert
     void insertAll(List<DailyActivities> dailyActivities);
 
+    @Query("SELECT * FROM DAILYACTIVITIES WHERE title = :txt")
+    DailyActivities getDailyActivityByTitle(String txt);
+
 
 
 }

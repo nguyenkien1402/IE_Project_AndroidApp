@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingScheduleActivity;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
-import com.mobile.tiamo.adapters.ScheduleModel;
+import com.mobile.tiamo.adapters.ScheduleItem;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
@@ -30,7 +29,7 @@ import java.util.List;
 public class ScheduleFragment extends Fragment {
 
     View view;
-    List<ScheduleModel> datasets;
+    List<ScheduleItem> datasets;
     ListView listView;
     TiamoDatabase db;
     private static ScheduleAdapter adapter;
@@ -46,7 +45,7 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schedule, container, false);
         listView = (ListView) view.findViewById(R.id.schedule_list);
-        datasets = new ArrayList<ScheduleModel>();
+        datasets = new ArrayList<ScheduleItem>();
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
         getAllScheduleAysnc.execute();
@@ -54,14 +53,14 @@ public class ScheduleFragment extends Fragment {
         return view;
     }
 
-    private class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleModel>>{
+    private class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>>{
         @Override
-        protected List<ScheduleModel> doInBackground(Void... voids) {
+        protected List<ScheduleItem> doInBackground(Void... voids) {
             if(db.scheduleDao().getAll() != null){
                 List<Schedule> scheduleList = db.scheduleDao().getAll();
                 if(scheduleList != null){
                     for(int i = 0 ; i < scheduleList.size() ; i++){
-                        ScheduleModel model = new ScheduleModel();
+                        ScheduleItem model = new ScheduleItem();
                         model.setTitle(scheduleList.get(i).getTitle());
                         model.setDays(scheduleList.get(i).getOperationDay());
                         model.setHours(scheduleList.get(i).getTimeStart()+" - " +scheduleList.get(i).getTimeEnd());
@@ -74,10 +73,10 @@ public class ScheduleFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<ScheduleModel> scheduleModels) {
-            adapter = new ScheduleAdapter(scheduleModels, getActivity().getApplicationContext());
+        protected void onPostExecute(List<ScheduleItem> scheduleItems) {
+            adapter = new ScheduleAdapter(scheduleItems, getActivity().getApplicationContext());
             listView.setAdapter(adapter);
-            super.onPostExecute(scheduleModels);
+            super.onPostExecute(scheduleItems);
         }
     }
 

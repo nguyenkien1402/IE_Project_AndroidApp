@@ -1,16 +1,16 @@
 package com.mobile.tiamo.adapters;
 
-public class DailyActivityModel {
+public class DailyActivityItem {
     private String title;
     private String hours;
     private String days;
     private int isDone;
 
-    public DailyActivityModel(){
+    public DailyActivityItem(){
 
     }
 
-    public DailyActivityModel(String title, String hours, String days, int isDone) {
+    public DailyActivityItem(String title, String hours, String days, int isDone) {
         this.title = title;
         this.hours = hours;
         this.days = days;

@@ -13,21 +13,18 @@ import androidx.annotation.Nullable;
 
 import com.mobile.tiamo.R;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleAdapter extends ArrayAdapter<ScheduleModel> implements View.OnClickListener {
+public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> implements View.OnClickListener {
 
-    private List<ScheduleModel> datasets;
+    private List<ScheduleItem> datasets;
     Context context;
 
     public static class ViewHolder{
         TextView txtTile, txtHour, txtDay;
     }
 
-    public ScheduleAdapter(List<ScheduleModel> datasets, Context context){
+    public ScheduleAdapter(List<ScheduleItem> datasets, Context context){
         super(context, R.layout.item_schedule, datasets);
         this.datasets = datasets;
         this.context = context;
@@ -42,7 +39,7 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleModel> implements View
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ScheduleModel scheduleModel = getItem(position);
+        ScheduleItem scheduleItem = getItem(position);
         ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -57,9 +54,9 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleModel> implements View
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.txtTile.setText(scheduleModel.getTitle());
-        viewHolder.txtDay.setText(scheduleModel.getDays());
-        viewHolder.txtHour.setText(scheduleModel.getHours());
+        viewHolder.txtTile.setText(scheduleItem.getTitle());
+        viewHolder.txtDay.setText(scheduleItem.getDays());
+        viewHolder.txtHour.setText(scheduleItem.getHours());
         // Return the completed view to render on screen
         return convertView;
     }

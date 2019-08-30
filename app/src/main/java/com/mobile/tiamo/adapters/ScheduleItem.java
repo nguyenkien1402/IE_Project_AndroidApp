@@ -1,15 +1,15 @@
 package com.mobile.tiamo.adapters;
 
-public class ScheduleModel {
+public class ScheduleItem {
 
     private String title;
     private String hours;
     private String days;
 
-    public ScheduleModel() {
+    public ScheduleItem() {
     }
 
-    public ScheduleModel(String title, String hours, String days) {
+    public ScheduleItem(String title, String hours, String days) {
         this.title = title;
         this.hours = hours;
         this.days = days;

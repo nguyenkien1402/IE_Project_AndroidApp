@@ -15,9 +15,9 @@ import com.mobile.tiamo.R;
 
 import java.util.List;
 
-public class DailyActivityAdapter extends ArrayAdapter<DailyActivityModel> implements View.OnClickListener {
+public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implements View.OnClickListener {
 
-    private List<DailyActivityModel> datasets;
+    private List<DailyActivityItem> datasets;
     Context context;
 
     public static class ViewHolder{
@@ -25,7 +25,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityModel> imple
         Switch aSwitch;
     }
 
-    public DailyActivityAdapter(List<DailyActivityModel> datasets, Context context){
+    public DailyActivityAdapter(List<DailyActivityItem> datasets, Context context){
         super(context, R.layout.item_dailyactivity, datasets);
         this.datasets = datasets;
         this.context = context;
@@ -39,7 +39,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityModel> imple
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        DailyActivityModel dailyActivityModel = getItem(position);
+        DailyActivityItem dailyActivityItem = getItem(position);
         ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -53,9 +53,9 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityModel> imple
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.txtTile.setText(dailyActivityModel.getTitle());
-        viewHolder.txtHour.setText(dailyActivityModel.getHours());
-        if(dailyActivityModel.getIsDone()==1){
+        viewHolder.txtTile.setText(dailyActivityItem.getTitle());
+        viewHolder.txtHour.setText(dailyActivityItem.getHours());
+        if(dailyActivityItem.getIsDone()==1){
             viewHolder.aSwitch.setChecked(true);
         }else{
             viewHolder.aSwitch.setChecked(false);
