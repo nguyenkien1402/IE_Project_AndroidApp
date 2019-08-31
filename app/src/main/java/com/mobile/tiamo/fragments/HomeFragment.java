@@ -139,30 +139,18 @@ public class HomeFragment extends Fragment {
             }
             return dailyActivityItems;
         }else{
-            Log.d("HomeFragment","Activities are already here");
             // First, check if something new has added by today
             List<Schedule> addRecently = db.scheduleDao().getListAddByDate(currentDate);
             List<Schedule> newList = new ArrayList<Schedule>();
             String dayAbb = DateUtilities.getCurrentDayInAbb();
-            Log.d("HomeFragment-DayAbb",dayAbb);
 
             for(int i = 0 ; i < addRecently.size() ; i++){
-                Log.d("HomeFragment-SD",addRecently.get(i).getSpecificDay());
                 if(addRecently.get(i).getSpecificDay().contains(dayAbb)){
-                    Log.d("HomeFragment-SD-Contain",addRecently.get(i).getUid()+"-"+addRecently.get(i).getSpecificDay());
                     newList.add(addRecently.get(i));
                 }else{
-                    Log.d("HomeFragment-NotContain",addRecently.get(i).getUid()+"-"+addRecently.get(i).getSpecificDay());
                 }
             }
             for(int i = 0 ; i < newList.size() ; i++){
-                DailyActivities d = null;
-                d = db.dailyActivitiesDao().checkIfAlreadyExistDailyActivity(newList.get(i).getUid());
-                if(d==null) {
-                    Log.d("HomeFragment","object null");
-                }else{
-                    Log.d("HomeFragment","object not null" + d);
-                }
                 if(db.dailyActivitiesDao().checkIfAlreadyExistDailyActivity(newList.get(i).getUid()) == null){
                     // add to database
                     DailyActivities dailyActivities = new DailyActivities();

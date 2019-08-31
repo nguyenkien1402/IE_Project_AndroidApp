@@ -3,6 +3,7 @@ package com.mobile.tiamo.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -27,6 +28,11 @@ public interface DailyActivitiesDao {
     @Query("SELECT * FROM DailyActivities WHERE schedule_id = :scheduleId")
     DailyActivities checkIfAlreadyExistDailyActivity(long scheduleId);
 
+    @Update()
+    void update(DailyActivities dailyActivities);
+
+    @Query("SELECT * FROM DailyActivities WHERE uid = :uid")
+    DailyActivities getDailyActivityById(long uid);
 
 
 }
