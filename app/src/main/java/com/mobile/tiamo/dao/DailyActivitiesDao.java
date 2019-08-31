@@ -24,6 +24,9 @@ public interface DailyActivitiesDao {
     @Query("SELECT * FROM DAILYACTIVITIES WHERE title = :txt")
     DailyActivities getDailyActivityByTitle(String txt);
 
+    @Query("SELECT * FROM DailyActivities WHERE schedule_id = :scheduleId")
+    DailyActivities checkIfAlreadyExistDailyActivity(long scheduleId);
+
 
 
 }

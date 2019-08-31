@@ -15,6 +15,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.utilities.Messages;
 
 public class ReminderNotificationEndAction extends BroadcastReceiver {
     private String notificationText = "Tiamo";
@@ -49,6 +50,6 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
                 .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
-        notificationManager.notify(1, notificationBuilder.build());
+        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
     }
 }

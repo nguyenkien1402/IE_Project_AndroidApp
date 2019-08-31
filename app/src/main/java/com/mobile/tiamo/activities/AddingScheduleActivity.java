@@ -28,6 +28,7 @@ import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.Tasks;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.DateUtilities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -149,6 +150,8 @@ public class AddingScheduleActivity extends AppCompatActivity {
                 long diff = d2.getTime() - d1.getTime();
                 String hours = new SimpleDateFormat("hh:mm").format(new Date(diff));
                 schedule.setHours(hours);
+                String currentDate = DateUtilities.getCurrentDateInString();
+                schedule.setDayCreated(currentDate);
                 long uid = db.scheduleDao().insert(schedule);
                 return uid;
             } catch (ParseException e) {

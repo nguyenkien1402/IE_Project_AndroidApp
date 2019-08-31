@@ -28,6 +28,9 @@ public class Schedule {
     @ColumnInfo(name="specific_day")
     private String specificDay;
 
+    @ColumnInfo(name = "day_created")
+    private String dayCreated;
+
     public Schedule() {
     }
 
@@ -94,5 +97,13 @@ public class Schedule {
 
     public void setSpecificDay(String specificDay) {
         this.specificDay = specificDay;
+    }
+
+    public String getDayCreated() {
+        return dayCreated;
+    }
+
+    public void setDayCreated(String dayCreated) {
+        this.dayCreated = dayCreated;
     }
 }

@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey;
 public class DailyActivities {
 
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private long uid;
 
     @ColumnInfo(name = "date")
     private String date;
 
     @ColumnInfo(name = "schedule_id")
-    private int scheduleId;
+    private long scheduleId;
 
     @ColumnInfo(name = "is_done")
     private int isDone;
@@ -31,11 +31,13 @@ public class DailyActivities {
     @ColumnInfo(name = "time_end")
     private String timeEnd;
 
+    @ColumnInfo(name = "time_actually_end")
+    private String timeActuallyEnd;
 
     public DailyActivities() {
     }
 
-    public DailyActivities(int uid, String date, int scheduleId, int isDone, String hours, String title) {
+    public DailyActivities(long uid, String date, int scheduleId, int isDone, String hours, String title) {
         this.uid = uid;
         this.date = date;
         this.scheduleId = scheduleId;
@@ -44,11 +46,11 @@ public class DailyActivities {
         this.title = title;
     }
 
-    public int getUid() {
+    public long getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(long uid) {
         this.uid = uid;
     }
 
@@ -60,11 +62,11 @@ public class DailyActivities {
         this.date = day;
     }
 
-    public int getScheduleId() {
+    public long getScheduleId() {
         return scheduleId;
     }
 
-    public void setScheduleId(int scheduleId) {
+    public void setScheduleId(long scheduleId) {
         this.scheduleId = scheduleId;
     }
 
@@ -114,5 +116,13 @@ public class DailyActivities {
 
     public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
+    }
+
+    public String getTimeActuallyEnd() {
+        return timeActuallyEnd;
+    }
+
+    public void setTimeActuallyEnd(String timeActuallyEnd) {
+        this.timeActuallyEnd = timeActuallyEnd;
     }
 }

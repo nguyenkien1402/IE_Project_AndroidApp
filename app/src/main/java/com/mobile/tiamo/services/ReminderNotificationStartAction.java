@@ -15,6 +15,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.utilities.Messages;
 
 public class ReminderNotificationStartAction extends BroadcastReceiver {
     private String notificationText = "Tiamo";
@@ -59,7 +60,7 @@ public class ReminderNotificationStartAction extends BroadcastReceiver {
                 .setPriority(Notification.PRIORITY_MAX)
                 .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
                 .addAction(R.drawable.icon_notification_dislike, "No", pendingIntentNo);
-        notificationManager.notify(1, notificationBuilder.build());
+        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
 
     }
 }

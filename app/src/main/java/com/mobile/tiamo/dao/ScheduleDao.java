@@ -21,4 +21,7 @@ public interface ScheduleDao {
     @Query("SELECT * FROM schedule where uid = :uid")
     Schedule getScheduleById(int uid);
 
+    @Query("SELECT * FROM schedule WHERE day_created = :date")
+    List<Schedule> getListAddByDate(String date);
+
 }

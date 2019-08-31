@@ -109,7 +109,7 @@ public class DashboardFragment extends Fragment {
                 .setPriority(Notification.PRIORITY_MAX);
 
 
-        notificationManager.notify(1, notificationBuilder.build());
+        notificationManager.notify(2, notificationBuilder.build());
     }
 
 

@@ -5,6 +5,7 @@ public class DailyActivityItem {
     private String hours;
     private String days;
     private int isDone;
+    private long uid;
 
     public DailyActivityItem(){
 
@@ -47,5 +48,13 @@ public class DailyActivityItem {
 
     public void setIsDone(int isDone) {
         this.isDone = isDone;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 }

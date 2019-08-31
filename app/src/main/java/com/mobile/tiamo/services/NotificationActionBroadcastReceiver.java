@@ -14,11 +14,11 @@ public class NotificationActionBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if(action.equals("YES_ACTION")){
             Log.d("Action","Yes");
-            nm.cancel(1);
+            nm.cancel(2);
         }
         if(action.equals("NO_ACTION")){
             Log.d("Action","No");
-            nm.cancel(1);
+            nm.cancel(2);
         }
     }
 }

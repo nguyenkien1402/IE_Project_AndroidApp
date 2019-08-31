@@ -2,41 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:paddingLeft="16dp"
-    android:orientation="horizontal"
     android:paddingRight="16dp"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:layout_height="80dp">
-        <TextView
-            android:id="@+id/item_dailyactivity_title"
-            android:textSize="26dp"
-            android:text="Test"
-            android:gravity="center_vertical"
-            style="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:text="test"
-            android:gravity="center_vertical"
-            android:textSize="16dp"
-            style="?android:attr/textAppearanceMedium"
-            android:id="@+id/item_dailyactivity_hour"
-            android:layout_marginTop="2dp"
-            android:layout_below="@id/item_dailyactivity_title"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
-    </RelativeLayout>
     <LinearLayout
-        android:layout_weight="0.2"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp">
-        <Switch
-            android:id="@+id/simpleSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="80dp">
+            <TextView
+                android:id="@+id/item_dailyactivity_title"
+                android:textSize="26dp"
+                android:text="Test"
+                android:gravity="center_vertical"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:text="test"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                style="?android:attr/textAppearanceMedium"
+                android:id="@+id/item_dailyactivity_hour"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/item_dailyactivity_title"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_weight="0.2"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp">
+            <Switch
+                android:focusable="false"
+                android:id="@+id/simpleSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
