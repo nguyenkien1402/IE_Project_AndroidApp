@@ -143,6 +143,7 @@ public class HomeFragment extends Fragment {
         protected void onPostExecute(List<DailyActivities> dailyActivities) {
             super.onPostExecute(dailyActivities);
             datasets.clear();
+            adapter.notifyDataSetChanged();
             if(dailyActivities.size() > 0){
                 // Show to the list
                 for(int i = 0 ; i < dailyActivities.size(); i++){
@@ -155,7 +156,6 @@ public class HomeFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             }else{
-                datasets.clear();
                 adapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(),"Kinda null",Toast.LENGTH_LONG).show();
             }
@@ -167,7 +167,6 @@ public class HomeFragment extends Fragment {
         @Override
         protected List<DailyActivityItem> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
-            Log.d("Current Date 2:",currentDate);
             datasets = getDailyActivityList(currentDate);
             return datasets;
         }
