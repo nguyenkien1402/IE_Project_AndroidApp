@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/schedule_menu_add"
-        android:icon="@drawable/icon_time_schedule_add_color_64"
+        android:icon="@drawable/icon_time_schedule_add_color_24"
         app:showAsAction="ifRoom"
         android:title="Compose">
     </item>

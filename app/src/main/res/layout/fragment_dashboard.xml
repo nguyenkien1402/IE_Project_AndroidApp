@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:primaryColor="@color/colorPrimary"
+        app:textColor="@android:color/white"
+        app:selectedItem_textColor="@color/colorPrimary"
+        android:id="@+id/collapsibleCalendarView"
+        app:todayItem_textColor="@android:color/white"
+        app:todayItem_background="@drawable/circle_white_stroke_background"
+        app:selectedItem_background="@drawable/circle_white_solid_background"
+        app:buttonLeft_drawableTintColor="@android:color/white"
+        app:buttonRight_drawableTintColor="@android:color/white"
+        app:expandIconColor="@android:color/white"
+        app:eventColor="@android:color/white">
+
+    </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
     <Button
         android:id="@+id/btnScheduleNotification"
         android:text="Schduel Notification"

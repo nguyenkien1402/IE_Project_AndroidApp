@@ -34,5 +34,8 @@ public interface DailyActivitiesDao {
     @Query("SELECT * FROM DailyActivities WHERE uid = :uid")
     DailyActivities getDailyActivityById(long uid);
 
+    @Query("UPDATE DailyActivities SET is_done = :isDone WHERE uid = :uid")
+    void updateIsDone(long uid, int isDone);
+
 
 }

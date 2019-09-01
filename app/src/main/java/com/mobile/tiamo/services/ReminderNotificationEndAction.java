@@ -23,8 +23,9 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int data = intent.getIntExtra("data end",0);
+        int notiId = intent.getIntExtra("notiId",0);
         String task = intent.getStringExtra("task");
+        long uid = intent.getIntExtra("uid",-1);
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,0);
@@ -41,6 +42,16 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
+        Intent yesReceive = new Intent(context, NotificationActionBroadcastReceiver.class);
+        yesReceive.setAction("YES_ACTION");
+        yesReceive.putExtra("uid",uid);
+        PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context,notiId, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent noReceive = new Intent(context, NotificationActionBroadcastReceiver.class);
+        noReceive.setAction("NO_ACTION");
+        noReceive.putExtra("uid",uid);
+        PendingIntent pendingIntentNo = PendingIntent.getBroadcast(context,notiId, noReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(notificationTitle)
@@ -49,7 +60,9 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
                 .setContentText(notificationText+" " + task +", have you finished it already?")
                 .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_MAX);
+                .setPriority(Notification.PRIORITY_MAX)
+                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
+                .addAction(R.drawable.icon_notification_dislike, "No", pendingIntentNo);;
         notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
     }
 }

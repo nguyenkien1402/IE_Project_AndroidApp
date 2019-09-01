@@ -39,4 +39,8 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
+    // Calendar
+    implementation 'com.github.badoualy:datepicker-timeline:1.0.0'
+    implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.1'
+
 }

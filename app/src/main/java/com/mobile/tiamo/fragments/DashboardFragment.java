@@ -33,6 +33,7 @@ import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
 import com.mobile.tiamo.services.ReminderNotificationEnd;
+import com.mobile.tiamo.services.ReminderNotificationEndAction;
 import com.mobile.tiamo.services.ReminderNotificationStart;
 import com.mobile.tiamo.utilities.DateUtilities;
 
@@ -77,7 +78,6 @@ public class DashboardFragment extends Fragment {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
-
             //Configure Notification Channel
             notificationChannel.setDescription("Game Notifications");
             notificationChannel.enableLights(true);
@@ -88,13 +88,13 @@ public class DashboardFragment extends Fragment {
 
         Intent yesReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
         yesReceive.setAction("YES_ACTION");
+        yesReceive.putExtra("uid",1);
         PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, yesReceive, PendingIntent.FLAG_CANCEL_CURRENT);
 //
         Intent noReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
         noReceive.setAction("NO_ACTION");
-        noReceive.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        noReceive.putExtra("uid",1);
         PendingIntent pendingIntentNo = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, noReceive, PendingIntent.FLAG_CANCEL_CURRENT);
-
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -111,8 +111,6 @@ public class DashboardFragment extends Fragment {
 
         notificationManager.notify(2, notificationBuilder.build());
     }
-
-
     public void multiplyAlerts(){
         final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getActivity().getApplicationContext(), ReminderNotificationStart.class);
@@ -125,7 +123,6 @@ public class DashboardFragment extends Fragment {
             t_calendar.set(Calendar.HOUR_OF_DAY, 17);
             t_calendar.set(Calendar.MINUTE, 25+ i);
             t_calendar.set(Calendar.SECOND, 00);
-//            t_calendar.set(Calendar.AM_PM, Calendar.PM);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, PendingIntent.FLAG_ONE_SHOT);
             alarmManager.set(AlarmManager.RTC_WAKEUP, t_calendar.getTimeInMillis(),pendingIntent);
             Log.d("MainActivity","Have Alarm manager");
@@ -153,7 +150,7 @@ public class DashboardFragment extends Fragment {
         private void scheduleNotification(List<DailyActivities> result) {
             final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
             intentStart = new Intent(getActivity().getApplicationContext(), ReminderNotificationStart.class);
-            intentEnd   = new Intent(getActivity().getApplicationContext(), ReminderNotificationEnd.class);
+            intentEnd   = new Intent(getActivity().getApplicationContext(), ReminderNotificationEndAction.class);
             for(int i = 0 ; i < result.size() ; i++){
                 DailyActivities dailyActivities = result.get(i);
                 String timeStart = dailyActivities.getTimeStart();
@@ -171,6 +168,7 @@ public class DashboardFragment extends Fragment {
                 // Config for starting ( code = 1000 + i )
                 intentStart.putExtra("notiId",1000+i+1);
                 intentStart.putExtra("task",dailyActivities.getTitle());
+                intentStart.putExtra("uid",result.get(i).getUid());
                 Calendar s_calendar = Calendar.getInstance();
                 s_calendar.set(Calendar.MONTH, month-1); // month = month - 1
                 s_calendar.set(Calendar.YEAR, year);
@@ -178,13 +176,13 @@ public class DashboardFragment extends Fragment {
                 s_calendar.set(Calendar.HOUR_OF_DAY, hourStart);
                 s_calendar.set(Calendar.MINUTE, minuteStart);
                 s_calendar.set(Calendar.SECOND, 00);
-//                t_calendar.set(Calendar.AM_PM, Calendar.PM);
                 PendingIntent pendingIntentS = PendingIntent.getBroadcast(getActivity(), 1000+i, intentStart, PendingIntent.FLAG_ONE_SHOT);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, s_calendar.getTimeInMillis(),pendingIntentS);
 
                 // Config for ending (code = 2000+i)
                 intentEnd.putExtra("notiId",2000+i+1);
                 intentEnd.putExtra("task",dailyActivities.getTitle());
+                intentEnd.putExtra("uid",result.get(i).getUid());
                 Calendar e_calendar = Calendar.getInstance();
                 e_calendar.set(Calendar.MONTH, month-1); // month = month - 1
                 e_calendar.set(Calendar.YEAR, year);

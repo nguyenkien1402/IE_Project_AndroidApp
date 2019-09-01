@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/home_menu_add"
-        android:icon="@drawable/icon_home_plus"
+        android:id="@+id/home_menu_calenar"
+        android:icon="@drawable/icon_home_calendar_24"
         app:showAsAction="always"
-        android:title="Compose">
+        android:title="Calendar">
     </item>
 </menu>

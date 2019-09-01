@@ -1,5 +1,6 @@
 package com.mobile.tiamo.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
     TiamoDatabase db;
     DailyActivityItem dailyActivityItem;
     ViewHolder viewHolder;
+    ProgressDialog dialog ;
     public static class ViewHolder{
         TextView txtTile, txtHour;
         Switch aSwitch;
@@ -51,6 +53,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
         final DailyActivityItem dailyActivityItem = getItem(position);
 //        final ViewHolder viewHolder;
         this.dailyActivityItem = dailyActivityItem;
+
         if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -61,7 +64,6 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
-//            this.viewHolder = viewHolder;
         }
 
         viewHolder.txtTile.setText(dailyActivityItem.getTitle());
@@ -84,27 +86,41 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
         return convertView;
     }
 
-    private class GetDailyActivityAsync extends AsyncTask<Long, Void, DailyActivities> {
+    private class GetDailyActivityAsync extends AsyncTask<Long, Void, Void> {
+
         @Override
-        protected DailyActivities doInBackground(Long... voids) {
-            Log.d("Adapter",voids[0]+"");
-            DailyActivities dailyActivities = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
-            boolean isCheck = viewHolder.aSwitch.isChecked();
-            if(isCheck ==true){
-                // Change into database
-                dailyActivities.setIsDone(1);
-                db.dailyActivitiesDao().update(dailyActivities);
-            }else{
-                // Change into database
-                dailyActivities.setIsDone(0);
-                db.dailyActivitiesDao().update(dailyActivities);
-            }
-            return dailyActivities;
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(context);
+            dialog.setMessage("Updating");
+            dialog.show();
         }
 
         @Override
-        protected void onPostExecute(DailyActivities dailyActivities) {
+        protected Void doInBackground(Long... voids) {
+            Log.d("Adapter",voids[0]+"");
+            boolean isCheck = viewHolder.aSwitch.isChecked();
+            Log.d("Adapter","is check:"+isCheck);
+            if(isCheck ==true){
+                // Change into database
+                Log.d("Adapter","Change to 1");
+                db.dailyActivitiesDao().updateIsDone(voids[0],0);
+            }
+            if(isCheck == false){
+                // Change into database
+                Log.d("Adapter","Change to zero");
+                db.dailyActivitiesDao().updateIsDone(voids[0],1);
+            }
+            DailyActivities dailyActivities = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
+            Log.d("Adapter",dailyActivities.getTitle() + "-"+dailyActivities.getIsDone());
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(Void dailyActivities) {
             super.onPostExecute(dailyActivities);
+            dialog.dismiss();
         }
     }
 }

@@ -44,7 +44,7 @@ public class ReminderNotificationStartAction extends BroadcastReceiver {
         Intent yesReceive = new Intent(context, NotificationActionBroadcastReceiver.class);
         yesReceive.setAction("YES_ACTION");
         PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context,notiId, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
-//
+
         Intent noReceive = new Intent(context, NotificationActionBroadcastReceiver.class);
         noReceive.setAction("NO_ACTION");
         PendingIntent pendingIntentNo = PendingIntent.getBroadcast(context,notiId, noReceive, PendingIntent.FLAG_UPDATE_CURRENT);

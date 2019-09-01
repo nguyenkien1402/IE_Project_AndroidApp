@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingScheduleActivity;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
@@ -22,6 +23,7 @@ import com.mobile.tiamo.adapters.ScheduleItem;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.DateUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,7 @@ public class ScheduleFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.schedule_list);
         datasets = new ArrayList<ScheduleItem>();
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
+        MainActivity.textToolbar.setText("Tiamo");
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
         getAllScheduleAysnc.execute();
 

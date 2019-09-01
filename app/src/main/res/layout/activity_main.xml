@@ -9,13 +9,21 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:elevation="1dp"
         android:background="@color/colorPrimary"
         android:id="@+id/main_toolbar"
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/white"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
