@@ -5,7 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_activity_main2">Adding Schedule</string>
-    
+
     <string-array name="day_of_week">
         <item>Monday</item>
         <item>Tuesday</item>
@@ -25,4 +25,19 @@
         <item>Sat</item>
         <item>Sun</item>
     </string-array>
+
+    <string name="title_activity_questionnaires_firststart">QuestionnairesFirststart</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+
+    <string name="sleep_schedule">Sleep Schedule</string>
+    <string name="wake_up">Wake up</string>
+
+    <string name="sleep_schedule_hr">HR</string>
+    <string name="sleep_schedule_min">MIN</string>
+    <string name="bedtime">BEDTIME</string>
+
+    <string name="chosen_time_range">%1$s:%2$s - %3$s:%4$s</string>
 </resources>

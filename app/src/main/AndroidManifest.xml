@@ -14,24 +14,42 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- <activity -->
+        <!-- android:name=".questionaires.QuestionnairesFirststart" -->
+        <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+        <!-- android:label="@string/title_activity_questionnaires_firststart" -->
+        <!-- android:theme="@style/FullscreenTheme"></activity> -->
         <activity
             android:name=".activities.AddingScheduleActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name=".questionaires.QuestionnairesFirststart"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".services.ReminderNotificationStart" android:enabled="true"></receiver>
-        <receiver android:name=".services.ReminderNotificationEnd" android:enabled="true"></receiver>
-        <receiver android:name=".services.ReminderNotificationStartAction" android:enabled="true"></receiver>
-        <receiver android:name=".services.ReminderNotificationEndAction" android:enabled="true"></receiver>
-        <receiver android:name=".services.NotificationActionBroadcastReceiver" android:enabled="true"></receiver>
+        <receiver
+            android:name=".services.ReminderNotificationStart"
+            android:enabled="true" />
+        <receiver
+            android:name=".services.ReminderNotificationEnd"
+            android:enabled="true" />
+        <receiver
+            android:name=".services.ReminderNotificationStartAction"
+            android:enabled="true" />
+        <receiver
+            android:name=".services.ReminderNotificationEndAction"
+            android:enabled="true" />
+        <receiver
+            android:name=".services.NotificationActionBroadcastReceiver"
+            android:enabled="true" />
 
         <meta-data
             android:name="preloaded_fonts"

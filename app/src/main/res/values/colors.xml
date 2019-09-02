@@ -5,4 +5,17 @@
     <color name="colorAccent">#768fff</color>
 
     <color name="google_red">#ea4335</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="dark">#181d20</color>
+    <color name="blue">#0028dc</color>
+
+    <color name="slate">#505a69</color>
+    <color name="almost_black">#0d1010</color>
+
+    <color name="dark_tangerine">#fdb414</color>
+    <color name="medium_turquoise">#58c8df</color>
 </resources>
