@@ -17,10 +17,10 @@
             android:layout_height="wrap_content" />
 
         <EditText
-
+            android:id="@+id/questionaries_2_commuting"
             android:layout_marginTop="16dp"
             android:hint="minutes"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 

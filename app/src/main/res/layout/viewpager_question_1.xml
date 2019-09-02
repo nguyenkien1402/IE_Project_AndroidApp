@@ -19,7 +19,7 @@
             android:layout_height="wrap_content" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+            android:id="@+id/chipFirstGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -107,7 +107,7 @@
 
         <TextView
             android:id="@+id/questionaries_time_setting"
-            android:layout_width="22dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"

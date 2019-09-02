@@ -21,6 +21,10 @@ import org.w3c.dom.Text
 
 class ThirdQuestionFragment : Fragment(){
 
+    companion object{
+        var sleepTime: String? = null
+        var wakeupTime: String? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,9 +42,11 @@ class ThirdQuestionFragment : Fragment(){
         timePicker.listener = { bedTime: LocalTime, wakeTime: LocalTime ->
             Timber.d("time changed \nbedtime= $bedTime\nwaketime=$wakeTime")
             val formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
+            val anotherFormat = DateTimeFormatter.ofPattern("hh:mm")
             tvBedTime.text = bedTime.format(formatter)
             tvWakeTime.text = wakeTime.format(formatter)
-
+            sleepTime = bedTime.format(anotherFormat)
+            wakeupTime = wakeTime.format(anotherFormat)
             val bedDate = bedTime.atDate(LocalDate.now())
             var wakeDate = wakeTime.atDate(LocalDate.now())
             if (bedDate >= wakeDate) wakeDate = wakeDate.plusDays(1)

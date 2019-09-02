@@ -41,6 +41,12 @@
         <item name="android:layout_height">40dp</item>
         <item name="chipBackgroundColor">@drawable/bg_chip_state_list</item>
     </style>
+    
+    <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 
 
 </resources>

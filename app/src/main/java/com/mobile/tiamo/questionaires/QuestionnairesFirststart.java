@@ -14,7 +14,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.utilities.SavingDataSharePreference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -31,19 +36,64 @@ public class QuestionnairesFirststart extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.questionaries_viewpager);
         main_view_pager = (LinearLayout) findViewById(R.id.main_view_pager);
         viewPager.setAdapter(new QuestionariesAdapter(getSupportFragmentManager()));
-        Button btnNext = findViewById(R.id.btnQNext);
+        final View parentLayout = findViewById(android.R.id.content);
+        final Button btnNext = findViewById(R.id.btnQNext);
         Button btnBack = findViewById(R.id.btnQBack);
+        Toast.makeText(this,"Number of page:"+viewPager.getAdapter().getCount(),Toast.LENGTH_LONG).show();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(getItem(+1),true);
+                // Tab 1
+                if(viewPager.getCurrentItem() == 0){
+                    String workingTime = FirstQuestionFragment.Companion.getTime();
+                    ArrayList<String> workingDay = FirstQuestionFragment.Companion.getDay();
+                    if(workingTime== null || workingDay.size() == 0){
+                        Snackbar.make(parentLayout,"You need to fill the data",Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        viewPager.setCurrentItem(getItem(+1),true);
+                        return;
+                    }
+                }
+
+                // Tab 2
+                if(viewPager.getCurrentItem() == 1){
+                    if(SecondQuestionFragment.editText.getText().toString() == null){
+                        Snackbar.make(parentLayout,"Data cannot null",Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        int commutingTime = Integer.parseInt(SecondQuestionFragment.editText.getText().toString());
+                        viewPager.setCurrentItem(getItem(+1),true);
+                        return;
+                    }
+                }
+
+                // Tab 3
+                if(viewPager.getCurrentItem() == 2){
+                    String sleepTime = ThirdQuestionFragment.Companion.getSleepTime();
+                    String wakeupTime = ThirdQuestionFragment.Companion.getWakeupTime();
+                    viewPager.setCurrentItem(getItem(+1),true);
+                    return;
+                }
+
+                // Tab 4
+                if(viewPager.getCurrentItem() == 3){
+                    List<String> hobbies = FourthQuestionFragment.listHobbies;
+                    if(hobbies.size() == 0){
+                        Snackbar.make(parentLayout,"You need select hobbies",Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        btnNext.setVisibility(View.GONE);
+                        viewPager.setCurrentItem(getItem(+1),true);
+                        return;
+                    }
+                }
+
             }
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnNext.setVisibility(View.VISIBLE);
                 viewPager.setCurrentItem(getItem(-1),true);
             }
         });
