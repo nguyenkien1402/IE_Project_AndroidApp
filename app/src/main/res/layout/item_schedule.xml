@@ -4,39 +4,49 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:layout_height="wrap_content">
-
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/item_schedule_title"
-            android:textSize="26dp"
-            android:text="Test"
-            android:gravity="center_vertical"
-            style="?android:attr/textAppearanceMedium"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp" />
-
+            android:layout_weight="1"
+            android:layout_height="80dp">
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/item_schedule_title"
+                android:textSize="26dp"
+                android:text="Test"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-medium"
+                android:typeface="sans"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <TextView
+                android:textColor="#000000"
+                android:text="test"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:fontFamily="sans-serif"
+                style="?android:attr/textAppearanceMedium"
+                android:id="@+id/item_schedule_day"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/item_schedule_title"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </RelativeLayout>
         <TextView
-            android:textSize="26dp"
+            android:textColor="#000000"
+            android:textSize="22dp"
             android:text="Test"
+            android:fontFamily="sans-serif-medium"
+            android:typeface="sans"
             android:id="@+id/item_schedule_hour"
             android:layout_alignParentRight="true"
             style="?android:attr/textAppearanceMedium"
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="50dp" />
-        <TextView
-            android:text="test"
-            android:gravity="center_vertical"
-            android:textSize="16dp"
-            style="?android:attr/textAppearanceMedium"
-            android:id="@+id/item_schedule_day"
-            android:layout_marginTop="2dp"
-            android:layout_below="@id/item_schedule_title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-    </RelativeLayout>
-
-
+    </LinearLayout>
 </LinearLayout>

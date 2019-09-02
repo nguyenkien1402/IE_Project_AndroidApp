@@ -11,6 +11,7 @@
         app:textColor="@android:color/white"
         app:selectedItem_textColor="@color/colorPrimary"
         android:id="@+id/collapsibleCalendarView"
+        android:elevation="2dp"
         app:todayItem_textColor="@android:color/white"
         app:todayItem_background="@drawable/circle_white_stroke_background"
         app:selectedItem_background="@drawable/circle_white_solid_background"
@@ -22,7 +23,7 @@
     </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
     <Button
         android:id="@+id/btnScheduleNotification"
-        android:text="Schduel Notification"
+        android:text="Schedule Notification"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

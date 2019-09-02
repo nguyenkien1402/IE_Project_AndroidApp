@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.github.badoualy.datepicker.DatePickerTimeline
         android:id="@+id/timeline"
+        android:elevation="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <ListView

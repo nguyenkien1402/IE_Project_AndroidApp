@@ -48,11 +48,12 @@ public class ScheduleFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_schedule, container, false);
         listView = (ListView) view.findViewById(R.id.schedule_list);
         datasets = new ArrayList<ScheduleItem>();
+        adapter = new ScheduleAdapter(datasets, getActivity().getApplicationContext());
+        listView.setAdapter(adapter);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         MainActivity.textToolbar.setText("Tiamo");
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
         getAllScheduleAysnc.execute();
-
         return view;
     }
 
@@ -77,8 +78,10 @@ public class ScheduleFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<ScheduleItem> scheduleItems) {
-            adapter = new ScheduleAdapter(scheduleItems, getActivity().getApplicationContext());
-            listView.setAdapter(adapter);
+            if(scheduleItems.size() > 0 ){
+                adapter.notifyDataSetChanged();
+            }
+
             super.onPostExecute(scheduleItems);
         }
     }

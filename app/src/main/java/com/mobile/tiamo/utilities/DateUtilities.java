@@ -1,6 +1,9 @@
 package com.mobile.tiamo.utilities;
 
+import android.util.Log;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +26,29 @@ public class DateUtilities {
         Date now = new Date();
         SimpleDateFormat simpleDateformat = new SimpleDateFormat("E");
         return simpleDateformat.format(now);
+    }
+
+    public static String getDayInAbbBySelectedDate(String date){
+        try{
+            SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd-MM-yyyy");
+            Date d = simpleDateformat.parse(date);
+            SimpleDateFormat parse = new SimpleDateFormat("E");
+            return parse.format(d);
+        }catch (ParseException e){
+            Log.d("DateUtility",e.getMessage());
+        }
+        return null;
+    }
+    public static Date stringToDate(String date){
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date d = simpleDateFormat.parse(date);
+            return d;
+        }catch (ParseException e){
+            Log.d("DateUtitlity",e.getMessage());
+        }
+        return null;
+
     }
 
 }

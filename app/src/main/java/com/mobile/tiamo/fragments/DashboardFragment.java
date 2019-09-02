@@ -88,12 +88,12 @@ public class DashboardFragment extends Fragment {
 
         Intent yesReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
         yesReceive.setAction("YES_ACTION");
-        yesReceive.putExtra("uid",1);
+        yesReceive.putExtra("uid",2);
         PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, yesReceive, PendingIntent.FLAG_CANCEL_CURRENT);
 //
         Intent noReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
         noReceive.setAction("NO_ACTION");
-        noReceive.putExtra("uid",1);
+        noReceive.putExtra("uid",2);
         PendingIntent pendingIntentNo = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, noReceive, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), NOTIFICATION_CHANNEL_ID)

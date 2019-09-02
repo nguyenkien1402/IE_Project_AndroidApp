@@ -204,7 +204,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
             for(int i = 0 ; i < tasks.size();i++){
                 t.add(tasks.get(i).getTitle());
             }
-            adaper = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,t);
+            adaper = new ArrayAdapter<String>(getApplicationContext(),R.layout.item_spinner,t);
             adaper.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adaper);
         }
@@ -237,6 +237,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
             super.onPostExecute(aLong);
             adaper.add(aLong);
             adaper.notifyDataSetChanged();
+            spinner.setSelection(adaper.getCount());
             Toast.makeText(getApplicationContext(),"Selected:"+aLong,Toast.LENGTH_SHORT).show();
         }
     }

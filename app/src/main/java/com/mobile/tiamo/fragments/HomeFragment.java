@@ -135,15 +135,41 @@ public class HomeFragment extends Fragment {
     private class GetDailyActivitiesFromSelectedDate extends AsyncTask<String,Void,List<DailyActivities>>{
         @Override
         protected List<DailyActivities> doInBackground(String... strings) {
-            List<DailyActivities> list = db.dailyActivitiesDao().getDailyActivities(strings[0]);
-            return list;
+            String currentDate = DateUtilities.getCurrentDateInString();
+            String selectedDate = strings[0];
+            List<DailyActivities> list = new ArrayList<DailyActivities>();
+            String abbDay = DateUtilities.getDayInAbbBySelectedDate(selectedDate);
+            // if currentDate less than selectedDate, then check the schedule from schedule
+            // and fill the list item without saving to database
+            if(DateUtilities.stringToDate(selectedDate).equals(DateUtilities.stringToDate(currentDate)) ||
+                DateUtilities.stringToDate(selectedDate).before(DateUtilities.stringToDate(currentDate))){
+                list = db.dailyActivitiesDao().getDailyActivities(selectedDate);
+                return list;
+            }
+            if(DateUtilities.stringToDate(selectedDate).after(DateUtilities.stringToDate(currentDate))){
+                List<Schedule> listSchedules = db.scheduleDao().getAll();
+                for(int i = 0 ; i < listSchedules.size() ; i++){
+                    if(listSchedules.get(i).getSpecificDay().contains(abbDay)){
+                        DailyActivities d = new DailyActivities();
+                        d.setIsDone(0);
+                        d.setScheduleId(listSchedules.get(i).getUid());
+                        d.setTitle(listSchedules.get(i).getTitle());
+                        d.setHours(listSchedules.get(i).getTimeStart() + " - " + listSchedules.get(i).getTimeEnd());
+                        d.setTimeStart(listSchedules.get(i).getTimeStart());
+                        d.setTimeEnd(listSchedules.get(i).getTimeEnd());
+                        list.add(d);
+                    }
+                }
+                return list;
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(List<DailyActivities> dailyActivities) {
             super.onPostExecute(dailyActivities);
             datasets.clear();
-            adapter.notifyDataSetChanged();
+//            adapter.notifyDataSetChanged();
             if(dailyActivities.size() > 0){
                 // Show to the list
                 for(int i = 0 ; i < dailyActivities.size(); i++){
@@ -157,7 +183,7 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }else{
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(),"Kinda null",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"No Data",Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -167,13 +193,13 @@ public class HomeFragment extends Fragment {
         @Override
         protected List<DailyActivityItem> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
-            datasets = getDailyActivityList(currentDate);
-            return datasets;
+            return getDailyActivityList(currentDate);
         }
 
         @Override
         protected void onPostExecute(List<DailyActivityItem> dailyActivityItems) {
             if(dailyActivityItems.size() > 0){
+                datasets = dailyActivityItems;
                 adapter = new DailyActivityAdapter(datasets, getActivity());
                 listView.setAdapter(adapter);
             }else{

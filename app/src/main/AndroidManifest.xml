@@ -32,6 +32,10 @@
         <receiver android:name=".services.ReminderNotificationStartAction" android:enabled="true"></receiver>
         <receiver android:name=".services.ReminderNotificationEndAction" android:enabled="true"></receiver>
         <receiver android:name=".services.NotificationActionBroadcastReceiver" android:enabled="true"></receiver>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

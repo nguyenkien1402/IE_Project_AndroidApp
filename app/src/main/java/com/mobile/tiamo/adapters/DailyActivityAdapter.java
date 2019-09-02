@@ -29,7 +29,6 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
     Context context;
     TiamoDatabase db;
 //    DailyActivityItem dailyActivityItem;
-    ViewHolder viewHolder;
     ProgressDialog dialog ;
     boolean localCheck;
     public static class ViewHolder{
@@ -65,21 +64,13 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//        int position = (Integer)buttonView.getTag();
-//        DailyActivityItem dailyActivityItem = getItem(position);
-//        Log.d("Adapter","is check:"+isChecked);
-//        localCheck = isChecked;
-//        Toast.makeText(context,"selected:"+dailyActivityItem.getUid()+"-"+dailyActivityItem.getTitle(),Toast.LENGTH_LONG).show();
-//        GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
-//        getDailyActivityAsync.execute(dailyActivityItem.getUid());
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final DailyActivityItem dailyActivityItem = getItem(position);
-//        final ViewHolder viewHolder;
-//        this.dailyActivityItem = dailyActivityItem;
+        ViewHolder viewHolder;
 
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -103,14 +94,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
         }
         viewHolder.aSwitch.setTag(position);
         viewHolder.aSwitch.setOnClickListener(this);
-//        viewHolder.aSwitch.setOnCheckedChangeListener(this);
-//        viewHolder.aSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean isCheck = viewHolder.aSwitch.isChecked();
-//                Log.d("Adapter",dailyActivityItem.getTitle()+"-"+isCheck+"");
-//            }
-//        });
+
         // Return the completed view to render on screen
         return convertView;
     }
