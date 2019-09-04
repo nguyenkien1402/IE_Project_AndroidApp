@@ -18,21 +18,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
-import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.activities.AddingScheduleActivity;
+import com.mobile.tiamo.activities.AddingRoutineActivity;
 import com.mobile.tiamo.dao.DailyActivities;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
-import com.mobile.tiamo.services.ReminderNotificationEnd;
 import com.mobile.tiamo.services.ReminderNotificationEndAction;
 import com.mobile.tiamo.services.ReminderNotificationStart;
 import com.mobile.tiamo.utilities.DateUtilities;
@@ -69,7 +66,7 @@ public class DashboardFragment extends Fragment {
     public void testAction(){
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent intent = new Intent(getActivity().getApplicationContext(), AddingScheduleActivity.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), AddingRoutineActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(getContext().getApplicationContext(), 0, intent,0);
 

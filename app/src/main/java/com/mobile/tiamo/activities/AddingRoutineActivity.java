@@ -39,7 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class AddingScheduleActivity extends AppCompatActivity {
+public class AddingRoutineActivity extends AppCompatActivity {
 
     TiamoDatabase db;
     Spinner spinner;
@@ -71,7 +71,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AddingScheduleActivity.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AddingRoutineActivity.this);
                 alertDialogBuilder.setCancelable(false);
 
                 // Init popup dialog view and it's ui controls.
@@ -215,7 +215,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
 
         // Inflate the popup dialog from a layout xml file.
-        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_task, null);
+        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_hobby, null);
 
         popup_ed_title = (EditText) popupInputDialogView.findViewById(R.id.popup_ed_title);
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel);
@@ -248,7 +248,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         int hour = cldr.get(Calendar.HOUR_OF_DAY);
         int minutes = cldr.get(Calendar.MINUTE);
         // time picker dialog
-        timePickerDialog = new TimePickerDialog(AddingScheduleActivity.this,
+        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
@@ -264,7 +264,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
         int hour = cldr.get(Calendar.HOUR_OF_DAY);
         int minutes = cldr.get(Calendar.MINUTE);
         // time picker dialog
-        timePickerDialog = new TimePickerDialog(AddingScheduleActivity.this,
+        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
@@ -276,7 +276,7 @@ public class AddingScheduleActivity extends AppCompatActivity {
 
     public void selectDay(View view){
         Toast.makeText(getApplicationContext(),"day",Toast.LENGTH_SHORT).show();
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddingScheduleActivity.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddingRoutineActivity.this);
         mBuilder.setTitle("Select Day");
         mBuilder.setMultiChoiceItems(listDays, checkedDays, new DialogInterface.OnMultiChoiceClickListener() {
             @Override

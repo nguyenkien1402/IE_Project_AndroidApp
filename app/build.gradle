@@ -60,6 +60,8 @@ dependencies {
 
     implementation 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.8'
 
+    // Fab Button
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
 
 }

@@ -7,4 +7,9 @@
     <dimen name="question_1_margin_top">16dp</dimen>
     <dimen name="question_size">35dp</dimen>
     <dimen name="chip_height">40dp</dimen>
+
+    <dimen name="tab_max_width">264dp</dimen>
+    <dimen name="tab_padding_bottom">16dp</dimen>
+    <dimen name="tab_label">14sp</dimen>
+    <dimen name="custom_tab_layout_height">72dp</dimen>
 </resources>

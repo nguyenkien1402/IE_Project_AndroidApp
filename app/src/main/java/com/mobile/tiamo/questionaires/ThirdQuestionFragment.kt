@@ -37,11 +37,13 @@ class ThirdQuestionFragment : Fragment(){
         val tvHours = view.findViewById<TextView>(R.id.tvHours)
         val tvMins = view.findViewById<TextView>(R.id.tvMins)
         val llMins = view.findViewById<LinearLayout>(R.id.llMins)
+        sleepTime = "23:00"
+        wakeupTime = "07:00"
         timePicker.setTime(LocalTime.of(23, 0), LocalTime.of(7, 0))
 
         timePicker.listener = { bedTime: LocalTime, wakeTime: LocalTime ->
             Timber.d("time changed \nbedtime= $bedTime\nwaketime=$wakeTime")
-            val formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
+            val formatter = DateTimeFormatter.ofPattern("hh:mm", Locale.US)
             val anotherFormat = DateTimeFormatter.ofPattern("hh:mm")
             tvBedTime.text = bedTime.format(formatter)
             tvWakeTime.text = wakeTime.format(formatter)
@@ -57,7 +59,7 @@ class ThirdQuestionFragment : Fragment(){
             tvMins.text = minutes.toString()
             if (minutes > 0) llMins.visibility = View.VISIBLE else llMins.visibility = View.GONE
         }
-        val formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
+        val formatter = DateTimeFormatter.ofPattern("hh:mm", Locale.US)
         tvBedTime.text = timePicker.getBedTime().format(formatter)
         tvWakeTime.text = timePicker.getWakeTime().format(formatter)
 
@@ -69,13 +71,9 @@ class ThirdQuestionFragment : Fragment(){
         val minutes = duration.toMinutes() % 60
         tvHours.text = hours.toString()
         tvMins.text = minutes.toString()
+
         if (minutes > 0) llMins.visibility = View.VISIBLE else llMins.visibility = View.GONE
-//        handleUpdate(timePicker.getBedTime(), timePicker.getWakeTime())
         return view
-    }
-
-    private fun handleUpdate(bedTime: LocalTime, wakeTime: LocalTime) {
-
     }
 
 

@@ -46,9 +46,10 @@ public class QuestionnairesFirststart extends AppCompatActivity {
             public void onClick(View v) {
                 // Tab 1
                 if(viewPager.getCurrentItem() == 0){
-                    String workingTime = FirstQuestionFragment.Companion.getTime();
+                    String workingStartTime = FirstQuestionFragment.Companion.getTimeRangeStart();
+                    String workingEndTime = FirstQuestionFragment.Companion.getTimeRangeEnd();
                     ArrayList<String> workingDay = FirstQuestionFragment.Companion.getDay();
-                    if(workingTime== null || workingDay.size() == 0){
+                    if(workingStartTime == null || workingDay.size() == 0 || workingEndTime == null){
                         Snackbar.make(parentLayout,"You need to fill the data",Snackbar.LENGTH_SHORT).show();
                     }else{
                         viewPager.setCurrentItem(getItem(+1),true);
@@ -61,7 +62,6 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                     if(SecondQuestionFragment.editText.getText().toString() == null){
                         Snackbar.make(parentLayout,"Data cannot null",Snackbar.LENGTH_SHORT).show();
                     }else{
-                        int commutingTime = Integer.parseInt(SecondQuestionFragment.editText.getText().toString());
                         viewPager.setCurrentItem(getItem(+1),true);
                         return;
                     }
@@ -69,8 +69,6 @@ public class QuestionnairesFirststart extends AppCompatActivity {
 
                 // Tab 3
                 if(viewPager.getCurrentItem() == 2){
-                    String sleepTime = ThirdQuestionFragment.Companion.getSleepTime();
-                    String wakeupTime = ThirdQuestionFragment.Companion.getWakeupTime();
                     viewPager.setCurrentItem(getItem(+1),true);
                     return;
                 }

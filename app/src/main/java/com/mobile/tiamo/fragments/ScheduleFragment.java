@@ -1,116 +1,143 @@
 package com.mobile.tiamo.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.activities.AddingScheduleActivity;
+import com.mobile.tiamo.activities.AddingRoutineActivity;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
 import com.mobile.tiamo.adapters.ScheduleItem;
+import com.mobile.tiamo.adapters.ScheduleViewPagerAdapter;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
-import com.mobile.tiamo.utilities.DateUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleFragment extends Fragment {
-
+    TabLayout tabLayout;
+    ViewPager viewPager;
     View view;
-    List<ScheduleItem> datasets;
-    ListView listView;
-    TiamoDatabase db;
-    private static ScheduleAdapter adapter;
+    FloatingActionButton btnAddingRoutine, btnAddingActivity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        listView = (ListView) view.findViewById(R.id.schedule_list);
-        datasets = new ArrayList<ScheduleItem>();
-        adapter = new ScheduleAdapter(datasets, getActivity().getApplicationContext());
-        listView.setAdapter(adapter);
-        db = SQLiteDatabase.getTiamoDatabase(getActivity());
+        btnAddingActivity = (FloatingActionButton) view.findViewById(R.id.action_activity);
+        btnAddingRoutine = (FloatingActionButton) view.findViewById(R.id.action_routine);
+
+        viewPager = (ViewPager) view.findViewById(R.id.schedule_viewpager_1);
+        setupViewPager(viewPager);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         MainActivity.textToolbar.setText("Tiamo");
-        GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
-        getAllScheduleAysnc.execute();
+
+        tabLayout.setTabTextColors(Color.parseColor("#e3e3e3"), Color.parseColor("#ffffff"));
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
+        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+
+        btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddingRoutineActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+
+        btnAddingActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater1 = LayoutInflater.from(getContext());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setCancelable(false);
+                // Inflate the popup dialog from a layout xml file.
+                View popupInputDialogView = inflater1.inflate(R.layout.popup_input_activity, null);
+                final EditText edTitle = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_title);
+                final EditText edHour = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_hours);
+                Button btnAdd = popupInputDialogView.findViewById(R.id.btn_adding_routine_add);
+                Button btnCancel = popupInputDialogView.findViewById(R.id.btn_adding_routine_cancel);
+
+                alertDialogBuilder.setView(popupInputDialogView);
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // save to database
+                        saveActivity(edTitle.getText().toString(), Integer.parseInt(edHour.getText().toString()));
+                        alertDialog.cancel();
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
+            }
+        });
+
         return view;
     }
 
-    private class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>>{
-        @Override
-        protected List<ScheduleItem> doInBackground(Void... voids) {
-            if(db.scheduleDao().getAll() != null){
-                List<Schedule> scheduleList = db.scheduleDao().getAll();
-                if(scheduleList != null){
-                    for(int i = 0 ; i < scheduleList.size() ; i++){
-                        ScheduleItem model = new ScheduleItem();
-                        model.setTitle(scheduleList.get(i).getTitle());
-                        model.setDays(scheduleList.get(i).getOperationDay());
-                        model.setHours(scheduleList.get(i).getTimeStart()+" - " +scheduleList.get(i).getTimeEnd());
-                        datasets.add(model);
-                    }
-                }
-                return datasets;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<ScheduleItem> scheduleItems) {
-            if(scheduleItems.size() > 0 ){
-                adapter.notifyDataSetChanged();
-            }
-
-            super.onPostExecute(scheduleItems);
-        }
+    private void setupViewPager(ViewPager viewPager) {
+        ScheduleViewPagerAdapter adapter = new ScheduleViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter.addFragment(new ScheduleRoutinePagerFragment(),"Routine");
+        adapter.addFragment(new ScheduleRoutinePagerFragment(), "Activity");
+        viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.schedule_menu,menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    private void saveActivity(String title, int hour) {
+
     }
 
 
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.schedule_menu,menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int itemId = item.getItemId();
+//        if(itemId == R.id.schedule_menu_add){
+//            Intent intent = new Intent(getActivity(), AddingRoutineActivity.class);
+//            startActivityForResult(intent,1);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if(itemId == R.id.schedule_menu_add){
-            Intent intent = new Intent(getActivity(), AddingScheduleActivity.class);
-            startActivityForResult(intent,1);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == getActivity().RESULT_OK){
-            datasets.clear();
-            adapter.clear();
-            GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
-            getAllScheduleAysnc.execute();
-        }
-    }
 }

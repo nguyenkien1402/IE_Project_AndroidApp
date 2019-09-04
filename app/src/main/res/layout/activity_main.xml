@@ -14,6 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white"
         android:layout_width="match_parent"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:layout_height="wrap_content">
 
         <TextView

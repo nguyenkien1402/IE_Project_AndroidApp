@@ -13,7 +13,8 @@ public class QuestionariesAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new FirstQuestionFragment();
+//            case 0: return new FirstQuestionFragment();
+            case 0: return SixthQuestionFragment.newInstance("Fourth Fragment");
             case 1: return SecondQuestionFragment.newInstance("Second Fragment");
             case 2: return new ThirdQuestionFragment();
             case 3: return FourthQuestionFragment.newInstance("Fourth Fragment");

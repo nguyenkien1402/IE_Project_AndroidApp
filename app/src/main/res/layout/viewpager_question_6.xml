@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Are you going to the gym?"
+            style="@style/TextQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:orientation="horizontal"
+                android:id="@+id/radioGroup"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RadioButton
+                    android:id="@+id/radio_no"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="26dp"
+                    android:layout_height="wrap_content"
+                    android:text="No" />
+                <RadioButton
+                    android:id="@+id/radio_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="26dp"
+                    android:text="Yes" />
+            </RadioGroup>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="26dp"
+            android:id="@+id/view_if_yes"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:text="Number of days per week"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    android:id="@+id/spinner_day"
+                    android:layout_marginLeft="26dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:text="Number of hours per day"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    android:id="@+id/spinner_hour"
+                    android:layout_marginLeft="26dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                </Spinner>
+            </LinearLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout-->
+                <!--android:layout_width="260dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<EditText-->
+                    <!--android:id="@+id/day_per_week"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="How many days per week?"-->
+                    <!--android:inputType="number"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:singleLine="true" />-->
+            <!--</com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--<com.google.android.material.textfield.TextInputLayout-->
+                <!--android:layout_width="260dp"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<EditText-->
+                    <!--android:id="@+id/hour_per_day"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="How many hours per day?"-->
+                    <!--android:inputType="number"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:singleLine="true" />-->
+            <!--</com.google.android.material.textfield.TextInputLayout>-->
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -19,12 +20,13 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
     private val tagBottomSheetTimeRangePicker = "tagBottomSheetTimeRangePicker"
 
     companion object{
-        var time: String? =  null
+        var timeRangeStart: String? =  null
+        var timeRangeEnd: String? = null
         var day = ArrayList<String>()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.viewpager_question_1,container,false)
-        val setWorkingTime = view.findViewById<TextView>(R.id.questionaries_working_time)
+        val setWorkingTime = view.findViewById<LinearLayout>(R.id.questionaries_working_time)
         val chipGroup = view.findViewById<ChipGroup>(R.id.chipFirstGroup)
 
         for(i in 0 until chipGroup.childCount){
@@ -37,7 +39,6 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
                 }
             }
         }
-
         setWorkingTime.setOnClickListener{
             BottomSheetTimeRangePicker
                     .newInstance(this, DateFormat.is24HourFormat(activity))
@@ -45,7 +46,6 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
         }
         return view
     }
-
 
 
     override fun onTimeRangeSelected(startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
@@ -60,17 +60,28 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
             endMinute < 9 -> endMinuteString = endMinute.toString().prependZero()
         }
 
-        val tvTimeRange = view?.findViewById<TextView>(R.id.questionaries_time_setting)
-        if (tvTimeRange != null) {
-            tvTimeRange.text = getString(
-                    R.string.chosen_time_range,
+        val timeStart = view?.findViewById<TextView>(R.id.timestart)
+        val timeEnd = view?.findViewById<TextView>(R.id.timeend)
+        if (timeStart != null ) {
+            timeStart.text = getString(
+                    R.string.chosen_time_range_only,
                     startHourString,
-                    startMinuteString,
+                    startMinuteString
+            )
+            timeStart.text = "Starting Time: " + timeStart.text
+            timeRangeStart = timeStart.text.toString()
+        }
+        if(timeEnd != null){
+            timeEnd.text = getString(
+                    R.string.chosen_time_range_only,
                     endHourString,
                     endMinuteString
             )
-            time = tvTimeRange.text.toString()
+            timeEnd.text = "Ending Time: " + timeEnd.text
+            timeRangeEnd = timeEnd.text.toString()
         }
+
+
     }
     private fun String.prependZero(): String {
         return "0".plus(this)

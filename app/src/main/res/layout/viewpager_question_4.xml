@@ -29,6 +29,14 @@
             app:layout_constraintStart_toStartOf="parent">
 
         </com.google.android.material.chip.ChipGroup>
+
+        <Button
+            android:layout_marginTop="26dp"
+            android:id="@+id/btn_add_your_activity"
+            android:text="Add your activity"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
