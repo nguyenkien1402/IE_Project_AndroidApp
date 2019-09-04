@@ -27,18 +27,17 @@ public class SixthQuestionFragment extends Fragment {
     LinearLayout ln;
     public static Spinner spinnerHour,spinnerDay;
     public String[] days = {"1 day","2 days","3 days","4 days","5 days","6 days","7 days"};
-    public String[] hours = {"1 hours","2 hours","3 hours","4 hours","5 hours","6 hours","7 hours",
+    public String[] hours = {"1 hour","2 hours","3 hours","4 hours","5 hours","6 hours","7 hours",
                     "8 hours","9 hours","10 hours","11 hours","12 hours","13 hours","14 hours",
                     "15 hours","16 hours","17 hours","18 hours","19 hours","20 hours",
                     "21 hours","22 hours","23 hours","24 hours"};
-    public static String daySelected, hourSelected;
+    public static boolean checkYes = false;
+    public static String daySelected ="", hourSelected = "";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.viewpager_question_6,container,false);
-//        day_per_week = view.findViewById(R.id.day_per_week);
-//        hour_per_day = view.findViewById(R.id.hour_per_day);
         radioGroup = view.findViewById(R.id.radioGroup);
         ln = view.findViewById(R.id.view_if_yes);
         spinnerDay = view.findViewById(R.id.spinner_day);
@@ -84,9 +83,11 @@ public class SixthQuestionFragment extends Fragment {
                 if(checkedId == R.id.radio_no){
                     // do nothing
                     ln.setVisibility(View.GONE);
+                    checkYes = false;
                 }
                 if(checkedId == R.id.radio_yes){
                     ln.setVisibility(View.VISIBLE);
+                    checkYes = true;
                 }
             }
         });

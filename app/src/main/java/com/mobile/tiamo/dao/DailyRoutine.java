@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class DailyActivities {
+public class DailyRoutine {
 
     @PrimaryKey(autoGenerate = true)
     private long uid;
@@ -34,10 +34,10 @@ public class DailyActivities {
     @ColumnInfo(name = "time_actually_end")
     private String timeActuallyEnd;
 
-    public DailyActivities() {
+    public DailyRoutine() {
     }
 
-    public DailyActivities(long uid, String date, int scheduleId, int isDone, String hours, String title) {
+    public DailyRoutine(long uid, String date, int scheduleId, int isDone, String hours, String title) {
         this.uid = uid;
         this.date = date;
         this.scheduleId = scheduleId;

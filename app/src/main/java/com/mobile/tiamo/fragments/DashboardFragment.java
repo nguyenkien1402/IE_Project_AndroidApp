@@ -26,7 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingRoutineActivity;
-import com.mobile.tiamo.dao.DailyActivities;
+import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
@@ -40,7 +40,7 @@ import java.util.List;
 public class DashboardFragment extends Fragment {
 
     View view;
-    List<DailyActivities> list;
+    List<DailyRoutine> list;
     TiamoDatabase db;
     Intent intentStart, intentEnd;
     @Nullable
@@ -126,16 +126,16 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    private class GetListDailyActivityAsync extends AsyncTask<Void, Void, List<DailyActivities>>{
+    private class GetListDailyActivityAsync extends AsyncTask<Void, Void, List<DailyRoutine>>{
         @Override
-        protected List<DailyActivities> doInBackground(Void... voids) {
+        protected List<DailyRoutine> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
             list = db.dailyActivitiesDao().getDailyActivities(currentDate);
             return list;
         }
 
         @Override
-        protected void onPostExecute(List<DailyActivities> result) {
+        protected void onPostExecute(List<DailyRoutine> result) {
             super.onPostExecute(result);
             if(result.size() > 0){
                 scheduleNotification(result);
@@ -144,14 +144,14 @@ public class DashboardFragment extends Fragment {
             }
         }
 
-        private void scheduleNotification(List<DailyActivities> result) {
+        private void scheduleNotification(List<DailyRoutine> result) {
             final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
             intentStart = new Intent(getActivity().getApplicationContext(), ReminderNotificationStart.class);
             intentEnd   = new Intent(getActivity().getApplicationContext(), ReminderNotificationEndAction.class);
             for(int i = 0 ; i < result.size() ; i++){
-                DailyActivities dailyActivities = result.get(i);
-                String timeStart = dailyActivities.getTimeStart();
-                String timeEnd = dailyActivities.getTimeEnd();
+                DailyRoutine dailyRoutine = result.get(i);
+                String timeStart = dailyRoutine.getTimeStart();
+                String timeEnd = dailyRoutine.getTimeEnd();
                 String currentDate = DateUtilities.getCurrentDateInString();
                 int year = Integer.parseInt(currentDate.split("-")[2]);
                 int day = Integer.parseInt(currentDate.split("-")[0]);
@@ -164,7 +164,7 @@ public class DashboardFragment extends Fragment {
                 int minuteEnd = Integer.parseInt(timeEnd.split(":")[1]);
                 // Config for starting ( code = 1000 + i )
                 intentStart.putExtra("notiId",1000+i+1);
-                intentStart.putExtra("task",dailyActivities.getTitle());
+                intentStart.putExtra("task", dailyRoutine.getTitle());
                 intentStart.putExtra("uid",result.get(i).getUid());
                 Calendar s_calendar = Calendar.getInstance();
                 s_calendar.set(Calendar.MONTH, month-1); // month = month - 1
@@ -178,7 +178,7 @@ public class DashboardFragment extends Fragment {
 
                 // Config for ending (code = 2000+i)
                 intentEnd.putExtra("notiId",2000+i+1);
-                intentEnd.putExtra("task",dailyActivities.getTitle());
+                intentEnd.putExtra("task", dailyRoutine.getTitle());
                 intentEnd.putExtra("uid",result.get(i).getUid());
                 Calendar e_calendar = Calendar.getInstance();
                 e_calendar.set(Calendar.MONTH, month-1); // month = month - 1

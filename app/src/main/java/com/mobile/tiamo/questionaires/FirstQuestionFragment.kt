@@ -68,8 +68,9 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
                     startHourString,
                     startMinuteString
             )
-            timeStart.text = "Starting Time: " + timeStart.text
             timeRangeStart = timeStart.text.toString()
+            timeStart.text = "From " + timeStart.text
+
         }
         if(timeEnd != null){
             timeEnd.text = getString(
@@ -77,8 +78,9 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
                     endHourString,
                     endMinuteString
             )
-            timeEnd.text = "Ending Time: " + timeEnd.text
             timeRangeEnd = timeEnd.text.toString()
+            timeEnd.text = "To " + timeEnd.text
+
         }
 
 

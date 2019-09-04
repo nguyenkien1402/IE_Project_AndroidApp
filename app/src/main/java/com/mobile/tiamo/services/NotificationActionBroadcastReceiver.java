@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.mobile.tiamo.dao.DailyActivities;
+import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
@@ -39,15 +39,15 @@ public class NotificationActionBroadcastReceiver extends BroadcastReceiver {
     private class UpdateActionToDatabaseAsync extends AsyncTask<Long, Void, Void>{
         @Override
         protected Void doInBackground(Long... longs) {
-            DailyActivities dailyActivities = db.dailyActivitiesDao().getDailyActivityById(longs[0]);
+            DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(longs[0]);
             if(action.equals("YES_ACTION")){
-                dailyActivities.setIsDone(1);
-                db.dailyActivitiesDao().update(dailyActivities);
+                dailyRoutine.setIsDone(1);
+                db.dailyActivitiesDao().update(dailyRoutine);
             }
 
             if(action.equals("NO_ACTION")){
-                dailyActivities.setIsDone(0);
-                db.dailyActivitiesDao().update(dailyActivities);
+                dailyRoutine.setIsDone(0);
+                db.dailyActivitiesDao().update(dailyRoutine);
             }
             return null;
         }

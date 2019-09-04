@@ -1,27 +1,23 @@
 package com.mobile.tiamo.fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.activities.AddingRoutineActivity;
+import com.mobile.tiamo.adapters.ActivityModelItem;
+import com.mobile.tiamo.adapters.ScheduleActivityAdapter;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
 import com.mobile.tiamo.adapters.ScheduleItem;
+import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
@@ -29,22 +25,22 @@ import com.mobile.tiamo.dao.TiamoDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleRoutinePagerFragment extends Fragment {
+public class ScheduleActivityPagerFragment extends Fragment {
 
     View view;
-    public static List<ScheduleItem> datasets;
+    public static List<ActivityModelItem> datasets;
     ListView listView;
     public static TiamoDatabase db;
-    public static ScheduleAdapter adapter;
+    public static ScheduleActivityAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_schedule_routine, container, false);
-        Log.d("TAG","create routine again");
-        listView = (ListView) view.findViewById(R.id.schedule_list);
-        datasets = new ArrayList<ScheduleItem>();
-        adapter = new ScheduleAdapter(datasets, getActivity().getApplicationContext());
+        view = inflater.inflate(R.layout.fragment_schedule_activity, container, false);
+        Log.d("TAG","create routine 2 again");
+        listView = (ListView) view.findViewById(R.id.schedule_activity_list);
+        datasets = new ArrayList<ActivityModelItem>();
+        adapter = new ScheduleActivityAdapter(datasets, getActivity().getApplicationContext());
         listView.setAdapter(adapter);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
@@ -52,27 +48,27 @@ public class ScheduleRoutinePagerFragment extends Fragment {
         return view;
     }
 
-    public static class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>> {
+    public static class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ActivityModelItem>> {
         @Override
-        protected List<ScheduleItem> doInBackground(Void... voids) {
-            if(db.scheduleDao().getAll().size() > 0){
-                List<Schedule> scheduleList = db.scheduleDao().getAll();
-                if(scheduleList != null){
+        protected List<ActivityModelItem> doInBackground(Void... voids) {
+            if(db.activitiesModelDao().getAll().size() > 0){
+                List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
                     for(int i = 0 ; i < scheduleList.size() ; i++){
-                        ScheduleItem model = new ScheduleItem();
+                        ActivityModelItem model = new ActivityModelItem();
                         model.setTitle(scheduleList.get(i).getTitle());
-                        model.setDays(scheduleList.get(i).getOperationDay());
-                        model.setHours(scheduleList.get(i).getTimeStart()+" - " +scheduleList.get(i).getTimeEnd());
+                        model.setHours(scheduleList.get(i).getHours());
+                        if(scheduleList.get(i).getTitle().equals("Gym")){
+                            model.setDayPerWeek(scheduleList.get(i).getDayPerWeek());
+                        }
                         datasets.add(model);
                     }
-                }
                 return datasets;
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(List<ScheduleItem> scheduleItems) {
+        protected void onPostExecute(List<ActivityModelItem> scheduleItems) {
             Log.d("TAG","Get routine data");
             if(scheduleItems.size() > 0 ){
                 adapter.notifyDataSetChanged();

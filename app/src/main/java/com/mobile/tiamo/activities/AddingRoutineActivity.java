@@ -215,7 +215,7 @@ public class AddingRoutineActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
 
         // Inflate the popup dialog from a layout xml file.
-        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_hobby, null);
+        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_task, null);
 
         popup_ed_title = (EditText) popupInputDialogView.findViewById(R.id.popup_ed_title);
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel);

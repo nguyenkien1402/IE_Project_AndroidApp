@@ -25,8 +25,8 @@ import java.util.List;
 public class FourthQuestionFragment extends Fragment {
     String[] s1 = {"Reading","Exercising","Hiking","Playing Football","Climbing"};
     List<String> s = new ArrayList<String>(Arrays.asList(s1));
-    List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
-    public static List<String> listHobbies = new ArrayList<String>();
+    public static List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
+//    public static List<String> listHobbies = new ArrayList<String>();
     EditText edHoursPerWeek, edInputActivity;
     View popupInputDialogView, popupInputHobby;
     Button btnAdd, btnCancel, btnAddHobby, btnInputAdd, btnInputCancel;
@@ -98,7 +98,7 @@ public class FourthQuestionFragment extends Fragment {
                             int hours = Integer.parseInt(edHoursPerWeek.getText().toString());
                             ActivitiesModel model = new ActivitiesModel(c.getText().toString(),hours);
                             activitiesModels.add(model);
-                            listHobbies.add(c.getText().toString());
+//                            listHobbies.add(c.getText().toString());
                             c.setText(c.getText().toString() +" ("+hours+" hours)");
                             alertDialog.cancel();
                         }
@@ -118,7 +118,7 @@ public class FourthQuestionFragment extends Fragment {
                             break;
                         }
                     }
-                    listHobbies.remove(c.getText().toString());
+//                    listHobbies.remove(c.getText().toString());
                 }
             }
         });
@@ -149,7 +149,7 @@ public class FourthQuestionFragment extends Fragment {
                                 int hours = Integer.parseInt(edHoursPerWeek.getText().toString());
                                 ActivitiesModel model = new ActivitiesModel(c.getText().toString(),hours);
                                 activitiesModels.add(model);
-                                listHobbies.add(c.getText().toString());
+//                                listHobbies.add(c.getText().toString());
                                 c.setText(c.getText().toString() +" ("+hours+" hours)");
                                 alertDialog.cancel();
                             }
@@ -169,7 +169,7 @@ public class FourthQuestionFragment extends Fragment {
                                 break;
                             }
                         }
-                        listHobbies.remove(c.getText().toString());
+//                        listHobbies.remove(c.getText().toString());
                     }
                 }
             });

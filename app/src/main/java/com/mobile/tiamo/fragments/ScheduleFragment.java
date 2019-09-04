@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.mobile.tiamo.activities.AddingRoutineActivity;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
 import com.mobile.tiamo.adapters.ScheduleItem;
 import com.mobile.tiamo.adapters.ScheduleViewPagerAdapter;
+import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
@@ -39,6 +41,7 @@ public class ScheduleFragment extends Fragment {
     ViewPager viewPager;
     View view;
     FloatingActionButton btnAddingRoutine, btnAddingActivity;
+    TiamoDatabase db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +61,9 @@ public class ScheduleFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        MainActivity.textToolbar.setText("Tiamo");
+        MainActivity.textToolbar.setText(R.string.app_name);
 
+        db = SQLiteDatabase.getTiamoDatabase(getActivity());
         tabLayout.setTabTextColors(Color.parseColor("#e3e3e3"), Color.parseColor("#ffffff"));
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
@@ -110,14 +114,45 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Log.d("TAG","Call again");
         ScheduleViewPagerAdapter adapter = new ScheduleViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new ScheduleRoutinePagerFragment(),"Routine");
-        adapter.addFragment(new ScheduleRoutinePagerFragment(), "Activity");
+        adapter.addFragment(new ScheduleActivityPagerFragment(), "Activity");
         viewPager.setAdapter(adapter);
     }
 
     private void saveActivity(String title, int hour) {
+        AddActivityModelAsyn addActivityModelAsyn = new AddActivityModelAsyn();
+        addActivityModelAsyn.execute(title,hour+"");
+    }
 
+    private class AddActivityModelAsyn extends AsyncTask<String,Void,ActivitiesModel>{
+        @Override
+        protected ActivitiesModel doInBackground(String... strings) {
+            int hour = Integer.parseInt(strings[1]);
+            ActivitiesModel activitiesModel = new ActivitiesModel(strings[0],hour);
+            long uid = db.activitiesModelDao().insert(activitiesModel);
+            activitiesModel.setUid(uid);
+            return activitiesModel;
+        }
+
+        @Override
+        protected void onPostExecute(ActivitiesModel s) {
+            super.onPostExecute(s);
+            Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
+//            ScheduleActivityPagerFragment.datasets.add(s);
+//            ScheduleActivityPagerFragment.adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == getActivity().RESULT_OK){
+            ScheduleRoutinePagerFragment.datasets.clear();
+            ScheduleRoutinePagerFragment.adapter.clear();
+            ScheduleRoutinePagerFragment.GetAllScheduleAysnc getAllScheduleAysnc = new ScheduleRoutinePagerFragment.GetAllScheduleAysnc();
+            getAllScheduleAysnc.execute();
+        }
     }
 
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="80dp">
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/item_schedule_activity_title"
+                android:textSize="26dp"
+                android:text="Test"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-medium"
+                android:typeface="sans"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <TextView
+                android:textColor="#000000"
+                android:text="test"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:fontFamily="sans-serif"
+                style="?android:attr/textAppearanceMedium"
+                android:id="@+id/item_schedule_activity_hour"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/item_schedule_activity_title"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <!--<TextView-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="22dp"-->
+            <!--android:text="Test"-->
+            <!--android:fontFamily="sans-serif-medium"-->
+            <!--android:typeface="sans"-->
+            <!--android:id="@+id/item_schedule_hour"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--style="?android:attr/textAppearanceMedium"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp" />-->
+    </LinearLayout>
+</LinearLayout>

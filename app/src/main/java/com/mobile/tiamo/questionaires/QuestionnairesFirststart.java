@@ -60,7 +60,7 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                 // Tab 2
                 if(viewPager.getCurrentItem() == 1){
                     if(SecondQuestionFragment.editText.getText().toString() == null){
-                        Snackbar.make(parentLayout,"Data cannot null",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(parentLayout,"Cannot leave a blank",Snackbar.LENGTH_SHORT).show();
                     }else{
                         viewPager.setCurrentItem(getItem(+1),true);
                         return;
@@ -73,16 +73,28 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                     return;
                 }
 
-                // Tab 4
+                // Tab 4 is about the gyming time
                 if(viewPager.getCurrentItem() == 3){
-                    List<String> hobbies = FourthQuestionFragment.listHobbies;
-                    if(hobbies.size() == 0){
-                        Snackbar.make(parentLayout,"You need select hobbies",Snackbar.LENGTH_SHORT).show();
-                    }else{
-                        btnNext.setVisibility(View.GONE);
-                        viewPager.setCurrentItem(getItem(+1),true);
-                        return;
+                    if(SixthQuestionFragment.checkYes == true){
+                        if(SixthQuestionFragment.daySelected.equals("") || SixthQuestionFragment.hourSelected.equals("")){
+                            Snackbar.make(parentLayout,"Cannot leave a blank",Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            viewPager.setCurrentItem(getItem(+1),true);
+                        }
                     }
+                    return;
+                }
+
+                // Tab 4
+                if(viewPager.getCurrentItem() == 4){
+//                    List<String> hobbies = FourthQuestionFragment.listHobbies;
+//                    if(hobbies.size() == 0){
+//                        Snackbar.make(parentLayout,"You need select hobbies",Snackbar.LENGTH_SHORT).show();
+//                    }else{
+                    btnNext.setVisibility(View.GONE);
+                    viewPager.setCurrentItem(getItem(+1),true);
+                    return;
+//                    }
                 }
 
             }

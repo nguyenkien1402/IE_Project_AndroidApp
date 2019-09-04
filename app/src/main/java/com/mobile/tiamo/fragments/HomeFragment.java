@@ -1,12 +1,10 @@
 package com.mobile.tiamo.fragments;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,16 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -32,13 +27,12 @@ import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.DailyActivityAdapter;
 import com.mobile.tiamo.adapters.DailyActivityItem;
-import com.mobile.tiamo.dao.DailyActivities;
+import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -47,7 +41,7 @@ public class HomeFragment extends Fragment {
     TiamoDatabase db;
     List<DailyActivityItem> datasets = null;
     ListView listView;
-    private static DailyActivityAdapter adapter;
+    private static DailyActivityAdapter adapter = null;
     DatePickerTimeline timeline;
     private static String TAG="HomeFragment";
 
@@ -98,7 +92,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.home_menu,menu);
@@ -132,12 +125,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private class GetDailyActivitiesFromSelectedDate extends AsyncTask<String,Void,List<DailyActivities>>{
+    private class GetDailyActivitiesFromSelectedDate extends AsyncTask<String,Void,List<DailyRoutine>>{
         @Override
-        protected List<DailyActivities> doInBackground(String... strings) {
+        protected List<DailyRoutine> doInBackground(String... strings) {
             String currentDate = DateUtilities.getCurrentDateInString();
             String selectedDate = strings[0];
-            List<DailyActivities> list = new ArrayList<DailyActivities>();
+            List<DailyRoutine> list = new ArrayList<DailyRoutine>();
             String abbDay = DateUtilities.getDayInAbbBySelectedDate(selectedDate);
             // if currentDate less than selectedDate, then check the schedule from schedule
             // and fill the list item without saving to database
@@ -150,7 +143,7 @@ public class HomeFragment extends Fragment {
                 List<Schedule> listSchedules = db.scheduleDao().getAll();
                 for(int i = 0 ; i < listSchedules.size() ; i++){
                     if(listSchedules.get(i).getSpecificDay().contains(abbDay)){
-                        DailyActivities d = new DailyActivities();
+                        DailyRoutine d = new DailyRoutine();
                         d.setIsDone(0);
                         d.setScheduleId(listSchedules.get(i).getUid());
                         d.setTitle(listSchedules.get(i).getTitle());
@@ -166,7 +159,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<DailyActivities> dailyActivities) {
+        protected void onPostExecute(List<DailyRoutine> dailyActivities) {
             super.onPostExecute(dailyActivities);
             datasets.clear();
 //            adapter.notifyDataSetChanged();
@@ -182,7 +175,9 @@ public class HomeFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             }else{
-                adapter.notifyDataSetChanged();
+                if(adapter != null){
+                    adapter.notifyDataSetChanged();
+                }
                 Toast.makeText(getActivity(),"No Data",Toast.LENGTH_LONG).show();
             }
         }
@@ -202,8 +197,9 @@ public class HomeFragment extends Fragment {
                 datasets = dailyActivityItems;
                 adapter = new DailyActivityAdapter(datasets, getActivity());
                 listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }else{
-                Toast.makeText(getActivity(),"Null cmnr",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(dailyActivityItems);
         }
@@ -211,7 +207,7 @@ public class HomeFragment extends Fragment {
 
     public List<DailyActivityItem> getDailyActivityList(String currentDate){
         List<DailyActivityItem> dailyActivityItems = new ArrayList<DailyActivityItem>();
-        List<DailyActivities> dailyActivitiesLists = new ArrayList<DailyActivities>();
+        List<DailyRoutine> dailyRoutineLists = new ArrayList<DailyRoutine>();
         if(db.dailyActivitiesDao().getDailyActivities(currentDate).size() == 0){
             // show up all the daily activities to show in the fragment
             String currentDayAbb = DateUtilities.getCurrentDayInAbb();
@@ -225,23 +221,23 @@ public class HomeFragment extends Fragment {
             if(scheduleList != null){
                 for(int i = 0 ; i < scheduleList.size(); i++){
                     // Add Daily Activity to database
-                    DailyActivities dailyActivities = new DailyActivities();
-                    dailyActivities.setIsDone(0);
-                    dailyActivities.setHours(scheduleList.get(i).getTimeStart() + " - " + scheduleList.get(i).getTimeEnd());
-                    dailyActivities.setTitle(scheduleList.get(i).getTitle());
-                    dailyActivities.setTimeStart(scheduleList.get(i).getTimeStart());
-                    dailyActivities.setTimeEnd(scheduleList.get(i).getTimeEnd());
-                    dailyActivities.setScheduleId(scheduleList.get(i).getUid());
-                    dailyActivities.setDate(currentDate);
-                    long uid = db.dailyActivitiesDao().insert(dailyActivities);
-                    dailyActivities.setUid(uid);
-                    dailyActivitiesLists.add(dailyActivities);
+                    DailyRoutine dailyRoutine = new DailyRoutine();
+                    dailyRoutine.setIsDone(0);
+                    dailyRoutine.setHours(scheduleList.get(i).getTimeStart() + " - " + scheduleList.get(i).getTimeEnd());
+                    dailyRoutine.setTitle(scheduleList.get(i).getTitle());
+                    dailyRoutine.setTimeStart(scheduleList.get(i).getTimeStart());
+                    dailyRoutine.setTimeEnd(scheduleList.get(i).getTimeEnd());
+                    dailyRoutine.setScheduleId(scheduleList.get(i).getUid());
+                    dailyRoutine.setDate(currentDate);
+                    long uid = db.dailyActivitiesDao().insert(dailyRoutine);
+                    dailyRoutine.setUid(uid);
+                    dailyRoutineLists.add(dailyRoutine);
 
                     DailyActivityItem dailyActivityItem = new DailyActivityItem();
                     dailyActivityItem.setIsDone(0);
                     dailyActivityItem.setHours(scheduleList.get(i).getTimeStart() + " - " + scheduleList.get(i).getTimeEnd());
                     dailyActivityItem.setTitle(scheduleList.get(i).getTitle());
-                    dailyActivityItem.setUid(dailyActivities.getUid());
+                    dailyActivityItem.setUid(dailyRoutine.getUid());
                     dailyActivityItems.add(dailyActivityItem);
                 }
             }else{
@@ -263,27 +259,27 @@ public class HomeFragment extends Fragment {
             for(int i = 0 ; i < newList.size() ; i++){
                 if(db.dailyActivitiesDao().checkIfAlreadyExistDailyActivity(newList.get(i).getUid()) == null){
                     // add to database
-                    DailyActivities dailyActivities = new DailyActivities();
-                    dailyActivities.setIsDone(0);
-                    dailyActivities.setHours(newList.get(i).getTimeStart() + " - " + newList.get(i).getTimeEnd());
-                    dailyActivities.setTitle(newList.get(i).getTitle());
-                    dailyActivities.setTimeStart(newList.get(i).getTimeStart());
-                    dailyActivities.setTimeEnd(newList.get(i).getTimeEnd());
-                    dailyActivities.setScheduleId(newList.get(i).getUid());
-                    dailyActivities.setDate(currentDate);
-                    long uid = db.dailyActivitiesDao().insert(dailyActivities);
-                    dailyActivities.setUid(uid);
-                    dailyActivitiesLists.add(dailyActivities);
+                    DailyRoutine dailyRoutine = new DailyRoutine();
+                    dailyRoutine.setIsDone(0);
+                    dailyRoutine.setHours(newList.get(i).getTimeStart() + " - " + newList.get(i).getTimeEnd());
+                    dailyRoutine.setTitle(newList.get(i).getTitle());
+                    dailyRoutine.setTimeStart(newList.get(i).getTimeStart());
+                    dailyRoutine.setTimeEnd(newList.get(i).getTimeEnd());
+                    dailyRoutine.setScheduleId(newList.get(i).getUid());
+                    dailyRoutine.setDate(currentDate);
+                    long uid = db.dailyActivitiesDao().insert(dailyRoutine);
+                    dailyRoutine.setUid(uid);
+                    dailyRoutineLists.add(dailyRoutine);
                 }
             }
 
-            List<DailyActivities> dailyActivitiesList = db.dailyActivitiesDao().getDailyActivities(currentDate);
-            for(int i = 0 ; i < dailyActivitiesList.size(); i++){
+            List<DailyRoutine> dailyRoutineList = db.dailyActivitiesDao().getDailyActivities(currentDate);
+            for(int i = 0; i < dailyRoutineList.size(); i++){
                 DailyActivityItem model = new DailyActivityItem();
-                model.setIsDone(dailyActivitiesList.get(i).getIsDone());
-                model.setTitle(dailyActivitiesList.get(i).getTitle());
-                model.setHours(dailyActivitiesList.get(i).getHours());
-                model.setUid(dailyActivitiesList.get(i).getUid());
+                model.setIsDone(dailyRoutineList.get(i).getIsDone());
+                model.setTitle(dailyRoutineList.get(i).getTitle());
+                model.setHours(dailyRoutineList.get(i).getHours());
+                model.setUid(dailyRoutineList.get(i).getUid());
                 dailyActivityItems.add(model);
             }
             return dailyActivityItems;

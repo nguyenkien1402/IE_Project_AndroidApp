@@ -11,13 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.dao.DailyActivities;
+import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
@@ -121,8 +120,8 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
                 Log.d("Adapter","Change to zero");
                 db.dailyActivitiesDao().updateIsDone(voids[0],0);
             }
-            DailyActivities dailyActivities = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
-            Log.d("Adapter",dailyActivities.getTitle() + "-"+dailyActivities.getIsDone());
+            DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
+            Log.d("Adapter", dailyRoutine.getTitle() + "-"+ dailyRoutine.getIsDone());
             return null;
         }
 

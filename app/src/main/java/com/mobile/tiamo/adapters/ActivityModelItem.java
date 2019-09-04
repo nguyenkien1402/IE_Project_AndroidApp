@@ -1,39 +1,23 @@
-package com.mobile.tiamo.dao;
+package com.mobile.tiamo.adapters;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity
-public class ActivitiesModel {
-
-    @PrimaryKey(autoGenerate = true)
+public class ActivityModelItem {
     private long uid;
-
-    @ColumnInfo(name = "title")
     private String title;
-
-    @ColumnInfo(name = "hours")
     private int hours;
-
-    @ColumnInfo(name ="day_per_week")
     private int dayPerWeek;
-
-    @ColumnInfo(name = "is_priority")
     private int isHighPriority;
 
-    public ActivitiesModel(String title, int hours){
-        this.title = title;
-        this.hours = hours;
+    public ActivityModelItem() {
     }
 
-    public ActivitiesModel(String title, int hours, int dayPerWeek) {
+    public ActivityModelItem(long uid, String title, int hours, int dayPerWeek, int isHighPriority) {
+        this.uid = uid;
         this.title = title;
         this.hours = hours;
         this.dayPerWeek = dayPerWeek;
-    }
-
-    public ActivitiesModel() {
+        this.isHighPriority = isHighPriority;
     }
 
     public long getUid() {

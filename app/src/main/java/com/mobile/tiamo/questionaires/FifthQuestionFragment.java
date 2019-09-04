@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingRoutineActivity;
+import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
@@ -24,6 +25,7 @@ import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.OtherUtilities;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FifthQuestionFragment extends Fragment {
@@ -101,6 +103,23 @@ public class FifthQuestionFragment extends Fragment {
             schedule.setOperationDay("All Day");
             schedule.setSpecificDay("Mon Tue Wed Thu Fri Sat Sun");
             db.scheduleDao().insert(schedule);
+
+            // Adding the daily activity
+            // First, get the gym time
+            List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
+            if(SixthQuestionFragment.checkYes == true){
+                int dayPerweek = Integer.parseInt(SixthQuestionFragment.daySelected.split(" ")[0]);
+                int hourPerday = Integer.parseInt(SixthQuestionFragment.hourSelected.split(" ")[0]);
+                ActivitiesModel a = new ActivitiesModel("Gym",hourPerday,dayPerweek);
+                activitiesModels.add(a);
+            }
+            // Adding hobby activity want to do more
+            if(FourthQuestionFragment.activitiesModels.size() > 0){
+                activitiesModels.addAll(FourthQuestionFragment.activitiesModels);
+            }
+            // Now, add to SQL
+            db.activitiesModelDao().insertAll(activitiesModels);
+
             return voids[0];
         }
 
