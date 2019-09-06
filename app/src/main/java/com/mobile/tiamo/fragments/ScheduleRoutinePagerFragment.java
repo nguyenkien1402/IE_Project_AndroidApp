@@ -1,5 +1,7 @@
 package com.mobile.tiamo.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,26 +35,47 @@ public class ScheduleRoutinePagerFragment extends Fragment {
 
     View view;
     public static List<ScheduleItem> datasets;
-    ListView listView;
+    static ListView listView;
     public static TiamoDatabase db;
-    public static ScheduleAdapter adapter;
+    public static ScheduleAdapter adapter = null;
+    private static Context context;
+
+
+    public ScheduleRoutinePagerFragment(Context context){
+        Log.d("TAG","create routine again");
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schedule_routine, container, false);
-        Log.d("TAG","create routine again");
+        context = getContext();
         listView = (ListView) view.findViewById(R.id.schedule_list);
         datasets = new ArrayList<ScheduleItem>();
-        adapter = new ScheduleAdapter(datasets, getActivity().getApplicationContext());
-        listView.setAdapter(adapter);
-        db = SQLiteDatabase.getTiamoDatabase(getActivity());
+        db = SQLiteDatabase.getTiamoDatabase(context);
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
         getAllScheduleAysnc.execute();
         return view;
     }
 
-    public static class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>> {
+    public class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>> {
+        ProgressDialog dialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(getContext());
+            dialog.setTitle("Update");
+            dialog.show();
+        }
+
         @Override
         protected List<ScheduleItem> doInBackground(Void... voids) {
             if(db.scheduleDao().getAll().size() > 0){
@@ -75,8 +98,53 @@ public class ScheduleRoutinePagerFragment extends Fragment {
         protected void onPostExecute(List<ScheduleItem> scheduleItems) {
             Log.d("TAG","Get routine data");
             if(scheduleItems.size() > 0 ){
+                adapter = new ScheduleAdapter(datasets, getActivity());
+                listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
+            dialog.dismiss();
+            super.onPostExecute(scheduleItems);
+        }
+    }
+
+
+
+    public static class RefreshListScheduleAysnc extends AsyncTask<Void,Void, List<ScheduleItem>> {
+        ProgressDialog dialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(context);
+            dialog.setTitle("Update");
+            dialog.show();
+        }
+
+        @Override
+        protected List<ScheduleItem> doInBackground(Void... voids) {
+            if(db.scheduleDao().getAll().size() > 0){
+                datasets.clear();
+                List<Schedule> scheduleList = db.scheduleDao().getAll();
+                if(scheduleList != null){
+                    for(int i = 0 ; i < scheduleList.size() ; i++){
+                        ScheduleItem model = new ScheduleItem();
+                        model.setTitle(scheduleList.get(i).getTitle());
+                        model.setDays(scheduleList.get(i).getOperationDay());
+                        model.setHours(scheduleList.get(i).getTimeStart()+" - " +scheduleList.get(i).getTimeEnd());
+                        datasets.add(model);
+                    }
+                }
+                return datasets;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<ScheduleItem> scheduleItems) {
+            Log.d("TAG","Get routine data");
+            if(scheduleItems.size() > 0 ){
+                adapter.notifyDataSetChanged();
+            }
+            dialog.dismiss();
             super.onPostExecute(scheduleItems);
         }
     }

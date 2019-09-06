@@ -25,6 +25,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingRoutineActivity;
+import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.ScheduleAdapter;
 import com.mobile.tiamo.adapters.ScheduleItem;
 import com.mobile.tiamo.adapters.ScheduleViewPagerAdapter;
@@ -115,8 +116,8 @@ public class ScheduleFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         Log.d("TAG","Call again");
-        ScheduleViewPagerAdapter adapter = new ScheduleViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new ScheduleRoutinePagerFragment(),"Routine");
+        ScheduleViewPagerAdapter adapter = new ScheduleViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new ScheduleRoutinePagerFragment(getContext()),"Routine");
         adapter.addFragment(new ScheduleActivityPagerFragment(), "Activity");
         viewPager.setAdapter(adapter);
     }
@@ -140,8 +141,16 @@ public class ScheduleFragment extends Fragment {
         protected void onPostExecute(ActivitiesModel s) {
             super.onPostExecute(s);
             Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
-//            ScheduleActivityPagerFragment.datasets.add(s);
-//            ScheduleActivityPagerFragment.adapter.notifyDataSetChanged();
+            ActivityModelItem activityModelItem = new ActivityModelItem();
+            if(s.getTitle() != null){
+                activityModelItem.setTitle(s.getTitle());
+            }
+            activityModelItem.setDayPerWeek(s.getDayPerWeek());
+            activityModelItem.setHours(s.getHours());
+            activityModelItem.setIsHighPriority(s.getIsHighPriority());
+            activityModelItem.setUid(s.getUid());
+            ScheduleActivityPagerFragment.datasets.add(activityModelItem);
+            ScheduleActivityPagerFragment.adapter.notifyDataSetChanged();
         }
     }
 
@@ -150,7 +159,7 @@ public class ScheduleFragment extends Fragment {
         if(resultCode == getActivity().RESULT_OK){
             ScheduleRoutinePagerFragment.datasets.clear();
             ScheduleRoutinePagerFragment.adapter.clear();
-            ScheduleRoutinePagerFragment.GetAllScheduleAysnc getAllScheduleAysnc = new ScheduleRoutinePagerFragment.GetAllScheduleAysnc();
+            ScheduleRoutinePagerFragment.RefreshListScheduleAysnc getAllScheduleAysnc = new ScheduleRoutinePagerFragment.RefreshListScheduleAysnc();
             getAllScheduleAysnc.execute();
         }
     }

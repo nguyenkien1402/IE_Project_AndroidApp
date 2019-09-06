@@ -31,24 +31,22 @@ public class ScheduleActivityPagerFragment extends Fragment {
     public static List<ActivityModelItem> datasets;
     ListView listView;
     public static TiamoDatabase db;
-    public static ScheduleActivityAdapter adapter;
+    public static ScheduleActivityAdapter adapter = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schedule_activity, container, false);
-        Log.d("TAG","create routine 2 again");
         listView = (ListView) view.findViewById(R.id.schedule_activity_list);
         datasets = new ArrayList<ActivityModelItem>();
-        adapter = new ScheduleActivityAdapter(datasets, getActivity().getApplicationContext());
-        listView.setAdapter(adapter);
+
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         GetAllScheduleAysnc getAllScheduleAysnc = new GetAllScheduleAysnc();
         getAllScheduleAysnc.execute();
         return view;
     }
 
-    public static class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ActivityModelItem>> {
+    public class GetAllScheduleAysnc extends AsyncTask<Void,Void, List<ActivityModelItem>> {
         @Override
         protected List<ActivityModelItem> doInBackground(Void... voids) {
             if(db.activitiesModelDao().getAll().size() > 0){
@@ -61,6 +59,7 @@ public class ScheduleActivityPagerFragment extends Fragment {
                             model.setDayPerWeek(scheduleList.get(i).getDayPerWeek());
                         }
                         datasets.add(model);
+
                     }
                 return datasets;
             }
@@ -71,6 +70,8 @@ public class ScheduleActivityPagerFragment extends Fragment {
         protected void onPostExecute(List<ActivityModelItem> scheduleItems) {
             Log.d("TAG","Get routine data");
             if(scheduleItems.size() > 0 ){
+                adapter = new ScheduleActivityAdapter(datasets, getActivity());
+                listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
             super.onPostExecute(scheduleItems);
