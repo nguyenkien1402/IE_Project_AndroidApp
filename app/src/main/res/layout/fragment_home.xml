@@ -1,20 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <com.github.badoualy.datepicker.DatePickerTimeline
         android:id="@+id/timeline"
         android:elevation="2dp"
         style="@style/AppThemeForHomeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <ListView
-        android:id="@+id/home_list"
+    <ScrollView
+        android:layout_below="@id/timeline"
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv1"
+                    style="?android:attr/textAppearanceMedium"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginTop="16dp"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="16dp"
+                    android:text="Routine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ListView
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/home_list_routine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"/>
 
-</LinearLayout>
+                <View
+                    android:id="@+id/divider"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginBottom="26dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:id="@+id/tv2"
+                    style="?android:attr/textAppearanceMedium"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="16dp"
+                    android:text="Daily Activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ListView
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/home_list_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"/>
+        </LinearLayout>
+    </ScrollView>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        fab:fab_addButtonColorNormal="@color/pink"
+        fab:fab_addButtonColorPressed="@color/pink_pressed"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_action_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_icon="@drawable/icon_home_calendar_black_white_32"
+            fab:fab_title="Activity"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_action_routine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/icon_home_calendar_black_white_2_32"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_title="Routine"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</RelativeLayout>

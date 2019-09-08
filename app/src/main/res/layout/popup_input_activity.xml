@@ -21,28 +21,27 @@
             android:maxLines="1"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:gravity="center"
+    <TextView
         android:layout_marginTop="16dp"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/adding_routine_hours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="How many hours per week?"
-            android:inputType="number"
-            android:maxLines="1"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#585757"
+        android:text="How many hours per week?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <TimePicker
+        android:id="@+id/activity_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner">
+    </TimePicker>
     <RelativeLayout
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:layout_height="60dp">
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:theme="@style/AppTheme"
             android:layout_marginLeft="10dp"
             android:id="@+id/btn_adding_routine_add"
@@ -51,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.google.android.material.button.MaterialButton
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:theme="@style/AppTheme"
             android:id="@+id/btn_adding_routine_cancel"
             android:layout_width="wrap_content"

@@ -16,13 +16,13 @@
             <TextView
                 android:textColor="#000000"
                 android:id="@+id/item_dailyactivity_title"
-                style="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:fontFamily="sans-serif-medium"
+                android:layout_height="35dp"
+                style="?android:attr/textAppearanceMedium"
+                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:text="Test"
-                android:textSize="26dp"
+                android:textSize="20dp"
                 android:typeface="sans" />
 
             <TextView

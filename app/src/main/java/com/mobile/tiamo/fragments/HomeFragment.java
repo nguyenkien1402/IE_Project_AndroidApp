@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,21 +13,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.badoualy.datepicker.DatePickerTimeline;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.activities.AddingRoutineActivity;
+import com.mobile.tiamo.activities.WeeklyCalendarViewActivity;
+import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DailyActivityAdapter;
-import com.mobile.tiamo.adapters.DailyActivityItem;
+import com.mobile.tiamo.adapters.DailyRoutineItem;
+import com.mobile.tiamo.adapters.HomeListDailyActivityAdapter;
+import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
@@ -39,29 +45,49 @@ public class HomeFragment extends Fragment {
 
     View view;
     TiamoDatabase db;
-    List<DailyActivityItem> datasets = null;
-    ListView listView;
+    List<DailyRoutineItem> datasets = null;
+    List<ActivityModelItem> activityModelItems = null;
+    ListView listViewRoutine, listViewActivity;
     private static DailyActivityAdapter adapter = null;
+    public static HomeListDailyActivityAdapter homeListDailyActivityAdapter = null;
+    private static
     DatePickerTimeline timeline;
     private static String TAG="HomeFragment";
+    FloatingActionButton btnAddingRoutine, btnAddingActivity;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_home, container,false);
-        listView = (ListView) view.findViewById(R.id.home_list);
+        listViewRoutine = (ListView) view.findViewById(R.id.home_list_routine);
+        listViewActivity = (ListView) view.findViewById(R.id.home_list_activity);
         timeline = view.findViewById(R.id.timeline);
-        datasets = new ArrayList<DailyActivityItem>();
+
+        datasets = new ArrayList<DailyRoutineItem>();
+        activityModelItems = new ArrayList<ActivityModelItem>();
+
+        btnAddingActivity = (FloatingActionButton) view.findViewById(R.id.home_action_activity);
+        btnAddingRoutine = (FloatingActionButton) view.findViewById(R.id.home_action_routine);
+
         db = SQLiteDatabase.getTiamoDatabase(getContext());
         MainActivity.textToolbar.setText(DateUtilities.getCurrentDateInString());
         GetAllDailyActivityAysnc getAllDailyActivityAysnc = new GetAllDailyActivityAysnc();
         getAllDailyActivityAysnc.execute();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewRoutine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = datasets.get(position).getTitle() + " " + datasets.get(position).getUid();
+                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            }
+        });
+
+        listViewActivity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String s = activityModelItems.get(position).getTitle() + " " + activityModelItems.get(position).getUid();
                 Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             }
         });
@@ -88,9 +114,85 @@ public class HomeFragment extends Fragment {
                 getDailyActivitiesFromSelectedDate.execute(selectedDate);
             }
         });
+
+        btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddingRoutineActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+
+        btnAddingActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                LayoutInflater inflater1 = LayoutInflater.from(getContext());
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+//                alertDialogBuilder.setCancelable(false);
+//                // Inflate the popup dialog from a layout xml file.
+//                View popupInputDialogView = inflater1.inflate(R.layout.popup_input_activity, null);
+//                final EditText edTitle = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_title);
+////                final EditText edHour = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_hours);
+//                Button btnAdd = popupInputDialogView.findViewById(R.id.btn_adding_routine_add);
+//                Button btnCancel = popupInputDialogView.findViewById(R.id.btn_adding_routine_cancel);
+//
+//                alertDialogBuilder.setView(popupInputDialogView);
+//                final AlertDialog alertDialog = alertDialogBuilder.create();
+//                alertDialog.show();
+//                btnAdd.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        // save to database
+////                        saveActivity(edTitle.getText().toString(), Integer.parseInt(edHour.getText().toString()));
+//                        alertDialog.cancel();
+//                    }
+//                });
+//
+//                btnCancel.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        alertDialog.cancel();
+//                    }
+//                });
+            }
+        });
+
+
         return view;
     }
 
+    private void saveActivity(String title, int hour) {
+        AddActivityModelAsyn addActivityModelAsyn = new AddActivityModelAsyn();
+        addActivityModelAsyn.execute(title,hour+"");
+    }
+
+    private class AddActivityModelAsyn extends AsyncTask<String,Void, ActivitiesModel>{
+        @Override
+        protected ActivitiesModel doInBackground(String... strings) {
+            int hour = Integer.parseInt(strings[1]);
+            ActivitiesModel activitiesModel = new ActivitiesModel(strings[0],hour);
+            long uid = db.activitiesModelDao().insert(activitiesModel);
+            activitiesModel.setUid(uid);
+            return activitiesModel;
+        }
+
+        @Override
+        protected void onPostExecute(ActivitiesModel s) {
+            super.onPostExecute(s);
+            Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
+            ActivityModelItem activityModelItem = new ActivityModelItem();
+            if(s.getTitle() != null){
+                activityModelItem.setTitle(s.getTitle());
+            }
+            activityModelItem.setDayPerWeek(s.getDayPerWeek());
+            activityModelItem.setHours(s.getHours());
+            activityModelItem.setIsHighPriority(s.getIsHighPriority());
+            activityModelItem.setUid(s.getUid());
+            ScheduleActivityPagerFragment.datasets.add(activityModelItem);
+            ScheduleActivityPagerFragment.adapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -103,10 +205,14 @@ public class HomeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if(itemId == R.id.home_menu_calenar){
-            FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
-            AppCompatDialogFragment dateFragment = new DatePickerFragment();
-            dateFragment.setTargetFragment(HomeFragment.this,DatePickerFragment.REQUEST_CODE);
-            dateFragment.show(fm,"datePicker");
+            Intent intent = new Intent(getActivity(), WeeklyCalendarViewActivity.class);
+            intent.putParcelableArrayListExtra("routine", (ArrayList<? extends Parcelable>) datasets);
+            intent.putParcelableArrayListExtra("activity", (ArrayList<? extends Parcelable>) activityModelItems);
+            startActivity(intent);
+//            FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+//            AppCompatDialogFragment dateFragment = new DatePickerFragment();
+//            dateFragment.setTargetFragment(HomeFragment.this,DatePickerFragment.REQUEST_CODE);
+//            dateFragment.show(fm,"datePicker");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -153,6 +259,19 @@ public class HomeFragment extends Fragment {
                         list.add(d);
                     }
                 }
+
+                if(db.activitiesModelDao().getAll().size() > 0) {
+                    List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
+                    for (int i = 0; i < scheduleList.size(); i++) {
+                        ActivityModelItem model = new ActivityModelItem();
+                        model.setUid(scheduleList.get(i).getUid());
+                        model.setTitle(scheduleList.get(i).getTitle());
+                        model.setHours(scheduleList.get(i).getHours());
+                        model.setMinutes(scheduleList.get(i).getMinutes());
+                        activityModelItems.add(model);
+                    }
+                }
+
                 return list;
             }
             return null;
@@ -166,7 +285,7 @@ public class HomeFragment extends Fragment {
             if(dailyActivities.size() > 0){
                 // Show to the list
                 for(int i = 0 ; i < dailyActivities.size(); i++){
-                    DailyActivityItem model = new DailyActivityItem();
+                    DailyRoutineItem model = new DailyRoutineItem();
                     model.setIsDone(dailyActivities.get(i).getIsDone());
                     model.setTitle(dailyActivities.get(i).getTitle());
                     model.setHours(dailyActivities.get(i).getHours());
@@ -174,30 +293,41 @@ public class HomeFragment extends Fragment {
                     datasets.add(model);
                 }
                 adapter.notifyDataSetChanged();
+                homeListDailyActivityAdapter.notifyDataSetChanged();
             }else{
+                activityModelItems.clear();
                 if(adapter != null){
                     adapter.notifyDataSetChanged();
                 }
+                if(homeListDailyActivityAdapter != null) homeListDailyActivityAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(),"No Data",Toast.LENGTH_LONG).show();
             }
         }
     }
 
 
-    private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyActivityItem>>{
+    private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
         @Override
-        protected List<DailyActivityItem> doInBackground(Void... voids) {
+        protected List<DailyRoutineItem> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
             return getDailyActivityList(currentDate);
         }
 
         @Override
-        protected void onPostExecute(List<DailyActivityItem> dailyActivityItems) {
+        protected void onPostExecute(List<DailyRoutineItem> dailyActivityItems) {
             if(dailyActivityItems.size() > 0){
                 datasets = dailyActivityItems;
                 adapter = new DailyActivityAdapter(datasets, getActivity());
-                listView.setAdapter(adapter);
+                listViewRoutine.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+
+                homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
+                listViewActivity.setAdapter(homeListDailyActivityAdapter);
+                homeListDailyActivityAdapter.notifyDataSetChanged();
+
+                setDynamicHeight(listViewActivity);
+                setDynamicHeight(listViewRoutine);
+
             }else{
                 Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
@@ -205,8 +335,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public List<DailyActivityItem> getDailyActivityList(String currentDate){
-        List<DailyActivityItem> dailyActivityItems = new ArrayList<DailyActivityItem>();
+    public List<DailyRoutineItem> getDailyActivityList(String currentDate){
+        List<DailyRoutineItem> dailyActivityItems = new ArrayList<DailyRoutineItem>();
         List<DailyRoutine> dailyRoutineLists = new ArrayList<DailyRoutine>();
         if(db.dailyActivitiesDao().getDailyActivities(currentDate).size() == 0){
             // show up all the daily activities to show in the fragment
@@ -233,7 +363,7 @@ public class HomeFragment extends Fragment {
                     dailyRoutine.setUid(uid);
                     dailyRoutineLists.add(dailyRoutine);
 
-                    DailyActivityItem dailyActivityItem = new DailyActivityItem();
+                    DailyRoutineItem dailyActivityItem = new DailyRoutineItem();
                     dailyActivityItem.setIsDone(0);
                     dailyActivityItem.setHours(scheduleList.get(i).getTimeStart() + " - " + scheduleList.get(i).getTimeEnd());
                     dailyActivityItem.setTitle(scheduleList.get(i).getTitle());
@@ -243,7 +373,6 @@ public class HomeFragment extends Fragment {
             }else{
                 return null;
             }
-            return dailyActivityItems;
         }else{
             // First, check if something new has added by today
             List<Schedule> addRecently = db.scheduleDao().getListAddByDate(currentDate);
@@ -275,14 +404,46 @@ public class HomeFragment extends Fragment {
 
             List<DailyRoutine> dailyRoutineList = db.dailyActivitiesDao().getDailyActivities(currentDate);
             for(int i = 0; i < dailyRoutineList.size(); i++){
-                DailyActivityItem model = new DailyActivityItem();
+                DailyRoutineItem model = new DailyRoutineItem();
                 model.setIsDone(dailyRoutineList.get(i).getIsDone());
                 model.setTitle(dailyRoutineList.get(i).getTitle());
                 model.setHours(dailyRoutineList.get(i).getHours());
                 model.setUid(dailyRoutineList.get(i).getUid());
                 dailyActivityItems.add(model);
             }
-            return dailyActivityItems;
         }
+
+        // get Activity
+        if(db.activitiesModelDao().getAll().size() > 0) {
+            List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
+            for (int i = 0; i < scheduleList.size(); i++) {
+                ActivityModelItem model = new ActivityModelItem();
+                model.setUid(scheduleList.get(i).getUid());
+                model.setTitle(scheduleList.get(i).getTitle());
+                model.setHours(scheduleList.get(i).getHours());
+                model.setMinutes(scheduleList.get(i).getMinutes());
+                activityModelItems.add(model);
+            }
+        }
+        return dailyActivityItems;
+    }
+
+    public static void setDynamicHeight(ListView listView) {
+        ListAdapter adapter = listView.getAdapter();
+        //check adapter if null
+        if (adapter == null) {
+            return;
+        }
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
+        layoutParams.height = height + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(layoutParams);
+        listView.requestLayout();
     }
 }

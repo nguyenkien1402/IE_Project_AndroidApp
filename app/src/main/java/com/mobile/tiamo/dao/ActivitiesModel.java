@@ -22,6 +22,9 @@ public class ActivitiesModel {
     @ColumnInfo(name = "is_priority")
     private int isHighPriority;
 
+    @ColumnInfo(name = "minutes")
+    private int minutes;
+
     public ActivitiesModel(String title, int hours){
         this.title = title;
         this.hours = hours;
@@ -74,5 +77,13 @@ public class ActivitiesModel {
 
     public void setIsHighPriority(int isHighPriority) {
         this.isHighPriority = isHighPriority;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 }

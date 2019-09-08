@@ -14,12 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.ActivityModelItem;
-import com.mobile.tiamo.adapters.ScheduleActivityAdapter;
-import com.mobile.tiamo.adapters.ScheduleAdapter;
-import com.mobile.tiamo.adapters.ScheduleItem;
+import com.mobile.tiamo.adapters.HomeListDailyActivityAdapter;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
-import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class ScheduleActivityPagerFragment extends Fragment {
     public static List<ActivityModelItem> datasets;
     ListView listView;
     public static TiamoDatabase db;
-    public static ScheduleActivityAdapter adapter = null;
+    public static HomeListDailyActivityAdapter adapter = null;
 
     @Nullable
     @Override
@@ -70,7 +67,7 @@ public class ScheduleActivityPagerFragment extends Fragment {
         protected void onPostExecute(List<ActivityModelItem> scheduleItems) {
             Log.d("TAG","Get routine data");
             if(scheduleItems.size() > 0 ){
-                adapter = new ScheduleActivityAdapter(datasets, getActivity());
+                adapter = new HomeListDailyActivityAdapter(datasets, getActivity());
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }

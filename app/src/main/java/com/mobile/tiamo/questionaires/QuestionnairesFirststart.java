@@ -50,7 +50,7 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                     String workingEndTime = FirstQuestionFragment.Companion.getTimeRangeEnd();
                     ArrayList<String> workingDay = FirstQuestionFragment.Companion.getDay();
                     if(workingStartTime == null || workingDay.size() == 0 || workingEndTime == null){
-                        Snackbar.make(parentLayout,"You need to fill the data",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(parentLayout,"You need to select the working day",Snackbar.LENGTH_SHORT).show();
                     }else{
                         viewPager.setCurrentItem(getItem(+1),true);
                         return;
@@ -59,35 +59,14 @@ public class QuestionnairesFirststart extends AppCompatActivity {
 
                 // Tab 2
                 if(viewPager.getCurrentItem() == 1){
-                    if(SecondQuestionFragment.editText.getText().toString() == null){
-                        Snackbar.make(parentLayout,"Cannot leave a blank",Snackbar.LENGTH_SHORT).show();
-                    }else{
-                        viewPager.setCurrentItem(getItem(+1),true);
-                        return;
-                    }
-                }
-
-                // Tab 3
-                if(viewPager.getCurrentItem() == 2){
                     viewPager.setCurrentItem(getItem(+1),true);
                     return;
                 }
 
-                // Tab 4 is about the gyming time
-                if(viewPager.getCurrentItem() == 3){
-                    if(SixthQuestionFragment.checkYes == true){
-                        if(SixthQuestionFragment.daySelected.equals("") || SixthQuestionFragment.hourSelected.equals("")){
-                            Snackbar.make(parentLayout,"Cannot leave a blank",Snackbar.LENGTH_SHORT).show();
-                        }else{
-                            viewPager.setCurrentItem(getItem(+1),true);
-                        }
-                    }
-                    return;
-                }
 
-                // Tab 4
-                if(viewPager.getCurrentItem() == 4){
-//                    List<String> hobbies = FourthQuestionFragment.listHobbies;
+                // Tab 3
+                if(viewPager.getCurrentItem() == 2){
+//                    List<String> hobbies = ThirdQuestionFragment.listHobbies;
 //                    if(hobbies.size() == 0){
 //                        Snackbar.make(parentLayout,"You need select hobbies",Snackbar.LENGTH_SHORT).show();
 //                    }else{

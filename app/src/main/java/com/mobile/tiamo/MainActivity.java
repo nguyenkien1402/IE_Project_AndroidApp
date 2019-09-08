@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mobile.tiamo.fragments.DashboardFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
-import com.mobile.tiamo.fragments.ScheduleFragment;
+import com.mobile.tiamo.fragments.SettingFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new DashboardFragment();
                     break;
                 case R.id.navigation_notifications:
-                    fragment = new ScheduleFragment();
+                    fragment = new SettingFragment();
                     break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();

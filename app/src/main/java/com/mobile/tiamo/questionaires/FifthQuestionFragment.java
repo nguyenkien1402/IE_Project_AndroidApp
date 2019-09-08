@@ -94,8 +94,8 @@ public class FifthQuestionFragment extends Fragment {
 
             // Adding the Sleeping time
             schedule = new Schedule();
-            String sleepingTime = ThirdQuestionFragment.Companion.getSleepTime();
-            String wakeupTime = ThirdQuestionFragment.Companion.getWakeupTime();
+            String sleepingTime = SecondQuestionFragment.Companion.getSleepTime();
+            String wakeupTime = SecondQuestionFragment.Companion.getWakeupTime();
             schedule.setDayCreated(DateUtilities.getCurrentDateInString());
             schedule.setTimeStart(sleepingTime);
             schedule.setTimeEnd(wakeupTime);
@@ -107,15 +107,9 @@ public class FifthQuestionFragment extends Fragment {
             // Adding the daily activity
             // First, get the gym time
             List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
-            if(SixthQuestionFragment.checkYes == true){
-                int dayPerweek = Integer.parseInt(SixthQuestionFragment.daySelected.split(" ")[0]);
-                int hourPerday = Integer.parseInt(SixthQuestionFragment.hourSelected.split(" ")[0]);
-                ActivitiesModel a = new ActivitiesModel("Gym",hourPerday,dayPerweek);
-                activitiesModels.add(a);
-            }
             // Adding hobby activity want to do more
-            if(FourthQuestionFragment.activitiesModels.size() > 0){
-                activitiesModels.addAll(FourthQuestionFragment.activitiesModels);
+            if(ThirdQuestionFragment.activitiesModels.size() > 0){
+                activitiesModels.addAll(ThirdQuestionFragment.activitiesModels);
             }
             // Now, add to SQL
             db.activitiesModelDao().insertAll(activitiesModels);

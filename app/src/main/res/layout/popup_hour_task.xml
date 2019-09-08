@@ -8,24 +8,31 @@
     android:layout_height="match_parent">
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <!--<com.google.android.material.textfield.TextInputLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<EditText-->
+            <!--android:id="@+id/hour_per_day_popup"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="How many hours per week?"-->
+            <!--android:inputType="number"-->
+            <!--android:maxLines="1"-->
+            <!--android:singleLine="true" />-->
+    <!--</com.google.android.material.textfield.TextInputLayout>-->
+    <TimePicker
+        android:id="@+id/q3_time_picker_2"
+        android:layout_marginTop="16dp"
+        android:timePickerMode="spinner"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/hour_per_day_popup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="How many hours per week?"
-            android:inputType="number"
-            android:maxLines="1"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="wrap_content"/>
     <RelativeLayout
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:theme="@style/AppTheme"
             android:layout_marginLeft="10dp"
             android:id="@+id/popup_btn_add_q"
@@ -34,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.google.android.material.button.MaterialButton
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:theme="@style/AppTheme"
             android:id="@+id/popup_btn_cancel_q"
             android:layout_width="wrap_content"

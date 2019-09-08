@@ -22,12 +22,11 @@ import com.mobile.tiamo.dao.TiamoDatabase;
 
 import java.util.List;
 
-public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private List<DailyActivityItem> datasets;
+    private List<DailyRoutineItem> datasets;
     Context context;
     TiamoDatabase db;
-//    DailyActivityItem dailyActivityItem;
     ProgressDialog dialog ;
     boolean localCheck;
     public static class ViewHolder{
@@ -35,7 +34,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
         Switch aSwitch;
     }
 
-    public DailyActivityAdapter(List<DailyActivityItem> datasets, Context context){
+    public DailyActivityAdapter(List<DailyRoutineItem> datasets, Context context){
         super(context, R.layout.item_dailyactivity, datasets);
         this.datasets = datasets;
         this.context = context;
@@ -68,7 +67,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyActivityItem> implem
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final DailyActivityItem dailyActivityItem = getItem(position);
+        final DailyRoutineItem dailyActivityItem = getItem(position);
         ViewHolder viewHolder;
 
         if(convertView == null){

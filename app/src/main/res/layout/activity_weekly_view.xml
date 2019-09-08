@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    <com.alamkanak.weekview.WeekView-->
+<!--        android:id="@+id/weekViewCal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:eventTextColor="@android:color/white"-->
+<!--        app:textSize="12sp"-->
+<!--        app:hourHeight="60dp"-->
+<!--        app:headerColumnPadding="8dp"-->
+<!--        app:headerColumnTextColor="@color/toolbar_text"-->
+<!--        app:headerRowPadding="12dp"-->
+<!--        app:columnGap="8dp"-->
+<!--        app:noOfVisibleDays="3"-->
+<!--        app:headerRowBackgroundColor="@color/toolbar"-->
+<!--        app:dayBackgroundColor="#05000000"-->
+<!--        app:todayBackgroundColor="#1848adff"-->
+<!--        app:headerColumnBackground="#ffffffff"-->
+<!--        app:todayHeaderTextColor="@color/accent" />-->
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.tobiasschuerg.weekview.view.WeekView
+            android:id="@+id/week_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:accent_color="@color/colorAccent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                tools:text="@tools:sample/full_names" />
+
+        </de.tobiasschuerg.weekview.view.WeekView>
+
+    </ScrollView>
+
+</LinearLayout>

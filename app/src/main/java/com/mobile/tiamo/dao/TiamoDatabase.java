@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {Tasks.class,Schedule.class, DailyRoutine.class, ActivitiesModel.class, DailyActivitiesModel.class}
-, version = 20
+        , version = 21
         , exportSchema = false)
 public abstract class TiamoDatabase extends RoomDatabase {
     public abstract DailyRoutineDao dailyActivitiesDao();

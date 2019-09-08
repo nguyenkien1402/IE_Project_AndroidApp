@@ -17,6 +17,11 @@
         <activity android:name=".activities.AddingHobbyActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".activities.WeeklyViewActivity"
+            android:theme="@style/AppThemeActionBar"/>
+
+        <activity android:name=".activities.WeeklyCalendarViewActivity"
+            android:theme="@style/AppThemeActionBar"/>
         <activity
             android:name=".activities.AddingRoutineActivity"
             android:label="@string/title_activity_main2"
@@ -54,7 +59,6 @@
         <receiver
             android:name=".services.NotificationActionBroadcastReceiver"
             android:enabled="true" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

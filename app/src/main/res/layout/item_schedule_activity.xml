@@ -15,14 +15,14 @@
             <TextView
                 android:textColor="#000000"
                 android:id="@+id/item_schedule_activity_title"
-                android:textSize="26dp"
+                android:textSize="20dp"
                 android:text="Test"
                 android:gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="sans-serif"
                 android:typeface="sans"
                 style="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
             <TextView
                 android:textColor="#000000"
                 android:text="test"
@@ -34,7 +34,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_below="@id/item_schedule_activity_title"
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="25dp" />
         </RelativeLayout>
         <!--<TextView-->
             <!--android:textColor="#000000"-->
