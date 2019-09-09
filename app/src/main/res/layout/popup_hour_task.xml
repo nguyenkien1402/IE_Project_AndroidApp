@@ -7,20 +7,6 @@
     android:paddingRight="30dp"
     android:layout_height="match_parent">
 
-
-    <!--<com.google.android.material.textfield.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<EditText-->
-            <!--android:id="@+id/hour_per_day_popup"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="How many hours per week?"-->
-            <!--android:inputType="number"-->
-            <!--android:maxLines="1"-->
-            <!--android:singleLine="true" />-->
-    <!--</com.google.android.material.textfield.TextInputLayout>-->
     <TimePicker
         android:id="@+id/q3_time_picker_2"
         android:layout_marginTop="16dp"

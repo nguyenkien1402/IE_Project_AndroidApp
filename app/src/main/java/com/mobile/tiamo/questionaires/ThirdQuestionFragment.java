@@ -28,7 +28,6 @@ public class ThirdQuestionFragment extends Fragment {
     String[] s1 = {"Gym","Reading","Running","Hiking","General Exercising","Climbing"};
     List<String> s = new ArrayList<String>(Arrays.asList(s1));
     public static List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
-//    public static List<String> listHobbies = new ArrayList<String>();
     EditText edInputActivity;
     View popupInputDialogView, popupInputHobby;
     Button btnAdd, btnCancel, btnAddHobby, btnInputAdd, btnInputCancel;

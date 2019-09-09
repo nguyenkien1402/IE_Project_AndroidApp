@@ -1,6 +1,7 @@
 package com.mobile.tiamo.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -21,5 +22,8 @@ public interface ActivitiesModelDao {
 
     @Update()
     void update(ActivitiesModel activitiesModels);
+
+    @Query("DELETE FROM ActivitiesModel")
+    void deleteAll();
 
 }

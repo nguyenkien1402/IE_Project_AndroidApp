@@ -51,6 +51,12 @@
         <item name="android:layout_height">40dp</item>
         <item name="chipBackgroundColor">@drawable/bg_chip_state_list</item>
     </style>
+    <style name="ChipStyleSecond" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="chipBackgroundColor">@drawable/bg_chip_state_list</item>
+    </style>
 
     <style name="ChipStyleAction" parent="Widget.MaterialComponents.Chip.Action">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>

@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_schedule">Schedule</string>
+    <string name="title_schedule">Setting</string>
     <string name="title_activity_main2">Adding Schedule</string>
 
     <string-array name="day_of_week">
@@ -24,6 +24,25 @@
         <item>Fri</item>
         <item>Sat</item>
         <item>Sun</item>
+    </string-array>
+
+    <string-array name="chip_suggestion">
+        <item>Meditation</item>
+        <item>Learn Cooking</item>
+        <item>Drawing</item>
+        <item>Yoga</item>
+        <item>Writing</item>
+        <item>Dancing</item>
+        <item>Learn Magic</item>
+        <item>Origami</item>
+        <item>Visit Local Museums</item>
+        <item>Play Sudoku</item>
+        <item>Photography</item>
+        <item>Cycling</item>
+        <item>Whittling</item>
+        <item>Baking</item>
+        <item>Pottery</item>
+
     </string-array>
 
     <string name="title_activity_questionnaires_firststart">QuestionnairesFirststart</string>

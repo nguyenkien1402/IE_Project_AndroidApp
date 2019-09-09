@@ -6,32 +6,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
-import com.mobile.tiamo.dao.Tasks;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,18 +31,20 @@ import java.util.List;
 
 public class AddingRoutineActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
 
-    TiamoDatabase db;
-    List<Schedule> tasks;
-    View popupInputDialogView = null;
-    EditText popup_ed_title;
-    Button btnCancel, btnAdd, btnAddSchedule;
-    TimePickerDialog timePickerDialog;
-    TextView timeStart,timeEnd, daySelected;
-    String[] listDays;
-    String[] listDaysAbb;
-    boolean[] checkedDays;
-    ArrayList<Integer> mItems = new ArrayList<>();
-    String currentTitle, specificDay="";
+    public static int CODE_RESULT = 3;
+    private TiamoDatabase db;
+    private List<Schedule> tasks;
+    private View popupInputDialogView = null;
+    private EditText edTitle;
+    private Button btnAddRoutine;
+    private TimePickerDialog timePickerDialog;
+    private TextView timeStart,timeEnd, daySelected;
+    private String[] listDays;
+    private String[] listDaysAbb;
+    private boolean[] checkedDays;
+    private ArrayList<Integer> mItems = new ArrayList<>();
+    private String specificDay="";
+    private List<Schedule> newRoutine = new ArrayList<Schedule>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,21 +57,23 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         db = SQLiteDatabase.getTiamoDatabase(getApplicationContext());
         initComponent();
 
-        btnAddSchedule.setOnClickListener(new View.OnClickListener() {
+        btnAddRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String timeS = timeStart.getText().toString();
                 String timeE = timeEnd.getText().toString();
                 String days = daySelected.getText().toString();
+                String title = edTitle.getText().toString();
                 AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
-                addingScheduleAsync.execute(new String[]{currentTitle,timeS,timeE,days});
+                addingScheduleAsync.execute(new String[]{title,timeS,timeE,days});
             }
         });
     }
 
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
-        timeStart.setText("From: "+hourStart+":"+minuteStart +"   to: "+hourEnd +":"+minuteEnd);
+        timeStart.setText(hourStart +":"+minuteStart);
+        timeEnd.setText(hourEnd +":"+minuteEnd);
     }
 
     private class AddingScheduleAsync extends AsyncTask<String,Void,Long>{
@@ -120,54 +112,53 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             if(aLong != null){
-                Toast.makeText(getApplicationContext(),"Add Schedule Successfully: "+aLong,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Add Routin Successfully: "+aLong,Toast.LENGTH_SHORT).show();
             }
         }
     }
 
 
     private void initComponent(){
+        edTitle = (EditText) findViewById(R.id.ed_adding_routine_title);
         timeStart = (TextView) findViewById(R.id.adding_schedule_time_start);
-//        timeEnd = (TextView) findViewById(R.id.adding_schedule_time_end);
+        timeEnd = (TextView) findViewById(R.id.adding_schedule_time_end);
         daySelected = (TextView) findViewById(R.id.adding_schedule_day);
-        btnAddSchedule = (Button) findViewById(R.id.adding_schedule_btn_add);
+        btnAddRoutine = (Button) findViewById(R.id.adding_schedule_btn_add);
 
         listDays = getResources().getStringArray(R.array.day_of_week);
         listDaysAbb = getResources().getStringArray(R.array.day_of_week_abb);
         checkedDays = new boolean[listDays.length];
     }
 
-
-
-    public void initPopupViewControls(){
-        // Get layout inflater object.
-        LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-
-        // Inflate the popup dialog from a layout xml file.
-        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_task, null);
-
-        popup_ed_title = (EditText) popupInputDialogView.findViewById(R.id.popup_ed_title);
-        btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel);
-        btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add);
-    }
+//    public void initPopupViewControls(){
+//        // Get layout inflater object.
+//        LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+//
+//        // Inflate the popup dialog from a layout xml file.
+//        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_task, null);
+//
+//        popup_ed_title = (EditText) popupInputDialogView.findViewById(R.id.popup_ed_title);
+//        btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel);
+//        btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add);
+//    }
 
 
 
-    public void selectEndTime(View view){
-        Toast.makeText(getApplicationContext(),"End",Toast.LENGTH_SHORT).show();
-        final Calendar cldr = Calendar.getInstance();
-        int hour = cldr.get(Calendar.HOUR_OF_DAY);
-        int minutes = cldr.get(Calendar.MINUTE);
-        // time picker dialog
-        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                        timeEnd.setText(sHour + ":" + sMinute);
-                    }
-                }, hour, minutes, true);
-        timePickerDialog.show();
-    }
+//    public void selectEndTime(View view){
+//        Toast.makeText(getApplicationContext(),"End",Toast.LENGTH_SHORT).show();
+//        final Calendar cldr = Calendar.getInstance();
+//        int hour = cldr.get(Calendar.HOUR_OF_DAY);
+//        int minutes = cldr.get(Calendar.MINUTE);
+//        // time picker dialog
+//        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
+//                new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+//                        timeEnd.setText(sHour + ":" + sMinute);
+//                    }
+//                }, hour, minutes, true);
+//        timePickerDialog.show();
+//    }
 
     public void selectStartTime(View view){
         RangeTimePickerDialog dialog = new RangeTimePickerDialog();
@@ -178,23 +169,9 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         dialog.setColorTextButton(R.color.colorPrimaryDark); // Set Text color of button
         FragmentManager fragmentManager = getFragmentManager();
         dialog.show(fragmentManager, "");
-//        Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
-//        final Calendar cldr = Calendar.getInstance();
-//        int hour = cldr.get(Calendar.HOUR_OF_DAY);
-//        int minutes = cldr.get(Calendar.MINUTE);
-//        // time picker dialog
-//        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
-//                new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-//                        timeStart.setText(sHour + ":" + sMinute);
-//                    }
-//                }, hour, minutes, true);
-//        timePickerDialog.show();
     }
 
     public void selectDay(View view){
-        Toast.makeText(getApplicationContext(),"day",Toast.LENGTH_SHORT).show();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddingRoutineActivity.this);
         mBuilder.setTitle("Select Day");
         mBuilder.setMultiChoiceItems(listDays, checkedDays, new DialogInterface.OnMultiChoiceClickListener() {
@@ -283,7 +260,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
     @Override
     public boolean onSupportNavigateUp() {
         Intent returnIntent = new Intent();
-        setResult(RESULT_OK,returnIntent);
+        setResult(CODE_RESULT,returnIntent);
         finish();
         return true;
     }

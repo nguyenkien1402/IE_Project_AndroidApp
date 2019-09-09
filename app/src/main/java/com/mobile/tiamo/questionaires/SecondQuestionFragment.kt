@@ -43,7 +43,7 @@ class SecondQuestionFragment : Fragment(){
 
         timePicker.listener = { bedTime: LocalTime, wakeTime: LocalTime ->
             Timber.d("time changed \nbedtime= $bedTime\nwaketime=$wakeTime")
-            val formatter = DateTimeFormatter.ofPattern("hh:mm", Locale.US)
+            val formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
             val anotherFormat = DateTimeFormatter.ofPattern("hh:mm")
             tvBedTime.text = bedTime.format(formatter)
             tvWakeTime.text = wakeTime.format(formatter)
@@ -59,7 +59,7 @@ class SecondQuestionFragment : Fragment(){
             tvMins.text = minutes.toString()
             if (minutes > 0) llMins.visibility = View.VISIBLE else llMins.visibility = View.GONE
         }
-        val formatter = DateTimeFormatter.ofPattern("hh:mm", Locale.US)
+        val formatter = DateTimeFormatter.ofPattern("h:mm a", Locale.US)
         tvBedTime.text = timePicker.getBedTime().format(formatter)
         tvWakeTime.text = timePicker.getWakeTime().format(formatter)
 

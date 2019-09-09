@@ -14,8 +14,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.AddingHobbyActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.AddingActivityActivity"
+            android:theme="@style/AppTheme"/>
 
         <activity android:name=".activities.WeeklyViewActivity"
             android:theme="@style/AppThemeActionBar"/>
@@ -25,7 +25,7 @@
         <activity
             android:name=".activities.AddingRoutineActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".questionaires.QuestionnairesFirststart"
             android:label="@string/app_name"
