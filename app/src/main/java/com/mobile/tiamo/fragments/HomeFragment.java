@@ -218,7 +218,6 @@ public class HomeFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -410,7 +409,6 @@ public class HomeFragment extends Fragment {
             dialog.dismiss();
         }
     }
-
 
     private class GetAllDailyActivityResultAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
         @Override
