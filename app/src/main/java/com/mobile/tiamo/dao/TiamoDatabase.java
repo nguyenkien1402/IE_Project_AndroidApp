@@ -6,8 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Tasks.class,Schedule.class, DailyRoutine.class, ActivitiesModel.class, DailyActivitiesModel.class}
-        , version = 21
+@Database(entities = {Tasks.class,Schedule.class, DailyRoutine.class, ActivitiesModel.class,
+        DailyActivitiesModel.class, DailyActivityHobbyModel.class}
+        , version = 1
         , exportSchema = false)
 public abstract class TiamoDatabase extends RoomDatabase {
     public abstract DailyRoutineDao dailyActivitiesDao();
@@ -15,6 +16,7 @@ public abstract class TiamoDatabase extends RoomDatabase {
     public abstract TasksDao tasksDao();
     public abstract ActivitiesModelDao activitiesModelDao();
     public abstract DailyActivitiesModelDao dailyActivitiesModelDao();
+    public abstract DailyActivityHobbyModelDao dailyActivityHobbyModelDao();
 
     private static volatile TiamoDatabase INSTANCE;
     static TiamoDatabase getDatabase(final Context context){

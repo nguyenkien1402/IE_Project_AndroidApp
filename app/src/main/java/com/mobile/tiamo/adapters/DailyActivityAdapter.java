@@ -120,7 +120,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
                 db.dailyActivitiesDao().updateIsDone(voids[0],0);
             }
             DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
-            Log.d("Adapter", dailyRoutine.getTitle() + "-"+ dailyRoutine.getIsDone());
+//            Log.d("Adapter", dailyRoutine.getTitle() + "-"+ dailyRoutine.getIsDone());
             return null;
         }
 

@@ -53,13 +53,29 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
         }
 
         viewHolder.txtTile.setText(activitiesModel.getTitle());
-        if(activitiesModel.getMinutes() == 0) {
-            String text = activitiesModel.getHours() + " hours per week";
-            viewHolder.txtHour.setText(text);
-        }else{
-            String text = activitiesModel.getHours() +" hours, "+activitiesModel.getMinutes()+" minutes per week";
-            viewHolder.txtHour.setText(text);
-        }
+//        if(activitiesModel.getHourPractice() == 0 && activitiesModel.getMinutePractice() == 0){
+//            if(activitiesModel.getMinutes() == 0) {
+//                String text = activitiesModel.getHours() + " hours per week";
+//                viewHolder.txtHour.setText(text);
+//            }else{
+//                String text = activitiesModel.getHours() +" hours, "+activitiesModel.getMinutes()+" minutes per week";
+//                viewHolder.txtHour.setText(text);
+//            }
+//        }else{
+            if(activitiesModel.getMinutePractice() == 0 && activitiesModel.getHourPractice() != 0){
+                String text = "You've done " + activitiesModel.getHourPractice() + " hours on this day";
+                viewHolder.txtHour.setText(text);
+            }else if(activitiesModel.getMinutePractice() != 0 && activitiesModel.getHourPractice() == 0) {
+                String text = "You've done " + activitiesModel.getMinutePractice() + " minutes on this day";
+                viewHolder.txtHour.setText(text);
+            }else if(activitiesModel.getHourPractice() != 0 && activitiesModel.getMinutePractice() != 0){
+                String text = "You've done " + activitiesModel.getHourPractice() +" hours and "+activitiesModel.getMinutePractice() + " minutes on this day";
+                viewHolder.txtHour.setText(text);
+            }else{
+                viewHolder.txtHour.setText("");
+            }
+//        }
+
 
 
         // Return the completed view to render on screen

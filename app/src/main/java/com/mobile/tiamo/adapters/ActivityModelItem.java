@@ -14,10 +14,22 @@ public class ActivityModelItem implements Parcelable {
     private int minutes;
     private int dayPerWeek;
     private int isHighPriority;
+    private int hourPractice;
+    private int minutePractice;
 
     public ActivityModelItem() {
     }
 
+    public ActivityModelItem(long uid, String title, int hours, int minutes, int dayPerWeek, int isHighPriority, int hourPractice, int minutePractice) {
+        this.uid = uid;
+        this.title = title;
+        this.hours = hours;
+        this.minutes = minutes;
+        this.dayPerWeek = dayPerWeek;
+        this.isHighPriority = isHighPriority;
+        this.hourPractice = hourPractice;
+        this.minutePractice = minutePractice;
+    }
 
     protected ActivityModelItem(Parcel in) {
         uid = in.readLong();
@@ -26,6 +38,8 @@ public class ActivityModelItem implements Parcelable {
         minutes = in.readInt();
         dayPerWeek = in.readInt();
         isHighPriority = in.readInt();
+        hourPractice = in.readInt();
+        minutePractice = in.readInt();
     }
 
     @Override
@@ -36,6 +50,8 @@ public class ActivityModelItem implements Parcelable {
         dest.writeInt(minutes);
         dest.writeInt(dayPerWeek);
         dest.writeInt(isHighPriority);
+        dest.writeInt(hourPractice);
+        dest.writeInt(minutePractice);
     }
 
     @Override
@@ -101,5 +117,21 @@ public class ActivityModelItem implements Parcelable {
 
     public void setIsHighPriority(int isHighPriority) {
         this.isHighPriority = isHighPriority;
+    }
+
+    public int getHourPractice() {
+        return hourPractice;
+    }
+
+    public void setHourPractice(int hourPractice) {
+        this.hourPractice = hourPractice;
+    }
+
+    public int getMinutePractice() {
+        return minutePractice;
+    }
+
+    public void setMinutePractice(int minutePractice) {
+        this.minutePractice = minutePractice;
     }
 }

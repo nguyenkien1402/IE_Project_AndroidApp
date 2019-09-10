@@ -74,9 +74,9 @@ public class AddingActivityActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // delete all the current hobbies in database
-//            db.activitiesModelDao().deleteAll();
+            db.activitiesModelDao().deleteAll();
             // add the new database
-//            db.activitiesModelDao().insertAll(activitiesModels);
+            db.activitiesModelDao().insertAll(activitiesModels);
             return null;
         }
 
