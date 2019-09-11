@@ -23,6 +23,7 @@
 
     <string name="chosen_time_range">%1$s:%2$s - %3$s:%4$s</string>
     <string name="chosen_time_range_only">%1$s:%2$s</string>
+    <string name="activity_progress">Activity Progress</string>
     <string-array name="day_of_week">
         <item>Monday</item>
         <item>Tuesday</item>
