@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mobile.tiamo.fragments.DashboardFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
 import com.mobile.tiamo.fragments.SettingFragment;
+import com.mobile.tiamo.fragments.TestNotificationFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_notifications:
                     fragment = new SettingFragment();
+                    break;
+                case R.id.test_notifications:
+                    fragment = new TestNotificationFragment();
                     break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
