@@ -31,6 +31,7 @@ public class ReminderNotificationStart extends BroadcastReceiver {
         title = title.equals("Working") ? title + " time starts soon" : title;
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,0);
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "101";
@@ -51,7 +52,7 @@ public class ReminderNotificationStart extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setSound(defaultSound)
                 .setContentText(content)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
         notificationManager.notify(Messages.ID_NOTIFICATION_WITHOUT_ACTION, notificationBuilder.build());

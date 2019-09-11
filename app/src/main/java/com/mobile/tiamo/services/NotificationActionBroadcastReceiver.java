@@ -27,7 +27,7 @@ public class NotificationActionBroadcastReceiver extends BroadcastReceiver {
         if(action.equals("NO_ACTION")){
             Log.d("Action","No:"+uid);
         }
-        updateToDatabase(uid);
+//        updateToDatabase(uid);
         nm.cancel(2);
     }
 

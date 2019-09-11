@@ -61,13 +61,59 @@ public class TestNotificationFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testActionEnd();
+//                testActionEnd();
+                testNotiActionEnd();
             }
         });
 
         return view;
     }
 
+    public void testNotiActionEnd(){
+//        int notiId = intent.getIntExtra("notiId",0);
+//        String task = intent.getStringExtra("title");
+//        long uid = intent.getIntExtra("uid",-1);
+        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,0);
+        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "101";
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+            //Configure Notification Channel
+            notificationChannel.setDescription("Tiamo End Notifications");
+            notificationChannel.enableLights(true);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        Intent yesReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
+        yesReceive.setAction("YES_ACTION");
+        yesReceive.putExtra("uid",100);
+        yesReceive.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),
+                1001, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent notifyIntent = new Intent(getActivity().getApplicationContext(), RequestExtraTimeActivity.class);
+        // Set the Activity to start in a new, empty task
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle("This is title")
+                .setAutoCancel(true)
+                .setSound(defaultSound)
+                .setContentText(NotificationMessages.WORKING_END_MESSAGE)
+                .setContentIntent(notifyPendingIntent)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_MAX)
+                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
+                .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
+        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
+    }
     public void testActionEnd(){
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -140,8 +186,8 @@ public class TestNotificationFragment extends Fragment {
                 .setSound(defaultSound)
                 .setContentText("This mean content to test notification")
                 .setContentIntent(pendingIntent)
-                .addAction(R.mipmap.ic_launcher,"Yes",pendingIntentYes)
-                .addAction(R.mipmap.ic_launcher, "No", pendingIntentNo)
+                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
+                .addAction(R.drawable.icon_notification_dislike, "No", pendingIntentNo)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
@@ -207,7 +253,7 @@ public class TestNotificationFragment extends Fragment {
                 // check if it is already pass the time start.
                 LocalTime now = LocalTime.now();
                 LocalTime time = LocalTime.of(hourStart, minuteStart);
-                time = time.plusMinutes(5);
+                time = time.minusMinutes(5);
 
                 // if now.compareTo(time) == 1 mean the current time bigger than the starting time,
                 // so, wont send notification anymore
@@ -215,6 +261,7 @@ public class TestNotificationFragment extends Fragment {
                     // Mean, the time now does not pass the starting time for 15 minutes
                     // Send notification for starting purpose
                     // Config for starting( code = 1000 + i )
+
                     intentStart.putExtra("notiId",1000+i+1);
                     intentStart.putExtra("title", dailyRoutine.getTitle());
                     intentStart.putExtra("uid",result.get(i).getUid());
@@ -222,15 +269,16 @@ public class TestNotificationFragment extends Fragment {
                     s_calendar.set(Calendar.MONTH, month-1); // month = month - 1
                     s_calendar.set(Calendar.YEAR, year);
                     s_calendar.set(Calendar.DAY_OF_MONTH, day);
-                    s_calendar.set(Calendar.HOUR_OF_DAY, hourStart);
-                    s_calendar.set(Calendar.MINUTE, minuteStart);
+                    s_calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
+                    s_calendar.set(Calendar.MINUTE, time.getMinute());
                     s_calendar.set(Calendar.SECOND, 00);
                     PendingIntent pendingIntentS = PendingIntent.getBroadcast(getActivity(), 1000+i, intentStart, PendingIntent.FLAG_ONE_SHOT);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, s_calendar.getTimeInMillis(),pendingIntentS);
                 }
 
                 // Of course, config for the ending time will be the same.
-                LocalTime timeToEnd = LocalTime.of(hourStart, minuteStart);
+                LocalTime timeToEnd = LocalTime.of(hourEnd, minuteEnd);
+                timeToEnd = timeToEnd.minusMinutes(5);
                 // Config for ending (code = 2000+i)
                 if(now.compareTo(timeToEnd) != 1){
                     intentEnd.putExtra("notiId",2000+i+1);
@@ -240,8 +288,8 @@ public class TestNotificationFragment extends Fragment {
                     e_calendar.set(Calendar.MONTH, month-1); // month = month - 1
                     e_calendar.set(Calendar.YEAR, year);
                     e_calendar.set(Calendar.DAY_OF_MONTH, day);
-                    e_calendar.set(Calendar.HOUR_OF_DAY, hourEnd);
-                    e_calendar.set(Calendar.MINUTE, minuteEnd);
+                    e_calendar.set(Calendar.HOUR_OF_DAY, timeToEnd.getHour());
+                    e_calendar.set(Calendar.MINUTE, timeToEnd.getMinute());
                     e_calendar.set(Calendar.SECOND,00);
                     PendingIntent pendingIntentE = PendingIntent.getBroadcast(getActivity(), 2000+i, intentEnd, PendingIntent.FLAG_ONE_SHOT);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, e_calendar.getTimeInMillis(), pendingIntentE);

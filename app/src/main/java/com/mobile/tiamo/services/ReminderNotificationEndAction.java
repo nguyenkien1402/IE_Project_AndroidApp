@@ -72,11 +72,12 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int notiId = intent.getIntExtra("notiId",0);
-        String task = intent.getStringExtra("title");
+        String title = intent.getStringExtra("title");
+        String content = title.equals("Working") ? NotificationMessages.WORKING_END_MESSAGE : title+" is about to end, have you finished yet?";
         long uid = intent.getIntExtra("uid",-1);
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,0);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,0);
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "101";
 
@@ -90,21 +91,30 @@ public class ReminderNotificationEndAction extends BroadcastReceiver {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
+        Intent yesReceive = new Intent(context, NotificationActionBroadcastReceiver.class);
+        yesReceive.setAction("YES_ACTION");
+        yesReceive.putExtra("uid",uid);
+        yesReceive.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context,notiId, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Intent notifyIntent = new Intent(context, RequestExtraTimeActivity.class);
         // Set the Activity to start in a new, empty task
+        notifyIntent.putExtra("uid",uid);
+        notifyIntent.putExtra("title",title);
+        yesReceive.putExtra("notiId",notiId);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(context,0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(notificationTitle)
+                .setContentTitle(title)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
-                .setContentText(NotificationMessages.WORKING_END_MESSAGE)
+                .setContentText(content)
                 .setContentIntent(notifyPendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX)
-                .addAction(R.drawable.icon_notification_yes,"Yes",null)
+                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
                 .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
         notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
     }
