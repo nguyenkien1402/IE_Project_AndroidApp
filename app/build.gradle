@@ -68,5 +68,7 @@ dependencies {
     implementation 'com.github.tobiasschuerg:android-week-view:1.4.3'
     implementation project(':weeklyviewlibrary')
 
+    //Progress bar
+    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
 
 }

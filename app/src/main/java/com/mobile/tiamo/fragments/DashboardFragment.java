@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,29 +18,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingRoutineActivity;
-import com.mobile.tiamo.activities.RequestExtraTimeActivity;
+import com.mobile.tiamo.adapters.ActivityModelItem;
+import com.mobile.tiamo.adapters.DailyRoutineItem;
+import com.mobile.tiamo.adapters.DashboardActivityAdapter;
+import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
+import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
 import com.mobile.tiamo.services.ReminderNotificationEndAction;
 import com.mobile.tiamo.services.ReminderNotificationStart;
 import com.mobile.tiamo.utilities.DateUtilities;
-import com.mobile.tiamo.utilities.Messages;
-import com.mobile.tiamo.utilities.NotificationMessages;
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar;
 
-import org.threeten.bp.LocalTime;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -49,67 +56,66 @@ public class DashboardFragment extends Fragment {
     List<DailyRoutine> list;
     TiamoDatabase db;
     Intent intentStart, intentEnd;
+    List<ActivityModelItem> activityModelItems = null;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        AndroidThreeTen.init(getActivity());
         view = inflater.inflate(R.layout.fragment_dashboard, container,false);
+
         db = SQLiteDatabase.getTiamoDatabase(getContext());
+        ListView dListView = (ListView) view.findViewById(R.id.listView_dashboard);
 
+        progressbar();
 
-        Button btn = (Button) view.findViewById(R.id.btnScheduleNotification);
+        DashboardActivityAdapter dashboardAdapter = new DashboardActivityAdapter(getContext(), R.layout.adapter_dashboard, activityModelItems);
+        dListView.setAdapter(dashboardAdapter);
+
+        GetListDailyActivityAsync getListDailyActivityAsync = new GetListDailyActivityAsync();
+        getListDailyActivityAsync.execute();
+/*        Button btn = (Button) view.findViewById(R.id.btnScheduleNotification);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testActionEnd();
+//                multiplyAlerts();
+                testAction();
             }
-        });
-//        GetListDailyActivityAsync getListDailyActivityAsync = new GetListDailyActivityAsync();
-//        getListDailyActivityAsync.execute();
-//        Button btn = (Button) view.findViewById(R.id.btnScheduleNotification);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                multiplyAlerts();
-//                testAction();
-//            }
-//        });
+        });*/
         return view;
     }
-    public void testActionEnd(){
-        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "101";
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
-            //Configure Notification Channel
-            notificationChannel.setDescription("Tiamo End Notifications");
-            notificationChannel.enableLights(true);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
+    public void progressbar(){
+        RoundCornerProgressBar progress1 = view.findViewById(R.id.dashboard_progress);
+        progress1.setProgressColor(Color.parseColor("#ed3b27"));
+        progress1.setProgressBackgroundColor(Color.parseColor("#808080"));
+        progress1.setMax(70);
+        progress1.setProgress(30);
 
-        Intent notifyIntent = new Intent(getActivity().getApplicationContext(), RequestExtraTimeActivity.class);
-        // Set the Activity to start in a new, empty task
-        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),
-                0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Working")
-                .setAutoCancel(true)
-                .setSound(defaultSound)
-                .setContentText(NotificationMessages.WORKING_END_MESSAGE)
-                .setContentIntent(notifyPendingIntent)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_MAX)
-                .addAction(R.drawable.icon_notification_yes,"Yes",null)
-                .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
-        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
+        /*IconRoundCornerProgressBar progress2 =  (IconRoundCornerProgressBar)view.findViewById(R.id.progress_2);
+        progress2.setIconImageResource(R.drawable.adding_ed_time_64);
+        progress2.setProgressColor(Color.parseColor("#ed3b27"));
+        progress2.setProgressBackgroundColor(Color.parseColor("#808080"));
+        progress2.setIconBackgroundColor(Color.parseColor("#ed3b27"));
+        progress2.setMax(70);
+        progress2.setProgress(30);*/
     }
+
+    public void getActivityList(){
+        activityModelItems = new ArrayList<ActivityModelItem>();
+        // get Activity
+        if(db.activitiesModelDao().getAll().size() > 0) {
+            List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
+            for (int i = 0; i < scheduleList.size(); i++) {
+                ActivityModelItem model = new ActivityModelItem();
+                model.setUid(scheduleList.get(i).getUid());
+                model.setTitle(scheduleList.get(i).getTitle());
+                model.setHours(scheduleList.get(i).getHours());
+                model.setMinutes(scheduleList.get(i).getMinutes());
+                activityModelItems.add(model);
+            }
+        }
+    }
+
+
 
     public void testAction(){
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -174,23 +180,25 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    private class GetListDailyActivityAsync extends AsyncTask<Void, Void, List<DailyRoutine>>{
+    private class GetListDailyActivityAsync extends AsyncTask<Void, Void, Void>{
         @Override
-        protected List<DailyRoutine> doInBackground(Void... voids) {
-            String currentDate = DateUtilities.getCurrentDateInString();
+        protected Void doInBackground(Void... voids) {
+            getActivityList();
+            /*String currentDate = DateUtilities.getCurrentDateInString();
             list = db.dailyActivitiesDao().getDailyActivities(currentDate);
-            return list;
+            return list;*/
+            return null;
         }
 
-        @Override
+        /*@Override
         protected void onPostExecute(List<DailyRoutine> result) {
             super.onPostExecute(result);
             if(result.size() > 0){
-                scheduleNotification(result);
+              //  scheduleNotification(result);
             }else{
 
             }
-        }
+        }*/
 
         private void scheduleNotification(List<DailyRoutine> result) {
             final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
@@ -201,7 +209,6 @@ public class DashboardFragment extends Fragment {
                 String timeStart = dailyRoutine.getTimeStart();
                 String timeEnd = dailyRoutine.getTimeEnd();
                 String currentDate = DateUtilities.getCurrentDateInString();
-
                 int year = Integer.parseInt(currentDate.split("-")[2]);
                 int day = Integer.parseInt(currentDate.split("-")[0]);
                 int month = Integer.parseInt(currentDate.split("-")[1]);
@@ -211,49 +218,34 @@ public class DashboardFragment extends Fragment {
                 int minuteStart = Integer.parseInt(timeStart.split(":")[1]);
                 int hourEnd = Integer.parseInt(timeEnd.split(":")[0]);
                 int minuteEnd = Integer.parseInt(timeEnd.split(":")[1]);
+                // Config for starting ( code = 1000 + i )
+                intentStart.putExtra("notiId",1000+i+1);
+                intentStart.putExtra("task", dailyRoutine.getTitle());
+                intentStart.putExtra("uid",result.get(i).getUid());
+                Calendar s_calendar = Calendar.getInstance();
+                s_calendar.set(Calendar.MONTH, month-1); // month = month - 1
+                s_calendar.set(Calendar.YEAR, year);
+                s_calendar.set(Calendar.DAY_OF_MONTH, day);
+                s_calendar.set(Calendar.HOUR_OF_DAY, hourStart);
+                s_calendar.set(Calendar.MINUTE, minuteStart);
+                s_calendar.set(Calendar.SECOND, 00);
+                PendingIntent pendingIntentS = PendingIntent.getBroadcast(getActivity(), 1000+i, intentStart, PendingIntent.FLAG_ONE_SHOT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, s_calendar.getTimeInMillis(),pendingIntentS);
 
-                // check if it is already pass the time start.
-                LocalTime now = LocalTime.now();
-                LocalTime time = LocalTime.of(hourStart, minuteStart);
-                time = time.plusMinutes(5);
-
-                // if now.compareTo(time) == 1 mean the current time bigger than the starting time,
-                // so, wont send notification anymore
-                if(now.compareTo(time) != 1){
-                    // Mean, the time now does not pass the starting time for 15 minutes
-                    // Send notification for starting purpose
-                    // Config for starting( code = 1000 + i )
-                    intentStart.putExtra("notiId",1000+i+1);
-                    intentStart.putExtra("title", dailyRoutine.getTitle());
-                    intentStart.putExtra("uid",result.get(i).getUid());
-                    Calendar s_calendar = Calendar.getInstance();
-                    s_calendar.set(Calendar.MONTH, month-1); // month = month - 1
-                    s_calendar.set(Calendar.YEAR, year);
-                    s_calendar.set(Calendar.DAY_OF_MONTH, day);
-                    s_calendar.set(Calendar.HOUR_OF_DAY, hourStart);
-                    s_calendar.set(Calendar.MINUTE, minuteStart);
-                    s_calendar.set(Calendar.SECOND, 00);
-                    PendingIntent pendingIntentS = PendingIntent.getBroadcast(getActivity(), 1000+i, intentStart, PendingIntent.FLAG_ONE_SHOT);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, s_calendar.getTimeInMillis(),pendingIntentS);
-                }
-
-                // Of course, config for the ending time will be the same.
-                LocalTime timeToEnd = LocalTime.of(hourStart, minuteStart);
                 // Config for ending (code = 2000+i)
-                if(now.compareTo(timeToEnd) != 1){
-                    intentEnd.putExtra("notiId",2000+i+1);
-                    intentEnd.putExtra("title", dailyRoutine.getTitle());
-                    intentEnd.putExtra("uid",result.get(i).getUid());
-                    Calendar e_calendar = Calendar.getInstance();
-                    e_calendar.set(Calendar.MONTH, month-1); // month = month - 1
-                    e_calendar.set(Calendar.YEAR, year);
-                    e_calendar.set(Calendar.DAY_OF_MONTH, day);
-                    e_calendar.set(Calendar.HOUR_OF_DAY, hourEnd);
-                    e_calendar.set(Calendar.MINUTE, minuteEnd);
-                    e_calendar.set(Calendar.SECOND,00);
-                    PendingIntent pendingIntentE = PendingIntent.getBroadcast(getActivity(), 2000+i, intentEnd, PendingIntent.FLAG_ONE_SHOT);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, e_calendar.getTimeInMillis(), pendingIntentE);
-                }
+                intentEnd.putExtra("notiId",2000+i+1);
+                intentEnd.putExtra("task", dailyRoutine.getTitle());
+                intentEnd.putExtra("uid",result.get(i).getUid());
+                Calendar e_calendar = Calendar.getInstance();
+                e_calendar.set(Calendar.MONTH, month-1); // month = month - 1
+                e_calendar.set(Calendar.YEAR, year);
+                e_calendar.set(Calendar.DAY_OF_MONTH, day);
+                e_calendar.set(Calendar.HOUR_OF_DAY, hourEnd);
+                e_calendar.set(Calendar.MINUTE, minuteEnd);
+                e_calendar.set(Calendar.SECOND,00);
+                PendingIntent pendingIntentE = PendingIntent.getBroadcast(getActivity(), 2000+i, intentEnd, PendingIntent.FLAG_ONE_SHOT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, e_calendar.getTimeInMillis(), pendingIntentE);
+
             }
         }
     }
