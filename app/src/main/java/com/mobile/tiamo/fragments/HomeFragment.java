@@ -628,7 +628,6 @@ public class HomeFragment extends Fragment {
         timePicker.setMinute(0);
     }
 
-
     public static void setDynamicHeight(ListView listView) {
         ListAdapter adapter = listView.getAdapter();
         //check adapter if null

@@ -73,4 +73,10 @@ dependencies {
     //Progress bar
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
 
+    // GSON and Retrofit library
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+
 }

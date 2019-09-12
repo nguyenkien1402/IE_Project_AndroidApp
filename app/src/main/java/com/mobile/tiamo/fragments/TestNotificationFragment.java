@@ -45,23 +45,24 @@ import java.util.List;
 
 public class TestNotificationFragment extends Fragment {
 
-    View view;
-    List<DailyRoutine> list;
-    TiamoDatabase db;
-    Intent intentStart, intentEnd;
+    private View view;
+    private List<DailyRoutine> list;
+    private TiamoDatabase db;
+    private Intent intentStart, intentEnd;
+    private Button btn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         AndroidThreeTen.init(getActivity());
-        view = inflater.inflate(R.layout.fragment_dashboard, container,false);
+        view = inflater.inflate(R.layout.fragment_test_schedule_notification, container,false);
         db = SQLiteDatabase.getTiamoDatabase(getContext());
 
-        Button btn = (Button) view.findViewById(R.id.btnScheduleNotification);
+
+        btn = (Button) view.findViewById(R.id.btnScheduleNotification);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                testActionEnd();
                 testNotiActionEnd();
             }
         });
@@ -96,10 +97,12 @@ public class TestNotificationFragment extends Fragment {
         PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),
                 1001, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
         Intent notifyIntent = new Intent(getActivity().getApplicationContext(), RequestExtraTimeActivity.class);
         // Set the Activity to start in a new, empty task
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,
+                notifyIntent,PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -113,104 +116,105 @@ public class TestNotificationFragment extends Fragment {
                 .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
                 .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
         notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
+
     }
-    public void testActionEnd(){
-        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "101";
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
-            //Configure Notification Channel
-            notificationChannel.setDescription("Tiamo End Notifications");
-            notificationChannel.enableLights(true);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        Intent notifyIntent = new Intent(getActivity().getApplicationContext(), RequestExtraTimeActivity.class);
-        // Set the Activity to start in a new, empty task
-        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),
-                0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Working")
-                .setAutoCancel(true)
-                .setSound(defaultSound)
-                .setContentText(NotificationMessages.WORKING_END_MESSAGE)
-                .setContentIntent(notifyPendingIntent)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_MAX)
-                .addAction(R.drawable.icon_notification_yes,"Yes",null)
-                .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
-        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
-    }
-
-    public void testAction(){
-        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        Intent intent = new Intent(getActivity().getApplicationContext(), AddingRoutineActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext().getApplicationContext(), 0, intent,0);
-
-        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "101";
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
-            //Configure Notification Channel
-            notificationChannel.setDescription("Game Notifications");
-            notificationChannel.enableLights(true);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        Intent yesReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
-        yesReceive.setAction("YES_ACTION");
-        yesReceive.putExtra("uid",2);
-        PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, yesReceive, PendingIntent.FLAG_CANCEL_CURRENT);
+//    public void testActionEnd(){
+//        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+//        String NOTIFICATION_CHANNEL_ID = "101";
 //
-        Intent noReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
-        noReceive.setAction("NO_ACTION");
-        noReceive.putExtra("uid",2);
-        PendingIntent pendingIntentNo = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, noReceive, PendingIntent.FLAG_CANCEL_CURRENT);
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+//            //Configure Notification Channel
+//            notificationChannel.setDescription("Tiamo End Notifications");
+//            notificationChannel.enableLights(true);
+//            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+//            notificationChannel.enableVibration(true);
+//            notificationManager.createNotificationChannel(notificationChannel);
+//        }
+//
+//        Intent notifyIntent = new Intent(getActivity().getApplicationContext(), RequestExtraTimeActivity.class);
+//        // Set the Activity to start in a new, empty task
+//        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent notifyPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),
+//                0,notifyIntent,PendingIntent.FLAG_ONE_SHOT);
+//
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+//                .setSmallIcon(R.mipmap.ic_launcher_round)
+//                .setContentTitle("Working")
+//                .setAutoCancel(true)
+//                .setSound(defaultSound)
+//                .setContentText(NotificationMessages.WORKING_END_MESSAGE)
+//                .setContentIntent(notifyPendingIntent)
+//                .setWhen(System.currentTimeMillis())
+//                .setPriority(Notification.PRIORITY_MAX)
+//                .addAction(R.drawable.icon_notification_yes,"Yes",null)
+//                .addAction(R.drawable.icon_notification_dislike, "No", notifyPendingIntent);
+//        notificationManager.notify(Messages.ID_NOTIFICATION_WITH_ACTION, notificationBuilder.build());
+//    }
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Test notification")
-                .setAutoCancel(true)
-                .setSound(defaultSound)
-                .setContentText("This mean content to test notification")
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
-                .addAction(R.drawable.icon_notification_dislike, "No", pendingIntentNo)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_MAX);
-
-
-        notificationManager.notify(2, notificationBuilder.build());
-    }
-    public void multiplyAlerts(){
-        final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getActivity().getApplicationContext(), ReminderNotificationStart.class);
-        for(int i = 0; i < 3; i++){
-            intent.putExtra("data",i+1);
-            Calendar t_calendar = Calendar.getInstance();
-            t_calendar.set(Calendar.MONTH, Calendar.AUGUST);
-            t_calendar.set(Calendar.YEAR, 2019);
-            t_calendar.set(Calendar.DAY_OF_MONTH, 30);
-            t_calendar.set(Calendar.HOUR_OF_DAY, 17);
-            t_calendar.set(Calendar.MINUTE, 25+ i);
-            t_calendar.set(Calendar.SECOND, 00);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, PendingIntent.FLAG_ONE_SHOT);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, t_calendar.getTimeInMillis(),pendingIntent);
-            Log.d("MainActivity","Have Alarm manager");
-        }
-    }
+//    public void testAction(){
+//        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//
+//        Intent intent = new Intent(getActivity().getApplicationContext(), AddingRoutineActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getContext().getApplicationContext(), 0, intent,0);
+//
+//        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+//        String NOTIFICATION_CHANNEL_ID = "101";
+//
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+//            //Configure Notification Channel
+//            notificationChannel.setDescription("Game Notifications");
+//            notificationChannel.enableLights(true);
+//            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+//            notificationChannel.enableVibration(true);
+//            notificationManager.createNotificationChannel(notificationChannel);
+//        }
+//
+//        Intent yesReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
+//        yesReceive.setAction("YES_ACTION");
+//        yesReceive.putExtra("uid",2);
+//        PendingIntent pendingIntentYes = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, yesReceive, PendingIntent.FLAG_CANCEL_CURRENT);
+////
+//        Intent noReceive = new Intent(getActivity().getApplicationContext(), NotificationActionBroadcastReceiver.class);
+//        noReceive.setAction("NO_ACTION");
+//        noReceive.putExtra("uid",2);
+//        PendingIntent pendingIntentNo = PendingIntent.getBroadcast(getActivity().getApplicationContext(),0, noReceive, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), NOTIFICATION_CHANNEL_ID)
+//                .setSmallIcon(R.mipmap.ic_launcher_round)
+//                .setContentTitle("Test notification")
+//                .setAutoCancel(true)
+//                .setSound(defaultSound)
+//                .setContentText("This mean content to test notification")
+//                .setContentIntent(pendingIntent)
+//                .addAction(R.drawable.icon_notification_yes,"Yes",pendingIntentYes)
+//                .addAction(R.drawable.icon_notification_dislike, "No", pendingIntentNo)
+//                .setWhen(System.currentTimeMillis())
+//                .setPriority(Notification.PRIORITY_MAX);
+//
+//
+//        notificationManager.notify(2, notificationBuilder.build());
+//    }
+//    public void multiplyAlerts(){
+//        final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(getActivity().getApplicationContext(), ReminderNotificationStart.class);
+//        for(int i = 0; i < 3; i++){
+//            intent.putExtra("data",i+1);
+//            Calendar t_calendar = Calendar.getInstance();
+//            t_calendar.set(Calendar.MONTH, Calendar.AUGUST);
+//            t_calendar.set(Calendar.YEAR, 2019);
+//            t_calendar.set(Calendar.DAY_OF_MONTH, 30);
+//            t_calendar.set(Calendar.HOUR_OF_DAY, 17);
+//            t_calendar.set(Calendar.MINUTE, 25+ i);
+//            t_calendar.set(Calendar.SECOND, 00);
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, PendingIntent.FLAG_ONE_SHOT);
+//            alarmManager.set(AlarmManager.RTC_WAKEUP, t_calendar.getTimeInMillis(),pendingIntent);
+//            Log.d("MainActivity","Have Alarm manager");
+//        }
+//    }
 
     private class GetListDailyActivityAsync extends AsyncTask<Void, Void, List<DailyRoutine>> {
         @Override

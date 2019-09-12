@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -54,7 +55,7 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
                 // Save information and finish the activity
                 ScheduleNewNotificationAsync scheduleNewNotificationAsync = new ScheduleNewNotificationAsync();
                 scheduleNewNotificationAsync.execute();
-                finish();
+
             }
         });
     }
@@ -64,6 +65,7 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         protected DailyRoutine doInBackground(Void... voids) {
             // get the data first
             DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(uid);
+            scheduleNewNotification(dailyRoutine);
             return dailyRoutine;
         }
 
@@ -71,7 +73,7 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         protected void onPostExecute(DailyRoutine aVoid) {
             super.onPostExecute(aVoid);
             if(aVoid != null){
-                scheduleNewNotification(aVoid);
+                finish();
             }
         }
     }
@@ -82,7 +84,8 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         int hour = timePicker.getHour();
         int minute = timePicker.getMinute();
         LocalTime timeToEnd = LocalTime.of(hour,minute);
-        timeToEnd = timeToEnd.minusMinutes(5);
+//        timeToEnd = timeToEnd.minusMinutes(5);
+        Log.d("TAG","hour: "+timeToEnd.getHour()+" minute:"+timeToEnd.getMinute());
 
         String currentDate = DateUtilities.getCurrentDateInString();
         int year = Integer.parseInt(currentDate.split("-")[2]);
@@ -91,7 +94,7 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
 
         // Config for ending (code = 2000+i)
         intentEnd.putExtra("notiId",notiId);
-        intentEnd.putExtra("title", dailyRoutine.getTitle());
+        intentEnd.putExtra("title", "Notification");
         intentEnd.putExtra("uid",uid);
         Calendar e_calendar = Calendar.getInstance();
         e_calendar.set(Calendar.MONTH, month-1); // month = month - 1
