@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobile.tiamo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -65,8 +67,13 @@
         <receiver
             android:name=".services.NotificationActionBroadcastReceiver"
             android:enabled="true" />
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+        <service android:name="com.mobile.tiamo.services.ScreenOnAndOffService">
+            <intent-filter>
+                <action android:name="com.mobile.tiamo.services.ScreenOnAndOffService"/>
+            </intent-filter>
+        </service>
+
+    </application>
 
 </manifest>

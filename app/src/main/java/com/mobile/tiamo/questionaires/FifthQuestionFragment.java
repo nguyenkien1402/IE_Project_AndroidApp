@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,13 @@ import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.services.ScreenOnAndOffService;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.OtherUtilities;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
+
+import org.threeten.bp.LocalTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +43,10 @@ public class FifthQuestionFragment extends Fragment {
         Button btnAddingRoutine = (Button) view.findViewById(R.id.adding_more_routine);
         Button btnGooApp = (Button) view.findViewById(R.id.go_to_app);
         db = SQLiteDatabase.getTiamoDatabase(getContext());
+        String sleepingTime = SecondQuestionFragment.Companion.getSleepTime();
+        String wakeupTime = SecondQuestionFragment.Companion.getWakeupTime();
 
         // adding working time and sleeping time to the schedule
-
         btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +66,17 @@ public class FifthQuestionFragment extends Fragment {
             }
         });
 
+        // Start service to store the sleeping data.
+
         return view;
+    }
+
+    private void startSleepTrackingService(){
+        // Save the current time
+        Intent serviceIntent = new Intent(getActivity(), ScreenOnAndOffService.class);
+        serviceIntent.putExtra("sleepingTime",SecondQuestionFragment.Companion.getSleepTime());
+        serviceIntent.putExtra("wakingupTime",SecondQuestionFragment.Companion.getWakeupTime());
+        getActivity().startService(serviceIntent);
     }
 
     private class AddingScheduleAsync extends AsyncTask<Integer, Void, Integer>{
@@ -124,11 +139,13 @@ public class FifthQuestionFragment extends Fragment {
             if(aVoid == 0){
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
                 Intent i = new Intent(getActivity(), AddingRoutineActivity.class);
+                startSleepTrackingService();
                 getActivity().finish();
                 startActivity(i);
             }else{
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
                 Intent i = new Intent(getActivity(), MainActivity.class);
+                startSleepTrackingService();
                 getActivity().finish();
                 startActivity(i);
             }

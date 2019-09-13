@@ -58,7 +58,4 @@ public class NotificationActionBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-
-
-
 }
