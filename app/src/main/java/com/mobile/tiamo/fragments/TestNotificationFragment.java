@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,9 @@ import com.mobile.tiamo.activities.RequestExtraTimeActivity;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.models.XbrainUser;
+import com.mobile.tiamo.rest.services.IXbrainUser;
+import com.mobile.tiamo.rest.services.RetrofitService;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
 import com.mobile.tiamo.services.ReminderNotificationEndAction;
 import com.mobile.tiamo.services.ReminderNotificationStart;
@@ -43,13 +47,17 @@ import org.threeten.bp.LocalTime;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TestNotificationFragment extends Fragment {
 
     private View view;
     private List<DailyRoutine> list;
     private TiamoDatabase db;
     private Intent intentStart, intentEnd;
-    private Button btn;
+    private Button btn, btn2;
 
     @Nullable
     @Override
@@ -60,6 +68,25 @@ public class TestNotificationFragment extends Fragment {
 
 
         btn = (Button) view.findViewById(R.id.btnScheduleNotification);
+        btn2 = (Button) view.findViewById(R.id.btnAddUser);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IXbrainUser iXbrainUser = RetrofitService.getRetrofitService().create(IXbrainUser.class);
+                Call<List<XbrainUser>> call = iXbrainUser.getAllUser();
+                call.enqueue(new Callback<List<XbrainUser>>() {
+                    @Override
+                    public void onResponse(Call<List<XbrainUser>> call, Response<List<XbrainUser>> response) {
+                        Log.d("USER",response.body().get(0).getUserName());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<XbrainUser>> call, Throwable t) {
+                        Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
