@@ -17,6 +17,18 @@ public class DateUtilities {
         return strDate;
     }
 
+    public static String convertDateFormat(String date){
+        try {
+            Date d1 = new SimpleDateFormat("dd-MM-yyyy").parse("13-09-2019");
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String str = format.format(d1);
+            return str;
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return null;
+    }
+
     public static Date getCurrentDateWithTime(){
         Date date =java.util.Calendar.getInstance().getTime();
         return date;

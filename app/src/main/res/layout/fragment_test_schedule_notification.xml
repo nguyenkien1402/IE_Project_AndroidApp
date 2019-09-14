@@ -30,9 +30,39 @@
     <Button
         android:layout_below="@id/btnScheduleNotification"
         android:id="@+id/btnAddUser"
-        android:text="Add User"
+        android:text="Get User"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:layout_below="@id/btnAddUser"
+        android:id="@+id/btnGetUser"
+        android:layout_centerInParent="true"
+        android:text="Add User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_below="@id/btnGetUser"
+        android:id="@+id/btnGetDailyActivity"
+        android:layout_centerInParent="true"
+        android:text="Get DailyActivity with UserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_below="@id/btnGetDailyActivity"
+        android:id="@+id/btnInsertSingleObject"
+        android:layout_centerInParent="true"
+        android:text="Insert Single Object"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_below="@id/btnInsertSingleObject"
+        android:id="@+id/btnInsertMultipleObject"
+        android:layout_centerInParent="true"
+        android:text="Insert Multiple Object"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

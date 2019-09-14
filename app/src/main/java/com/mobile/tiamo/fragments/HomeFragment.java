@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment {
                         dailyActivityHobbyModel.setDateCreated(DateUtilities.getCurrentDateInString());
                         dailyActivityHobbyModel.setHours(timePicker.getHour());
                         dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
+
                         SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                         saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
                         int hour = timePicker.getHour();
@@ -487,6 +488,7 @@ public class HomeFragment extends Fragment {
                     dailyRoutine.setTimeEnd(scheduleList.get(i).getTimeEnd());
                     dailyRoutine.setScheduleId(scheduleList.get(i).getUid());
                     dailyRoutine.setDate(currentDate);
+                    dailyRoutine.setDayOperation(scheduleList.get(i).getSpecificDay());
                     long uid = db.dailyActivitiesDao().insert(dailyRoutine);
                     dailyRoutine.setUid(uid);
                     dailyRoutineLists.add(dailyRoutine);
@@ -524,6 +526,8 @@ public class HomeFragment extends Fragment {
                     dailyRoutine.setTimeEnd(newList.get(i).getTimeEnd());
                     dailyRoutine.setScheduleId(newList.get(i).getUid());
                     dailyRoutine.setDate(currentDate);
+                    dailyRoutine.setIsStorage(0);
+                    dailyRoutine.setDayOperation(newList.get(i).getSpecificDay());
                     long uid = db.dailyActivitiesDao().insert(dailyRoutine);
                     dailyRoutine.setUid(uid);
                     dailyRoutineLists.add(dailyRoutine);

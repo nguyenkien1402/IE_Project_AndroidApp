@@ -26,9 +26,15 @@ public interface DailyActivityHobbyModelDao {
     @Query("SELECT * FROM DailyActivityHobbyModel WHERE day_created = :day")
     List<DailyActivityHobbyModel> getDailyActivityHobbyByDate(String day);
 
+    @Query("SELECT * FROM DailyActivityHobbyModel WHERE isStorage = 0")
+    List<DailyActivityHobbyModel> getDailyActivityHobbyUnStorage();
+
     @Update
     void update(DailyActivityHobbyModel dailyActivityHobbyModel);
 
     @Query("SELECT * FROM DailyActivityHobbyModel WHERE title = :title AND day_created = :date")
     List<DailyActivityHobbyModel> checkIfExists(String title,String date);
+
+    @Query("UPDATE DailyActivityHobbyModel SET isStorage = 1 WHERE isStorage = 0")
+    void updateStorage();
 }

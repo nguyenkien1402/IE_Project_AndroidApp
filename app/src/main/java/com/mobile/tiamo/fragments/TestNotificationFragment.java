@@ -32,7 +32,10 @@ import com.mobile.tiamo.activities.RequestExtraTimeActivity;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.models.DailyActivity;
 import com.mobile.tiamo.models.XbrainUser;
+import com.mobile.tiamo.rest.services.IDailyActivity;
+import com.mobile.tiamo.rest.services.IDailyRoutine;
 import com.mobile.tiamo.rest.services.IXbrainUser;
 import com.mobile.tiamo.rest.services.RetrofitService;
 import com.mobile.tiamo.services.NotificationActionBroadcastReceiver;
@@ -57,7 +60,7 @@ public class TestNotificationFragment extends Fragment {
     private List<DailyRoutine> list;
     private TiamoDatabase db;
     private Intent intentStart, intentEnd;
-    private Button btn, btn2;
+    private Button btn, btn2, btn3, btn4, btn5, btn6;
 
     @Nullable
     @Override
@@ -69,6 +72,11 @@ public class TestNotificationFragment extends Fragment {
 
         btn = (Button) view.findViewById(R.id.btnScheduleNotification);
         btn2 = (Button) view.findViewById(R.id.btnAddUser);
+        btn3 = (Button) view.findViewById(R.id.btnGetUser);
+        btn4 = (Button) view.findViewById(R.id.btnGetDailyActivity);
+        btn5 = (Button) view.findViewById(R.id.btnInsertSingleObject);
+        btn6 = (Button) view.findViewById(R.id.btnInsertMultipleObject);
+
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +95,68 @@ public class TestNotificationFragment extends Fragment {
                 });
             }
         });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IXbrainUser iXbrainUser = RetrofitService.getRetrofitService().create(IXbrainUser.class);
+                XbrainUser x = new XbrainUser();
+                x.setDeviceId("jdg23oi093hfiu2394234");
+                x.setEmail("kiennt@gmail.com");
+                x.setFirstName("Q");
+                x.setLastName("Y");
+                x.setHassPassword("234h234923498230949234");
+                x.setUserName("qs");
+                Call<XbrainUser> call = iXbrainUser.register(x);
+                call.enqueue(new Callback<XbrainUser>() {
+                    @Override
+                    public void onResponse(Call<XbrainUser> call, Response<XbrainUser> response) {
+                        if(response.body() != null){
+                            Log.d("User",response.body().getUserName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<XbrainUser> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IDailyActivity iDailyActivity = RetrofitService.getRetrofitService().create(IDailyActivity.class);
+                Call<List<DailyActivity>> call = iDailyActivity.getActivityByUserIdAndDate(1,"2019-09-13");
+                call.enqueue(new Callback<List<DailyActivity>>() {
+                    @Override
+                    public void onResponse(Call<List<DailyActivity>> call, Response<List<DailyActivity>> response) {
+                        Log.d("UserDailyActivity",response.body().get(0).getActivityContent());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DailyActivity>> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckingAndUpdatingDatabaseAsync update = new CheckingAndUpdatingDatabaseAsync();
+                update.execute();
+            }
+        });
+
+        btn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +165,83 @@ public class TestNotificationFragment extends Fragment {
         });
 
         return view;
+    }
+    private class CheckingAndUpdatingDatabaseAsync extends AsyncTask<Void, Void, List<DailyRoutine>> {
+        @Override
+        protected List<DailyRoutine> doInBackground(Void... voids) {
+            String currentDay = DateUtilities.getCurrentDateInString();
+            // Get all the data which doesn't have the flag update
+            // Get the routine data first.
+            List<DailyRoutine> dailyRoutines = db.dailyActivitiesDao().getDailyRoutineUnUpdate();
+            return dailyRoutines;
+        }
+
+        @Override
+        protected void onPostExecute(List<DailyRoutine> list) {
+            super.onPostExecute(list);
+
+            IDailyRoutine iDailyRoutine = RetrofitService.getRetrofitService().create(IDailyRoutine.class);
+//            Call<List<com.mobile.tiamo.models.DailyRoutine>> listA = iDailyRoutine.getAll();
+//            listA.enqueue(new Callback<List<com.mobile.tiamo.models.DailyRoutine>>() {
+//                @Override
+//                public void onResponse(Call<List<com.mobile.tiamo.models.DailyRoutine>> call, Response<List<com.mobile.tiamo.models.DailyRoutine>> response) {
+//                    Log.d("TAG",response.body().get(0).getRoutineTitle());
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<com.mobile.tiamo.models.DailyRoutine>> call, Throwable t) {
+//                    Log.d("TAG","Failed");
+//                }
+//            });
+            String currentDay = DateUtilities.getCurrentDateInString();
+            Log.d("TAG",list.size() + " - " +list.get(0).getTimeStart());
+//            com.mobile.tiamo.dao.DailyRoutine d = list.get(0);
+//            com.mobile.tiamo.models.DailyRoutine da = new com.mobile.tiamo.models.DailyRoutine();
+//            da.setRoutineTitle(d.getTitle());
+//            da.setPlanStartTime(d.getTimeStart());
+//            da.setDateAchieve(DateUtilities.convertDateFormat(currentDay));
+//            da.setDayOperation(d.getDayOperation());
+//            da.setPlanEndTime(d.getTimeEnd());
+//            da.setActualStartTime(d.getTimeStart());
+//            da.setActualEndTime(d.getTimeActuallyEnd());
+//            da.setUserId(1);
+//            da.setRoutineContent("");
+//            Call<com.mobile.tiamo.models.DailyRoutine> call = iDailyRoutine.insert(da);
+//            call.enqueue(new Callback<com.mobile.tiamo.models.DailyRoutine>() {
+//                @Override
+//                public void onResponse(Call<com.mobile.tiamo.models.DailyRoutine> call, Response<com.mobile.tiamo.models.DailyRoutine> response) {
+//                    Log.d("TAG","Insert Successfully");
+//                }
+//                @Override
+//                public void onFailure(Call<com.mobile.tiamo.models.DailyRoutine> call, Throwable t) {
+//                    Log.d("TAG","Insert Failed");
+//                }
+//            });
+            for(int i = 0 ; i < list.size() ; i++){
+                com.mobile.tiamo.dao.DailyRoutine d = list.get(i);
+                com.mobile.tiamo.models.DailyRoutine da = new com.mobile.tiamo.models.DailyRoutine();
+                da.setRoutineTitle(d.getTitle());
+                da.setPlanStartTime(d.getTimeStart());
+                da.setDateAchieve(DateUtilities.convertDateFormat(currentDay));
+                da.setDayOperation(d.getDayOperation());
+                da.setPlanEndTime(d.getTimeEnd());
+                da.setActualStartTime(d.getTimeStart());
+                da.setActualEndTime(d.getTimeActuallyEnd());
+                Call<com.mobile.tiamo.models.DailyRoutine> call = iDailyRoutine.insert(1,da);
+                call.enqueue(new Callback<com.mobile.tiamo.models.DailyRoutine>() {
+                    @Override
+                    public void onResponse(Call<com.mobile.tiamo.models.DailyRoutine> call, Response<com.mobile.tiamo.models.DailyRoutine> response) {
+                        Log.d("TAG","Insert Successfully");
+                    }
+                    @Override
+                    public void onFailure(Call<com.mobile.tiamo.models.DailyRoutine> call, Throwable t) {
+                        Log.d("TAG","Insert Failed");
+                    }
+                });
+
+            }
+
+        }
     }
 
     public void testNotiActionEnd(){

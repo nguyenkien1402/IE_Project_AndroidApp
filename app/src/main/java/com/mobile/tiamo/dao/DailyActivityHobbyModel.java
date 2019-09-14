@@ -28,6 +28,12 @@ public class DailyActivityHobbyModel {
     @ColumnInfo(name = "day_created")
     private String dateCreated;
 
+    @ColumnInfo(name = "isStorage")
+    private int isStorage;
+
+    @ColumnInfo(name = "target")
+    private float targetHour;
+
 
     public DailyActivityHobbyModel() {
     }
@@ -98,4 +104,19 @@ public class DailyActivityHobbyModel {
         this.dateCreated = dateCreated;
     }
 
+    public int getIsStorage() {
+        return isStorage;
+    }
+
+    public void setIsStorage(int isStorage) {
+        this.isStorage = isStorage;
+    }
+
+    public float getTargetHour() {
+        return targetHour;
+    }
+
+    public void setTargetHour(float targetHour) {
+        this.targetHour = targetHour;
+    }
 }

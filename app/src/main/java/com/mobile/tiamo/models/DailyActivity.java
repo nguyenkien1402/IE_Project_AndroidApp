@@ -16,7 +16,7 @@ public class DailyActivity {
     @SerializedName("numberOfHour")
     private int numberOfHour;
     @SerializedName("targetHour")
-    private int targetHour;
+    private float targetHour;
 
     public DailyActivity() {
     }
@@ -79,11 +79,11 @@ public class DailyActivity {
         this.numberOfHour = numberOfHour;
     }
 
-    public int getTargetHour() {
+    public float getTargetHour() {
         return targetHour;
     }
 
-    public void setTargetHour(int targetHour) {
+    public void setTargetHour(float targetHour) {
         this.targetHour = targetHour;
     }
 }

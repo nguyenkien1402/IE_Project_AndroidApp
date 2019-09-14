@@ -1,5 +1,6 @@
 package com.mobile.tiamo.utilities;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,5 +15,11 @@ public class OtherUtilities {
         dictionary.put("Saturday","Sat");
         dictionary.put("Sunday","Sun");
         return dictionary;
+    }
+
+    public static float floatHour(int hour, int minute){
+        DecimalFormat f = new DecimalFormat("##.00");
+        float k = (float) minute/60 + hour;
+        return Float.parseFloat(f.format(k));
     }
 }

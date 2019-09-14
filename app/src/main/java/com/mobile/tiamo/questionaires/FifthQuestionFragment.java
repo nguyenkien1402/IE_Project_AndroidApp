@@ -45,7 +45,9 @@ public class FifthQuestionFragment extends Fragment {
         db = SQLiteDatabase.getTiamoDatabase(getContext());
         String sleepingTime = SecondQuestionFragment.Companion.getSleepTime();
         String wakeupTime = SecondQuestionFragment.Companion.getWakeupTime();
-
+        // save this data in to SharePreferences
+        SavingDataSharePreference.savingLocalData(getContext(),Messages.LOCAL_DATA,Messages.SLEEPING_TIME,sleepingTime);
+        SavingDataSharePreference.savingLocalData(getContext(),Messages.LOCAL_DATA,Messages.WAKINGUP_TIME,wakeupTime);
         // adding working time and sleeping time to the schedule
         btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,13 +73,7 @@ public class FifthQuestionFragment extends Fragment {
         return view;
     }
 
-    private void startSleepTrackingService(){
-        // Save the current time
-        Intent serviceIntent = new Intent(getActivity(), ScreenOnAndOffService.class);
-        serviceIntent.putExtra("sleepingTime",SecondQuestionFragment.Companion.getSleepTime());
-        serviceIntent.putExtra("wakingupTime",SecondQuestionFragment.Companion.getWakeupTime());
-        getActivity().startService(serviceIntent);
-    }
+
 
     private class AddingScheduleAsync extends AsyncTask<Integer, Void, Integer>{
 
@@ -139,13 +135,12 @@ public class FifthQuestionFragment extends Fragment {
             if(aVoid == 0){
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
                 Intent i = new Intent(getActivity(), AddingRoutineActivity.class);
-                startSleepTrackingService();
+
                 getActivity().finish();
                 startActivity(i);
             }else{
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                startSleepTrackingService();
                 getActivity().finish();
                 startActivity(i);
             }

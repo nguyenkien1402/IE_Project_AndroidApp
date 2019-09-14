@@ -37,5 +37,11 @@ public interface DailyRoutineDao {
     @Query("UPDATE DailyRoutine SET is_done = :isDone WHERE uid = :uid")
     void updateIsDone(long uid, int isDone);
 
+    @Query("SELECT * FROM DailyRoutine  WHERE isStorage = 0")
+    List<DailyRoutine> getDailyRoutineUnUpdate();
+
+    @Query("UPDATE DailyRoutine SET isStorage = 1 WHERE isStorage = 0")
+    void updateStorage();
+
 
 }

@@ -7,4 +7,7 @@ public class Messages {
     public static String LOCAL_DATA = "LocalData";
     public static String FLAG_IS_ANSWER = "flagAnswer";
 
+    public static String SLEEPING_TIME = "SleepingTime";
+    public static String WAKINGUP_TIME = "WakingupTime";
+
 }

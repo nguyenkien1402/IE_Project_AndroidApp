@@ -34,6 +34,12 @@ public class DailyRoutine {
     @ColumnInfo(name = "time_actually_end")
     private String timeActuallyEnd;
 
+    @ColumnInfo(name = "dayOperation")
+    private String dayOperation;
+
+    @ColumnInfo(name = "isStorage")
+    private int isStorage;
+
     public DailyRoutine() {
     }
 
@@ -124,5 +130,21 @@ public class DailyRoutine {
 
     public void setTimeActuallyEnd(String timeActuallyEnd) {
         this.timeActuallyEnd = timeActuallyEnd;
+    }
+
+    public int getIsStorage() {
+        return isStorage;
+    }
+
+    public void setIsStorage(int isStorage) {
+        this.isStorage = isStorage;
+    }
+
+    public String getDayOperation() {
+        return dayOperation;
+    }
+
+    public void setDayOperation(String dayOperation) {
+        this.dayOperation = dayOperation;
     }
 }
