@@ -8,13 +8,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobile.tiamo.fragments.DashboardFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
 import com.mobile.tiamo.fragments.SettingFragment;
 import com.mobile.tiamo.fragments.TestNotificationFragment;
 import com.mobile.tiamo.questionaires.SecondQuestionFragment;
 import com.mobile.tiamo.services.ScreenOnAndOffService;
+import com.mobile.tiamo.services.SleepingNotificationBeforeTimeReceiver;
 import com.mobile.tiamo.services.UpdateDatabaseToServer;
+import com.mobile.tiamo.utilities.Messages;
+import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -25,6 +29,8 @@ import androidx.fragment.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import org.threeten.bp.LocalTime;
 
 import java.util.Calendar;
 
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidThreeTen.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -78,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Run service in the mid-night.
         // Service to inform saving the data. Let's do this one first
-        serviceUpdateDatabase();
+//        serviceUpdateDatabase();
         // Service to inform tracking sleep
 //        startSleepTrackingService();
 
@@ -98,19 +105,42 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 55);
         calendar.set(Calendar.SECOND, 00);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        startService(service);
 
     }
-
 
     /*
      * Service for tracking sleep.
      * This service will be run at the time people set for sleeping
      */
     private void startSleepTrackingService(){
-        // Save the current time
-        Intent serviceIntent = new Intent(this, ScreenOnAndOffService.class);
-        startService(serviceIntent);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        // Get the current time sleeping time first
+        String sleepingTime = SavingDataSharePreference.getDataString(this, Messages.LOCAL_DATA,Messages.SLEEPING_TIME);
+        LocalTime time = LocalTime.parse(sleepingTime);
+        LocalTime timeBefore = time.minusMinutes(30);
+        // Send notification 30 minute before sleeping time.
+        Intent intentBefore = new Intent(this, SleepingNotificationBeforeTimeReceiver.class);
+        PendingIntent piSleepBefore = PendingIntent.getBroadcast(this,2,intentBefore,PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendarSleepBefore = Calendar.getInstance();
+        calendarSleepBefore.set(Calendar.HOUR_OF_DAY, timeBefore.getHour());
+        calendarSleepBefore.set(Calendar.MINUTE, timeBefore.getMinute());
+        calendarSleepBefore.set(Calendar.SECOND, 00);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendarSleepBefore.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piSleepBefore);
+
+        // Send notification and start tracking sleep at sleeping time
+        int hour = LocalTime.parse(sleepingTime).getHour();
+        int minute = LocalTime.parse(sleepingTime).getMinute();
+        Intent trackingSleeping = new Intent(this, ScreenOnAndOffService.class);
+        trackingSleeping.putExtra("SleepingTime",sleepingTime);
+        trackingSleeping.putExtra("WakingupTime",SavingDataSharePreference.getDataString(this,Messages.LOCAL_DATA,Messages.WAKINGUP_TIME));
+
+        PendingIntent piTracking = PendingIntent.getService(this,3,trackingSleeping,PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendarSleep = Calendar.getInstance();
+        calendarSleep.set(Calendar.HOUR_OF_DAY, hour);
+        calendarSleep.set(Calendar.MINUTE, minute);
+        calendarSleep.set(Calendar.SECOND,00);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendarSleep.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piTracking);
+
     }
 
     @Override

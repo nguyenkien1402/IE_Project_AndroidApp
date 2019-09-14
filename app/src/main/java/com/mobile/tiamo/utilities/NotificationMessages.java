@@ -10,4 +10,8 @@ public class NotificationMessages {
 
     public static String SLEEPING_START_MESSAGE = "Your hectic night is over, may you have a dream as beautiful as you. See you tomorrow " +
             "with the full of energy. Good night!";
+
+    public static String BEFORE_SLEEPING = "You are going to sleep in next 30 minutes, lay in bed soon to get quality dream";
+
+    public static String SLEEPING = "It is time to sleep";
 }
