@@ -10,10 +10,13 @@ import androidx.annotation.Nullable;
 import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
+import com.mobile.tiamo.dao.SleepingModel;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.models.DailyActivity;
+import com.mobile.tiamo.models.SleepingTime;
 import com.mobile.tiamo.rest.services.IDailyActivity;
 import com.mobile.tiamo.rest.services.IDailyRoutine;
+import com.mobile.tiamo.rest.services.ISleepingTime;
 import com.mobile.tiamo.rest.services.IXbrainUser;
 import com.mobile.tiamo.rest.services.RetrofitService;
 import com.mobile.tiamo.utilities.DateUtilities;
@@ -30,6 +33,7 @@ public class UpdateDatabaseToServer extends IntentService {
     TiamoDatabase db;
     IDailyRoutine iDailyRoutine;
     IDailyActivity iDailyActivity;
+    ISleepingTime iSleepingTime;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -44,11 +48,46 @@ public class UpdateDatabaseToServer extends IntentService {
         db = SQLiteDatabase.getTiamoDatabase(getApplicationContext());
         iDailyRoutine = RetrofitService.getRetrofitService().create(IDailyRoutine.class);
         iDailyActivity = RetrofitService.getRetrofitService().create(IDailyActivity.class);
+        iSleepingTime = RetrofitService.getRetrofitService().create(ISleepingTime.class);
         CheckingAndUpdatingRoutineToDatabaseAsync update = new CheckingAndUpdatingRoutineToDatabaseAsync();
         update.execute();
 
         CheckingAndUpdatingActivityToDatabaseAsync activity= new CheckingAndUpdatingActivityToDatabaseAsync();
         activity.execute();
+
+        CheckingAndUpdatingSleepingToDatabaseAsync sleep = new CheckingAndUpdatingSleepingToDatabaseAsync();
+        sleep.execute();
+    }
+
+    private class CheckingAndUpdatingSleepingToDatabaseAsync extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<SleepingModel> sleepingModels = db.sleepingModelDao().getSleepingUnStorage();
+            for(int i = 0 ; i < sleepingModels.size() ; i++){
+                final SleepingTime sleepingTime = new SleepingTime();
+                sleepingTime.setDateAchieve(DateUtilities.convertDateFormat(sleepingModels.get(i).getDate()));
+                sleepingTime.setSleepingTime(sleepingModels.get(i).getTime());
+                Call<SleepingTime> call = iSleepingTime.insert(1,sleepingTime);
+                call.enqueue(new Callback<SleepingTime>() {
+                    @Override
+                    public void onResponse(Call<SleepingTime> call, Response<SleepingTime> response) {
+                        Log.d("TAG","Update Sleeping time to database");
+                    }
+
+                    @Override
+                    public void onFailure(Call<SleepingTime> call, Throwable t) {
+
+                    }
+                });
+                db.sleepingModelDao().updateStorageSleeping();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 
     private class CheckingAndUpdatingActivityToDatabaseAsync extends AsyncTask<Void, Void, Void>{
@@ -70,7 +109,7 @@ public class UpdateDatabaseToServer extends IntentService {
                     public void onResponse(Call<DailyActivity> call, Response<DailyActivity> response) {
                         Log.d("TAG","Insert Success");
                         // Update database
-                        db.dailyActivityHobbyModelDao().updateStorage();
+
                     }
 
                     @Override
@@ -78,6 +117,7 @@ public class UpdateDatabaseToServer extends IntentService {
 
                     }
                 });
+                db.dailyActivityHobbyModelDao().updateStorage();
             }
             return null;
         }
@@ -111,7 +151,7 @@ public class UpdateDatabaseToServer extends IntentService {
                     public void onResponse(Call<com.mobile.tiamo.models.DailyRoutine> call, Response<com.mobile.tiamo.models.DailyRoutine> response) {
                         Log.d("TAG","Insert Successfully");
                         // Update to database
-                        db.dailyActivitiesDao().updateStorage();
+
                     }
 
                     @Override
@@ -119,8 +159,8 @@ public class UpdateDatabaseToServer extends IntentService {
 
                     }
                 });
-
             }
+            db.dailyActivitiesDao().updateStorage();
             return null;
         }
 

@@ -20,8 +20,14 @@ import androidx.core.app.NotificationCompat;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.StopSleepTrackingActivity;
+import com.mobile.tiamo.dao.SQLiteDatabase;
+import com.mobile.tiamo.dao.SleepingModel;
+import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
+import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
+import org.threeten.bp.Duration;
 import org.threeten.bp.LocalTime;
 
 public class ScreenOnAndOffService extends Service {
@@ -29,24 +35,29 @@ public class ScreenOnAndOffService extends Service {
     BroadcastReceiver mReceiver = null;
     String sleepingTime, wakingupTime;
     Context context;
+    TiamoDatabase db;
 
     @Override
     public void onCreate() {
         AndroidThreeTen.init(getApplication());
         super.onCreate();
         context = this;
+        NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(Messages.ID_NOTIFICATION_WITHOUT_ACTION);
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         mReceiver = new ScreenReceiver();
         registerReceiver(mReceiver,filter);
-        NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(Messages.ID_NOTIFICATION_WITHOUT_ACTION);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        boolean screenOn = false;
+        context = getApplicationContext();
+        db = SQLiteDatabase.getTiamoDatabase(context);
 
+        boolean screenOn = false;
+        String currentDate;
         try{
             // Get ON/OFF values sent from receiver ( AEScreenOnOffReceiver.java )
             screenOn = intent.getBooleanExtra("screen_state", false);
@@ -54,13 +65,58 @@ public class ScreenOnAndOffService extends Service {
         }catch(Exception e){}
         sleepingTime = intent.getStringExtra("SleepingTime");
         wakingupTime = intent.getStringExtra("WakingupTime");
-        LocalTime now = LocalTime.now();
         LocalTime sleep = LocalTime.parse(sleepingTime);
+        LocalTime midnight = LocalTime.of(23,59);
+        if(sleep.compareTo(midnight) == 1){
+            // Mean, the sleeping time bigger than the midnight, so the current day will be from the system
+            currentDate = DateUtilities.getCurrentDateInString();
+        }else{
+            // Mean, the sleeping time is before the midnight, so current day will be add to one.
+            currentDate = DateUtilities.getTheNextDateInString();
+        }
 
         if (!screenOn) {
             Log.d("TAG","Screen One");
+            // If the last time record is less then 30 minutes, then update the last record with the new time
+            // else if more than 30 minutes, save the new one.
+            if(db.sleepingModelDao().getSleepingByDate(currentDate).size() > 0){
+                SleepingModel sleepingModel = db.sleepingModelDao().getTheNewest(currentDate);
+                LocalTime now = LocalTime.now();
+                LocalTime previous = LocalTime.parse(sleepingTime);
+                if(Duration.between(now,previous).toMinutes() >= 30){
+                    SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"ISLEEPING",true);
+                }else{
+                    SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"ISLEEPING",false);
+                }
+            }
+
         } else {
-            if(now.compareTo(sleep)==1){
+            // Check if there are some records into SQL file
+            // If there are already some record in the SQL
+            if(db.sleepingModelDao().getSleepingByDate(currentDate).size() > 0){
+                // mean, there are already some records about sleeping
+                // if isSleeping == true, mean, need to save a new record
+                // otherwise, get the previous record and save the new time
+                boolean isSleeping = SavingDataSharePreference.getDataBoolean(context,Messages.LOCAL_DATA,"ISSLEEPING");
+                if(isSleeping){
+                    SleepingModel s = new SleepingModel();
+                    s.setDate(currentDate);
+                    s.setIsStorage(0);
+                    s.setTime(LocalTime.now().getHour()+":"+LocalTime.now().getMinute());
+                    db.sleepingModelDao().insert(s);
+                }else{
+                    SleepingModel s = db.sleepingModelDao().getTheNewest(currentDate);
+                    s.setTime(LocalTime.now().getHour()+":"+LocalTime.now().getMinute());
+                    db.sleepingModelDao().update(s);
+                }
+            }else{
+                // mean, no records yet, so install then
+                SleepingModel s = new SleepingModel();
+                s.setDate(currentDate);
+                s.setIsStorage(0);
+                s.setTime(LocalTime.now().getHour()+":"+LocalTime.now().getMinute());
+                db.sleepingModelDao().insert(s);
+
             }
             Log.d("TAG","Screen Off");
         }

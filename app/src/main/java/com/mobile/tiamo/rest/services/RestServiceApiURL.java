@@ -7,5 +7,6 @@ public class RestServiceApiURL {
     public static final String XBRAIN_USER_CREATE = "XbrainUsers";
     public static final String XBRAIN_DAILYACTIVITY =  "DailyActivities";
     public static final String XBRAIN_DAILYROUTINE =  "DailyRoutines";
+    public static final String XBRAIN_SLEEPINGTIME = "SleepingTimes";
 
 }
