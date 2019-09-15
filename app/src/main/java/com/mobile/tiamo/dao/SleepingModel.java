@@ -16,6 +16,8 @@ public class SleepingModel {
     @ColumnInfo(name = "time")
     private String time;
 
+    @ColumnInfo(name = "wakeupTime")
+    private String wakeupTime;
 
     @ColumnInfo(name = "isStorage")
     private int isStorage;
@@ -60,6 +62,14 @@ public class SleepingModel {
 
     public void setIsStorage(int isStorage) {
         this.isStorage = isStorage;
+    }
+
+    public String getWakeupTime() {
+        return wakeupTime;
+    }
+
+    public void setWakeupTime(String wakeupTime) {
+        this.wakeupTime = wakeupTime;
     }
 }
 

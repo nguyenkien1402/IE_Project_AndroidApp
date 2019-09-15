@@ -10,17 +10,19 @@ public class SleepingTime {
     private int userId;
     @SerializedName("dateAchieve")
     private String dateAchieve;
-    @SerializedName("sleepingTime")
-    private String sleepingTime;
+    @SerializedName("sleepTime")
+    private String sleepTime;
+    @SerializedName("wakingupTime")
+    private String wakingupTime;
 
     public SleepingTime() {
     }
 
-    public SleepingTime(int id, int userId, String dateAchieve, String sleepingTime) {
+    public SleepingTime(int id, int userId, String dateAchieve, String sleepTime) {
         this.id = id;
         this.userId = userId;
         this.dateAchieve = dateAchieve;
-        this.sleepingTime = sleepingTime;
+        this.sleepTime = sleepTime;
     }
 
     public int getId() {
@@ -48,10 +50,18 @@ public class SleepingTime {
     }
 
     public String getSleepingTime() {
-        return sleepingTime;
+        return sleepTime;
     }
 
-    public void setSleepingTime(String sleepingTime) {
-        this.sleepingTime = sleepingTime;
+    public void setSleepingTime(String sleepTime) {
+        this.sleepTime = sleepTime;
+    }
+
+    public String getWakingupTime() {
+        return wakingupTime;
+    }
+
+    public void setWakingupTime(String wakingupTime) {
+        this.wakingupTime = wakingupTime;
     }
 }

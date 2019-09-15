@@ -67,6 +67,7 @@ public class UpdateDatabaseToServer extends IntentService {
                 final SleepingTime sleepingTime = new SleepingTime();
                 sleepingTime.setDateAchieve(DateUtilities.convertDateFormat(sleepingModels.get(i).getDate()));
                 sleepingTime.setSleepingTime(sleepingModels.get(i).getTime());
+                sleepingTime.setWakingupTime(sleepingModels.get(i).getWakeupTime());
                 Call<SleepingTime> call = iSleepingTime.insert(1,sleepingTime);
                 call.enqueue(new Callback<SleepingTime>() {
                     @Override

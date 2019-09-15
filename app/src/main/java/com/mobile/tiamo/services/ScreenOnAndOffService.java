@@ -82,12 +82,17 @@ public class ScreenOnAndOffService extends Service {
             if(db.sleepingModelDao().getSleepingByDate(currentDate).size() > 0){
                 SleepingModel sleepingModel = db.sleepingModelDao().getTheNewest(currentDate);
                 LocalTime now = LocalTime.now();
-                LocalTime previous = LocalTime.parse(sleepingTime);
+                LocalTime previous = LocalTime.parse(sleepingModel.getTime());
                 if(Duration.between(now,previous).toMinutes() >= 30){
+                    SleepingModel s = db.sleepingModelDao().getTheNewest(currentDate);
+                    s.setWakeupTime(LocalTime.now().getHour()+":"+LocalTime.now().getMinute());
+                    db.sleepingModelDao().update(s);
                     SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"ISLEEPING",true);
                 }else{
                     SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"ISLEEPING",false);
                 }
+            }else{
+                SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"ISLEEPING",true);
             }
 
         } else {
@@ -116,7 +121,6 @@ public class ScreenOnAndOffService extends Service {
                 s.setIsStorage(0);
                 s.setTime(LocalTime.now().getHour()+":"+LocalTime.now().getMinute());
                 db.sleepingModelDao().insert(s);
-
             }
             Log.d("TAG","Screen Off");
         }
