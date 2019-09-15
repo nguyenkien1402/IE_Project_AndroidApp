@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">timerangepicker</string>
+    <declare-styleable name="ArcSeekBar">
+        <attr format="reference" name="thumb"/>
+        <attr format="integer" name="progress"/>
+        <attr format="integer" name="maxProgress"/>
+        <attr format="color" name="progressColor"/>
+        <attr format="dimension" name="progressWidth"/>
+        <attr format="color" name="progressBackgroundColor"/>
+        <attr format="dimension" name="progressBackgroundWidth"/>
+        <attr format="boolean" name="roundEdges"/>
+        <attr format="boolean" name="enabled"/>
+    </declare-styleable>
+    <declare-styleable name="TimeSliderRangePicker">
+        <!--<attr name="start_angle" format="float" />-->
+        <!--<attr name="end_angle" format="float" />-->
+        <attr format="dimension" name="border_thickness"/>
+        <attr format="color" name="border_color"/>
+        <attr format="dimension" name="thumb_size"/>
+        <attr format="dimension" name="start_thumb_size"/>
+        <attr format="dimension" name="end_thumb_size"/>
+        <attr format="reference" name="start_thumb_image_am"/>
+        <attr format="reference" name="end_thumb_image_am"/>
+        <attr format="reference" name="start_thumb_image_pm"/>
+        <attr format="reference" name="end_thumb_image_pm"/>
+        <attr format="color" name="start_thumb_color"/>
+        <attr format="color" name="end_thumb_color"/>
+        <attr format="color" name="arc_color_am"/>
+        <attr format="color" name="arc_color_pm"/>
+        <attr format="dimension" name="arc_dash_size"/>
+    </declare-styleable>
+</resources>

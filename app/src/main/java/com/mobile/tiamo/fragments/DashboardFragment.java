@@ -11,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DashboardActivityAdapter;
 import com.mobile.tiamo.dao.ActivitiesModel;
-import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
     private static View view;
     private static TiamoDatabase db;
     private static List<ActivityModelItem> activityModelItems = null;
-    List<DailyRoutine> list;
+    private LineChart chart;
 
     private static void getActivityList() {
         activityModelItems = new ArrayList<>();
@@ -44,6 +44,8 @@ public class DashboardFragment extends Fragment {
             }
         }
     }
+
+
 
     @Nullable
     @Override

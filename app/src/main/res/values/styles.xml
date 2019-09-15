@@ -77,6 +77,11 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    
+    <style name="AppTheme.PopUpDashboard">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 
 
 </resources>
