@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -66,7 +67,8 @@ public class MyFirebaseMessagingServices extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setSmallIcon(R.drawable.liberzy_logo4)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.liberzy_logo4))
                     .setContentTitle(Config.title)
                     .setAutoCancel(true)
                     .setSound(defaultSound)
