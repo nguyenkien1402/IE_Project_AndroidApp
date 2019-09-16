@@ -135,6 +135,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
                 // Init popup dialog view and it's ui controls.
 
                 final AlertDialog alertDialog = alertDialogBuilder.create();
+
                 alertDialog.show();
 
                 //instantiate popup window
