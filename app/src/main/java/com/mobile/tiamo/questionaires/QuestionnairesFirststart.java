@@ -27,20 +27,22 @@ import java.util.List;
  */
 public class QuestionnairesFirststart extends AppCompatActivity {
 
-    ViewPager viewPager;
+    NoSwipeableViewpager viewPager;
     LinearLayout main_view_pager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaires_firststart);
-        viewPager = (ViewPager) findViewById(R.id.questionaries_viewpager);
+        viewPager = (NoSwipeableViewpager) findViewById(R.id.questionaries_viewpager);
         main_view_pager = (LinearLayout) findViewById(R.id.main_view_pager);
         viewPager.setAdapter(new QuestionariesAdapter(getSupportFragmentManager()));
         final View parentLayout = findViewById(android.R.id.content);
         final Button btnNext = findViewById(R.id.btnQNext);
         final Button btnBack = findViewById(R.id.btnQBack);
         btnBack.setVisibility(View.GONE);
-        Toast.makeText(this,"Number of page:"+viewPager.getAdapter().getCount(),Toast.LENGTH_LONG).show();
+
+        viewPager.setPagingEnabled(false);
+        viewPager.invalidate();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
