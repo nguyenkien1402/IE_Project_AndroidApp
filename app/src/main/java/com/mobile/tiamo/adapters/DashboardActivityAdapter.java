@@ -1,6 +1,7 @@
 package com.mobile.tiamo.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -44,7 +45,6 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
     private int mResource;
     private Context context;
     Button showPopupBtn, closePopupBtn;
-    PopupWindow popupWindow;
     LinearLayout linearLayout1;
     private LineChart chart;
 
@@ -108,8 +108,13 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
             @Override
             public void onClick(View v) {
                 //instantiate the popup.xml layout file
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setCancelable(false);
+
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 View customView = layoutInflater.inflate(R.layout.popup_graph,null);
+                alertDialogBuilder.setView(customView);
+                // Inflate the popup dialog from a layout xml file.
 
                 closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
                 TextView popUpTitle = (TextView) customView.findViewById(R.id.popup_dashboard_tvTitle);
@@ -123,22 +128,23 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
                 String strpopUpTotalTime = "Total Time: " + model.getHours() + "h " + model.getMinutes() + "m";
                 popUpTotalTime.setText(strpopUpTotalTime);
 
-
-
                 // Dismiss already existing popups
-                if(popupWindow!=null)
-                    popupWindow.dismiss();
+//                if(popupWindow!=null)
+//                    popupWindow.dismiss();
 
+                // Init popup dialog view and it's ui controls.
+
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
 
                 //instantiate popup window
-
-                popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                //display the popup window
-                popupWindow.showAtLocation(linearLayout1, Gravity.CENTER, 0, 0);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
-                popupWindow.setFocusable(false);
-                popupWindow.setOutsideTouchable(true);
+//                popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//                //display the popup window
+//                popupWindow.showAtLocation(linearLayout1, Gravity.CENTER, 0, 0);
+//                popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
+//                popupWindow.setFocusable(false);
+//                popupWindow.setOutsideTouchable(true);
 
 
                 //////////////////////////////////////////////////
@@ -191,16 +197,11 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
                 l.setForm(Legend.LegendForm.LINE);
                 ///////////////////////////////////////////////////
 
-
-
-
-
-
                 //close the popup window on button click
                 closePopupBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupWindow.dismiss();
+                        alertDialog.cancel();
                     }
                 });
 

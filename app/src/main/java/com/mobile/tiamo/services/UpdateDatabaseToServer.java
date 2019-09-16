@@ -17,7 +17,6 @@ import com.mobile.tiamo.models.SleepingTime;
 import com.mobile.tiamo.rest.services.IDailyActivity;
 import com.mobile.tiamo.rest.services.IDailyRoutine;
 import com.mobile.tiamo.rest.services.ISleepingTime;
-import com.mobile.tiamo.rest.services.IXbrainUser;
 import com.mobile.tiamo.rest.services.RetrofitService;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.OtherUtilities;
