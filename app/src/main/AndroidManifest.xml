@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.NotificationActivity"></activity>
+        <activity android:name=".activities.NotificationActivity"
+            android:theme="@style/AppThemeActionBar"/>
         <activity
             android:name=".activities.StopSleepTrackingActivity"
             android:theme="@style/AppThemeActionBar" />

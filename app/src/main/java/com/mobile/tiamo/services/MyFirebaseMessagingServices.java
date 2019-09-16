@@ -51,7 +51,6 @@ public class MyFirebaseMessagingServices extends FirebaseMessagingService {
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent , 0);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "101";
@@ -80,14 +79,13 @@ public class MyFirebaseMessagingServices extends FirebaseMessagingService {
     }
 
     private void getDateForNotification(final RemoteMessage remoteMessage) {
+        Log.d("TAG","Try");
         try{
             Map<String, String> data = remoteMessage.getData();
-            Config.id = Integer.parseInt(data.get("id"));
             Config.title = data.get("title");
             Config.content = data.get("content");
             Config.imageUrl = data.get("imageUrl");
             Config.gameUrl = data.get("gameUrl");
-            Config.patientId = data.get("patientId");
             sendNotification();
         }catch (Exception e){
             Log.d(TAG,e.getMessage());
