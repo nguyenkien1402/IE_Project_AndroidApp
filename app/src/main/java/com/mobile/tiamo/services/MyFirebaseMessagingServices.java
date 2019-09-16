@@ -7,13 +7,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -23,8 +19,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.NotificationActivity;
 import com.mobile.tiamo.utilities.Config;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 
 import java.util.Map;
