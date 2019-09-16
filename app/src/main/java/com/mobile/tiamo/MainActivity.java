@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     fragment = new SettingFragment();
                     break;
-                case R.id.test_notifications:
-                    fragment = new TestNotificationFragment();
-                    break;
+//                case R.id.test_notifications:
+//                    fragment = new TestNotificationFragment();
+//                    break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();

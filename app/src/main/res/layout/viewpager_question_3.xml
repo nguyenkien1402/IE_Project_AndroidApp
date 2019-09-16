@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:background="@color/almost_black"
+    android:background="#F5F5F5"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
@@ -13,7 +12,7 @@
         android:layout_marginRight="16dp"
         android:text="What is your sleeping time?"
         style="@style/TextQuestion"
-        android:textColor="#ffffff"
+        android:textColor="@color/dark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -32,7 +31,7 @@
             android:gravity="center"
             android:lineSpacingExtra="12sp"
             android:text="@string/sleep_schedule"
-            android:textColor="@color/white"
+            android:textColor="@color/dark"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,14 +44,14 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             app:divisionColor="@color/dark"
-            app:labelColor="@color/slate"
+            app:labelColor="@color/dark"
             app:layout_constraintBottom_toBottomOf="@+id/pickerGuide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/pickerGuide"
-            app:progressBackgroundColor="@color/dark"
+            app:progressBackgroundColor="@color/slate2"
             app:progressBgStrokeWidth="28dp"
-            app:progressColor="@color/white"
+            app:progressColor="@color/dark"
             app:progressStrokeWidth="28dp"
             app:sleepLayoutId="@layout/layout_picker_sleep"
             app:wakeLayoutId="@layout/layout_picker_wake"/>
@@ -78,7 +77,7 @@
                     android:id="@+id/tvHours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/dark"
                     android:textSize="24sp"
                     tools:text="7"/>
 
@@ -89,7 +88,7 @@
                     android:letterSpacing="0.2"
                     android:lineSpacingExtra="18sp"
                     android:text="@string/sleep_schedule_hr"
-                    android:textColor="@color/white"
+                    android:textColor="@color/dark"
                     android:textSize="10sp"/>
 
             </LinearLayout>
@@ -106,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/dark"
                     android:textSize="24sp"
                     tools:text="7"/>
 
@@ -117,7 +116,7 @@
                     android:letterSpacing="0.2"
                     android:lineSpacingExtra="18sp"
                     android:text="@string/sleep_schedule_min"
-                    android:textColor="@color/white"
+                    android:textColor="@color/dark"
                     android:textSize="10sp"/>
 
             </LinearLayout>
@@ -169,7 +168,7 @@
                 android:layout_marginTop="4dp"
                 android:letterSpacing="0.06"
                 android:lineSpacingExtra="6sp"
-                android:textColor="@color/white"
+                android:textColor="@color/dark"
                 android:textSize="18sp"
                 tools:text="12:15 PM"/>
         </LinearLayout>
@@ -204,7 +203,7 @@
                 android:layout_marginTop="4dp"
                 android:letterSpacing="0.06"
                 android:lineSpacingExtra="6sp"
-                android:textColor="@color/white"
+                android:textColor="@color/dark"
                 android:textSize="18sp"
                 tools:text="7:45 AM"/>
         </LinearLayout>

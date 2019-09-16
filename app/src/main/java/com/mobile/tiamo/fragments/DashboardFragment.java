@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DashboardActivityAdapter;
@@ -51,7 +52,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dashboard, container,false);
-
+        MainActivity.textToolbar.setText(R.string.app_name);
         db = SQLiteDatabase.getTiamoDatabase(getContext());
 
         GetListDailyActivityAsync getListDailyActivityAsync = new GetListDailyActivityAsync();

@@ -110,7 +110,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar_adding_activity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("Hobbies");
+        getSupportActionBar().setTitle("Adding Activities");
 
         activitiesModels = new ArrayList<ActivitiesModel>();
         // Fill down the chip suggestion.
