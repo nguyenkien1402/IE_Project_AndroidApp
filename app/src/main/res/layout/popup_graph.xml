@@ -33,6 +33,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="This is a popup window.."
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_weight="0.5"
             />
 
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="This is a popup window.."
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_weight="0.5"
             />
     </LinearLayout>
