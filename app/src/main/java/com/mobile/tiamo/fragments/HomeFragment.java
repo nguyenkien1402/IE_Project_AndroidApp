@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = datasets.get(position).getTitle() + " " + datasets.get(position).getUid();
-                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
                         alertDialog.cancel();
                     }
                 });
-                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(ActivitiesModel s) {
             super.onPostExecute(s);
-            Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
+//            Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
             ActivityModelItem activityModelItem = new ActivityModelItem();
             if(s.getTitle() != null){
                 activityModelItem.setTitle(s.getTitle());
@@ -429,7 +429,7 @@ public class HomeFragment extends Fragment {
                 setDynamicHeight(listViewRoutine);
 
             }else{
-                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(dailyActivityItems);
         }
@@ -458,7 +458,7 @@ public class HomeFragment extends Fragment {
                 setDynamicHeight(listViewRoutine);
 
             }else{
-                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(dailyActivityItems);
         }
