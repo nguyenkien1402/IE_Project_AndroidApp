@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
                         dailyActivityHobbyModel.setDateCreated(DateUtilities.getCurrentDateInString());
                         dailyActivityHobbyModel.setHours(timePicker.getHour());
                         dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
-
+                        dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
                         SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                         saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
                         int hour = timePicker.getHour();
@@ -604,6 +604,12 @@ public class HomeFragment extends Fragment {
             if(db.dailyActivityHobbyModelDao().checkIfExists(dailyActivityHobbyModels[0].getTitle(),
                     DateUtilities.getCurrentDateInString()).size() > 0){
                 // call update
+//                DailyActivityHobbyModel m = db.dailyActivityHobbyModelDao().checkIfExists(dailyActivityHobbyModels[0].getTitle(),
+//                        DateUtilities.getCurrentDateInString()).get(0);
+//                m.setHours(dailyActivityHobbyModels[0].getHours());
+//                m.setMinutes(dailyActivityHobbyModels[0].getMinutes());
+                Log.d("TAG","Update");
+
                 db.dailyActivityHobbyModelDao().update(dailyActivityHobbyModels[0]);
             }else{
                 db.dailyActivityHobbyModelDao().insert(dailyActivityHobbyModels[0]);
