@@ -36,12 +36,13 @@ public class QuestionnairesFirststart extends AppCompatActivity {
         viewPager = (NoSwipeableViewpager) findViewById(R.id.questionaries_viewpager);
         main_view_pager = (LinearLayout) findViewById(R.id.main_view_pager);
         viewPager.setAdapter(new QuestionariesAdapter(getSupportFragmentManager()));
+        viewPager.setSwipeLocked(false);
         final View parentLayout = findViewById(android.R.id.content);
         final Button btnNext = findViewById(R.id.btnQNext);
         final Button btnBack = findViewById(R.id.btnQBack);
         btnBack.setVisibility(View.GONE);
 
-        viewPager.setPagingEnabled(false);
+
         viewPager.invalidate();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
