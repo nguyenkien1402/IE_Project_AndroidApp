@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
         listViewActivity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                String s = activityModelItems.get(position).getTitle() + " " + activityModelItems.get(position).getUid();
+//                String s = activityModelItems.get(position).getTitle() + " " + activityModelItems.get(position).getUid();
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                 alertDialogBuilder.setCancelable(false);
                 // Init popup dialog view and it's ui controls.
@@ -100,6 +100,8 @@ public class HomeFragment extends Fragment {
                 alertDialogBuilder.setView(popupInputDialogView);
                 final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+                timePicker.setHour(activityModelItems.get(position).getHourPractice());
+                timePicker.setMinute(activityModelItems.get(position).getMinutePractice());
 
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
