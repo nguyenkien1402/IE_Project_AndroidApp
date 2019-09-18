@@ -68,6 +68,8 @@ public class MyFirebaseMessagingServices extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.drawable.liberzy_logo4)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(Config.content))
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.liberzy_logo4))
                     .setContentTitle(Config.title)
                     .setAutoCancel(true)
