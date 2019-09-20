@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +28,7 @@ import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class AddingActivityActivity extends AppCompatActivity {
 
     public static int CODE_RESULT = 2;
     private static String[] chipSuggestion = null;
+    private TypedArray chipSugesstionIcon = null;
     private ChipGroup chipCurrentGroup;
     private ChipGroup chipSuggesstionGroup;
     private View popupInputDialogView, popupInputHobby;
@@ -48,7 +52,6 @@ public class AddingActivityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_hobby);
-
         initComponent();
         fabButtonAction();
     }
@@ -104,6 +107,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         // init database
         db = SQLiteDatabase.getTiamoDatabase(this);
         chipSuggestion = getResources().getStringArray(R.array.chip_suggestion);
+        chipSugesstionIcon = getResources().obtainTypedArray(R.array.chip_icons);
         chipCurrentGroup = findViewById(R.id.adding_current_chip);
         chipSuggesstionGroup = findViewById(R.id.adding_suggestion_chip);
         fab = findViewById(R.id.fab_adding_activity);
@@ -181,6 +185,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         for(int i = 0 ; i < list.size() ; i++){
             Chip chip = (Chip) inflater.inflate(R.layout.item_chip,chipCurrentGroup,false);
+            chip.setChipIcon(getResources().getDrawable(OtherUtilities.getIcon(list.get(i).getTitle())));
             if(list.get(i).getHours() == 0) {
                 String text = list.get(i).getTitle() + " (" + list.get(i).getMinutes() + " minutes)";
                 chip.setText(text);
@@ -240,8 +245,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                             }
                         });
                     }else{
+                        chipCurrentGroup.removeView(c);
                         String match = c.getText().toString().split("\\(")[0].trim();
-                        c.setText(match);
                         for(int i = 0 ; i < activitiesModels.size() ; i++){
                             if(match.equals(activitiesModels.get(i).getTitle().trim())){
                                 activitiesModels.remove(i);
@@ -259,6 +264,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         for(int i = 0 ; i < chipSuggestion.length ; i++){
             Chip chip = (Chip) inflater.inflate(R.layout.item_chip,chipSuggesstionGroup,false);
             chip.setText(chipSuggestion[i]);
+            chip.setChipIcon(getResources().getDrawable(chipSugesstionIcon.getResourceId(i,0)));
             chipSuggesstionGroup.addView(chip);
         }
         for(int i = 0 ; i < chipSuggesstionGroup.getChildCount(); i++){
@@ -325,6 +331,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         activitiesModels.add(model);
         LayoutInflater inflater = LayoutInflater.from(this);
         final Chip c = (Chip) inflater.inflate(R.layout.item_chip,chipCurrentGroup,false);
+        c.setChipIcon(getResources().getDrawable(R.drawable.default_activity));
         int hour = model.getHours();
         int minute = model.getMinutes();
         if(minute == 0){

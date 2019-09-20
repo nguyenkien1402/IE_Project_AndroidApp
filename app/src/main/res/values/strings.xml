@@ -53,12 +53,26 @@
         <item>Learn Magic</item>
         <item>Origami</item>
         <item>Visit Local Museums</item>
-        <item>Play Sudoku</item>
         <item>Photography</item>
         <item>Cycling</item>
-        <item>Whittling</item>
         <item>Baking</item>
         <item>Pottery</item>
-
     </string-array>
+
+    <integer-array name="chip_icons">
+        <item>@drawable/yoga_24</item>
+        <item>@drawable/cooking_24</item>
+        <item>@drawable/drawing_art_24</item>
+        <item>@drawable/yoga_24</item>
+        <item>@drawable/writing_24</item>
+        <item>@drawable/dancing_24</item>
+        <item>@drawable/magic_24</item>
+        <item>@drawable/origami_24</item>
+        <item>@drawable/museum_24</item>
+        <item>@drawable/photography_24</item>
+        <item>@drawable/cycling_24</item>
+        <item>@drawable/baking_24</item>
+        <item>@drawable/pottery_24</item>
+    </integer-array>
 </resources>
+

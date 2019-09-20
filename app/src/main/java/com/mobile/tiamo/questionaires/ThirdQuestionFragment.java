@@ -1,5 +1,6 @@
 package com.mobile.tiamo.questionaires;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ThirdQuestionFragment extends Fragment {
-    String[] s1 = {"Gym","Reading","Running","Hiking","General Exercising","Climbing"};
+    String[] s1 = {"Gym","Reading","Running","Hiking","General Exercising","Cycling"};
+    int[] icons = {R.drawable.gym_24,R.drawable.reading_24, R.drawable.running_man_24, R.drawable.hiking_24,
+                    R.drawable.general_exercise_24,R.drawable.cycling_24};
     List<String> s = new ArrayList<String>(Arrays.asList(s1));
     public static List<ActivitiesModel> activitiesModels = new ArrayList<ActivitiesModel>();
     EditText edInputActivity;
@@ -89,6 +92,7 @@ public class ThirdQuestionFragment extends Fragment {
         final Chip c = (Chip) inflater.inflate(R.layout.item_chip,chipGroup,false);
         c.setText(text);
         c.setChecked(true);
+        c.setChipIcon(getResources().getDrawable(R.drawable.default_activity));
         chipGroup.addView(c);
         c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -141,6 +145,7 @@ public class ThirdQuestionFragment extends Fragment {
         chipGroup.removeAllViews();
         for(int i = 0 ; i < s.size() ; i++){
             Chip chip = (Chip) inflater.inflate(R.layout.item_chip,chipGroup,false);
+            chip.setChipIcon(getResources().getDrawable(icons[i]));
             chip.setText(s.get(i));
             chipGroup.addView(chip);
         }
