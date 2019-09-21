@@ -9,16 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.DateUtilities;
+import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
@@ -29,9 +34,11 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
     TiamoDatabase db;
     ProgressDialog dialog ;
     boolean localCheck;
+
     public static class ViewHolder{
         TextView txtTile, txtHour;
         Switch aSwitch;
+        ImageView imageView;
     }
 
     public DailyActivityAdapter(List<DailyRoutineItem> datasets, Context context){
@@ -43,21 +50,28 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
 
     @Override
     public void onClick(View v) {
-        int position = (Integer)v.getTag();
-        int isCheck = getItem(position).getIsDone();
-        if(isCheck == 1){
-            // Change to No
-            localCheck = false;
-            GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
-            getDailyActivityAsync.execute(getItem(position).getUid());
-            Log.d("Adapter",position+"-Y:"+getItem(position).getTitle() + ":"+getItem(position).getIsDone());
+        String currentDate = DateUtilities.getCurrentDateInString().trim();
+        String selectedDate = MainActivity.textToolbar.getText().toString().trim();
+        if (currentDate.equals(selectedDate)) {
+            int position = (Integer)v.getTag();
+            int isCheck = getItem(position).getIsDone();
+            if(isCheck == 1){
+                // Change to No
+                localCheck = false;
+                GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
+                getDailyActivityAsync.execute(getItem(position).getUid());
+                Log.d("Adapter",position+"-Y:"+getItem(position).getTitle() + ":"+getItem(position).getIsDone());
+            }else{
+                // Change to 1
+                localCheck = true;
+                GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
+                getDailyActivityAsync.execute(getItem(position).getUid());
+                Log.d("Adapter",position+"-N"+getItem(position).getTitle() + ":"+getItem(position).getIsDone());
+            }
         }else{
-            // Change to 1
-            localCheck = true;
-            GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
-            getDailyActivityAsync.execute(getItem(position).getUid());
-            Log.d("Adapter",position+"-N"+getItem(position).getTitle() + ":"+getItem(position).getIsDone());
+            Toast.makeText(context,"Not Today",Toast.LENGTH_LONG).show();
         }
+
     }
 
     @Override
@@ -77,21 +91,30 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
             viewHolder.txtTile = (TextView) convertView.findViewById(R.id.item_dailyactivity_title);
             viewHolder.txtHour = (TextView) convertView.findViewById(R.id.item_dailyactivity_hour);
             viewHolder.aSwitch = (Switch) convertView.findViewById(R.id.simpleSwitch);
+            viewHolder.imageView = (ImageView)convertView.findViewById(R.id.daily_routine_icon);
             convertView.setTag(viewHolder);
 
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(OtherUtilities.getIcon(dailyActivityItem.getTitle())));
         viewHolder.txtTile.setText(dailyActivityItem.getTitle());
         viewHolder.txtHour.setText(dailyActivityItem.getHours());
-        if(dailyActivityItem.getIsDone()==1){
-            viewHolder.aSwitch.setChecked(true);
+        if(viewHolder.txtTile.getText().equals("Sleeping")){
+            viewHolder.aSwitch.setVisibility(View.GONE);
         }else{
-            viewHolder.aSwitch.setChecked(false);
+            viewHolder.aSwitch.setVisibility(View.VISIBLE);
+            if(dailyActivityItem.getIsDone()==1){
+                viewHolder.aSwitch.setChecked(true);
+            }else{
+                viewHolder.aSwitch.setChecked(false);
+            }
         }
+
         viewHolder.aSwitch.setTag(position);
         viewHolder.aSwitch.setOnClickListener(this);
+
 
         // Return the completed view to render on screen
         return convertView;

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,11 +67,12 @@ public class ThirdQuestionFragment extends Fragment {
                             model.setTitle(activity);
                             activitiesModels.add(model);
                             addingNewChip(inflater,model.getTitle() + " ("+model.getHours()+" hours, "+model.getMinutes()+" minutes)");
+                            alertDialog.dismiss();
                         }else{
-
+                            edInputActivity.setError("Please Enter Title for Activity");
                         }
 
-                        alertDialog.dismiss();
+
 
                     }
                 });

@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobile.tiamo.fragments.DashboardFragment;
+import com.mobile.tiamo.fragments.DashboardViewPagerFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
 import com.mobile.tiamo.fragments.SettingFragment;
 import com.mobile.tiamo.fragments.TestNotificationFragment;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new HomeFragment();
                     break;
                 case R.id.navigation_dashboard:
-                    fragment = new DashboardFragment();
+                    fragment = new DashboardViewPagerFragment();
                     break;
                 case R.id.navigation_notifications:
                     fragment = new SettingFragment();

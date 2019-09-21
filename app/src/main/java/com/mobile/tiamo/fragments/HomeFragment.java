@@ -84,50 +84,53 @@ public class HomeFragment extends Fragment {
         listViewRoutine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = datasets.get(position).getTitle() + " " + datasets.get(position).getUid();
-//                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             }
         });
 
         listViewActivity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//                String s = activityModelItems.get(position).getTitle() + " " + activityModelItems.get(position).getUid();
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setCancelable(false);
-                // Init popup dialog view and it's ui controls.
-                initPopupViewControls();
-                alertDialogBuilder.setView(popupInputDialogView);
-                final AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                timePicker.setHour(activityModelItems.get(position).getHourPractice());
-                timePicker.setMinute(activityModelItems.get(position).getMinutePractice());
+                String currentDate = DateUtilities.getCurrentDateInString().trim();
+                String selectedDate = MainActivity.textToolbar.getText().toString().trim();
+                if(currentDate.equals(selectedDate)){
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setCancelable(false);
+                    // Init popup dialog view and it's ui controls.
+                    initPopupViewControls();
+                    alertDialogBuilder.setView(popupInputDialogView);
+                    final AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    timePicker.setHour(activityModelItems.get(position).getHourPractice());
+                    timePicker.setMinute(activityModelItems.get(position).getMinutePractice());
 
-                btnAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DailyActivityHobbyModel dailyActivityHobbyModel = new DailyActivityHobbyModel();
-                        dailyActivityHobbyModel.setTitle(activityModelItems.get(position).getTitle());
-                        dailyActivityHobbyModel.setDateCreated(DateUtilities.getCurrentDateInString());
-                        dailyActivityHobbyModel.setHours(timePicker.getHour());
-                        dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
-                        dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
-                        SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
-                        saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
-                        int hour = timePicker.getHour();
-                        int minute = timePicker.getMinute();
-                        activityModelItems.get(position).setHourPractice(hour);
-                        activityModelItems.get(position).setMinutePractice(minute);
-                        alertDialog.cancel();
-                    }
-                });
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.cancel();
-                    }
-                });
-//                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+                    btnAdd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DailyActivityHobbyModel dailyActivityHobbyModel = new DailyActivityHobbyModel();
+                            dailyActivityHobbyModel.setTitle(activityModelItems.get(position).getTitle());
+                            dailyActivityHobbyModel.setDateCreated(DateUtilities.getCurrentDateInString());
+                            dailyActivityHobbyModel.setHours(timePicker.getHour());
+                            dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
+                            dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
+                            SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
+                            saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
+                            int hour = timePicker.getHour();
+                            int minute = timePicker.getMinute();
+                            activityModelItems.get(position).setHourPractice(hour);
+                            activityModelItems.get(position).setMinutePractice(minute);
+                            alertDialog.cancel();
+                        }
+                    });
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.cancel();
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(getActivity(),"Not Today", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -201,7 +204,6 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(ActivitiesModel s) {
             super.onPostExecute(s);
-//            Toast.makeText(getActivity(),"ID: "+s.getUid() +" - " + s.getTitle(),Toast.LENGTH_LONG).show();
             ActivityModelItem activityModelItem = new ActivityModelItem();
             if(s.getTitle() != null){
                 activityModelItem.setTitle(s.getTitle());
@@ -210,8 +212,6 @@ public class HomeFragment extends Fragment {
             activityModelItem.setHours(s.getHours());
             activityModelItem.setIsHighPriority(s.getIsHighPriority());
             activityModelItem.setUid(s.getUid());
-            ScheduleActivityPagerFragment.datasets.add(activityModelItem);
-            ScheduleActivityPagerFragment.adapter.notifyDataSetChanged();
         }
     }
 
@@ -316,8 +316,8 @@ public class HomeFragment extends Fragment {
                 return null;
             }
             if(DateUtilities.stringToDate(selectedDate).before(DateUtilities.stringToDate(currentDate))){
-                if(db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(currentDate).size() > 0) {
-                    List<DailyActivityHobbyModel> dailyActivityHobbyModels = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(currentDate);
+                if(db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(selectedDate).size() > 0) {
+                    List<DailyActivityHobbyModel> dailyActivityHobbyModels = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(selectedDate);
                     for(int i = 0 ; i < dailyActivityHobbyModels.size() ; i++){
                         ActivityModelItem model = new ActivityModelItem();
                         model.setUid(dailyActivityHobbyModels.get(i).getUid());
@@ -431,7 +431,6 @@ public class HomeFragment extends Fragment {
                 setDynamicHeight(listViewRoutine);
 
             }else{
-//                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(dailyActivityItems);
         }
@@ -460,7 +459,6 @@ public class HomeFragment extends Fragment {
                 setDynamicHeight(listViewRoutine);
 
             }else{
-//                Toast.makeText(getActivity(),"Null",Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(dailyActivityItems);
         }
@@ -556,7 +554,7 @@ public class HomeFragment extends Fragment {
             dailyActivityHobbyModels = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(currentDate);
             // First, loop all the hobby activities list
             // Then, loop all the daily activities hobby list
-            // Check if some of them is already contanin the data, the populate the item with information
+            // Check if some of them is already contain the data, the populate the item with information
             for(int i = 0 ; i < hobbyActivities.size() ; i++){
                 ActivityModelItem model = new ActivityModelItem();
                 model.setUid(hobbyActivities.get(i).getUid());

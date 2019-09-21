@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_below="@id/timeline"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="The more you do exercise, the more you feel better"
+                android:textSize="20dp"
+                android:textColor="@color/google_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Today: 26-09-2019"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="160dp"
+                    android:elevation="11dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_height="170dp">
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:gravity="center_horizontal"
+                            android:layout_width="135dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/circle_shape_yellow"
+                            android:layout_height="135dp">
+                            <TextView
+                                android:fontFamily="sans-serif-condensed-medium"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="30dp"
+                                android:text="2200"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:src="@drawable/walking_64"
+                                android:layout_width="24dp"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:textColor="#000000"
+                                android:textSize="16dp"
+                                android:text="Total Steps"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="160dp"
+                    android:layout_height="170dp">
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:gravity="center_horizontal"
+                            android:layout_width="135dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/circle_shape_orange"
+                            android:layout_height="135dp">
+                            <TextView
+                                android:fontFamily="sans-serif-condensed-medium"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="30dp"
+                                android:text="0.18 km"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:src="@drawable/running_64"
+                                android:layout_width="24dp"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:fontFamily="sans-serif-condensed"
+                                android:textColor="#000000"
+                                android:textSize="16dp"
+                                android:text="Running Distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <Button
+                    android:text="Are you in this mood?"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:src="@drawable/happy_64"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"/>
+            </LinearLayout>
+<!--            <TextView-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="20dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:fontFamily="sans-serif-condensed-medium"-->
+<!--                android:layout_marginLeft="12dp"-->
+<!--                android:text="In this week"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+            <com.anychart.AnyChartView
+                android:id="@+id/chart1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+<!--            <ListView-->
+<!--                android:id="@+id/dashboard_sleeplv"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:divider="@null"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

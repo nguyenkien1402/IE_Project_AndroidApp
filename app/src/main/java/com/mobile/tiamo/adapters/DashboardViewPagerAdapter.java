@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
+public class DashboardViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public ScheduleViewPagerAdapter(FragmentManager manager) {
+    public DashboardViewPagerAdapter(FragmentManager manager) {
         super(manager);
     }
 

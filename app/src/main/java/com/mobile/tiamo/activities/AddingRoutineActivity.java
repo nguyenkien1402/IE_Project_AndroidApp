@@ -62,12 +62,22 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         btnAddRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String timeS = timeStart.getText().toString();
-                String timeE = timeEnd.getText().toString();
-                String days = daySelected.getText().toString();
-                String title = edTitle.getText().toString();
-                AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
-                addingScheduleAsync.execute(new String[]{title,timeS,timeE,days});
+                if(edTitle.getText() != null && !edTitle.getText().toString().equals("")){
+                    if(timeStart.getText() != null && timeEnd.getText() != null && daySelected.getText() != null){
+                        String timeS = timeStart.getText().toString();
+                        String timeE = timeEnd.getText().toString();
+                        String days = daySelected.getText().toString();
+                        String title = edTitle.getText().toString();
+                        AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
+                        addingScheduleAsync.execute(new String[]{title,timeS,timeE,days});
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Please set day and time for rountines", Toast.LENGTH_LONG).show();
+                    }
+
+                }else{
+                    edTitle.setError("Title Not Null");
+                }
+
             }
         });
     }
@@ -114,7 +124,8 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             if(aLong != null){
-                Toast.makeText(getApplicationContext(),"Add Routin Successfully: "+aLong,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Add Routine Successfully",Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }

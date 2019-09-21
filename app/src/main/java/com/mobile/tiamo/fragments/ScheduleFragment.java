@@ -8,40 +8,26 @@
 //import android.view.LayoutInflater;
 //import android.view.View;
 //import android.view.ViewGroup;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.ListView;
-//import android.widget.TableLayout;
 //import android.widget.Toast;
-//
 //import androidx.annotation.NonNull;
 //import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AlertDialog;
 //import androidx.fragment.app.Fragment;
 //import androidx.viewpager.widget.ViewPager;
-//
 //import com.getbase.floatingactionbutton.FloatingActionButton;
 //import com.google.android.material.tabs.TabLayout;
 //import com.mobile.tiamo.MainActivity;
 //import com.mobile.tiamo.R;
-//import com.mobile.tiamo.activities.AddingRoutineActivity;
 //import com.mobile.tiamo.adapters.ActivityModelItem;
-//import com.mobile.tiamo.adapters.ScheduleAdapter;
-//import com.mobile.tiamo.adapters.ScheduleItem;
-//import com.mobile.tiamo.adapters.ScheduleViewPagerAdapter;
+//import com.mobile.tiamo.adapters.DashboardViewPagerAdapter;
 //import com.mobile.tiamo.dao.ActivitiesModel;
 //import com.mobile.tiamo.dao.SQLiteDatabase;
-//import com.mobile.tiamo.dao.Schedule;
 //import com.mobile.tiamo.dao.TiamoDatabase;
 //
-//import java.util.ArrayList;
-//import java.util.List;
 //
 //public class ScheduleFragment extends Fragment {
 //    TabLayout tabLayout;
 //    ViewPager viewPager;
 //    View view;
-//    FloatingActionButton btnAddingRoutine, btnAddingActivity;
 //    TiamoDatabase db;
 //
 //    @Override
@@ -54,8 +40,6 @@
 //    @Override
 //    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        view = inflater.inflate(R.layout.fragment_schedule, container, false);
-//        btnAddingActivity = (FloatingActionButton) view.findViewById(R.id.action_activity);
-//        btnAddingRoutine = (FloatingActionButton) view.findViewById(R.id.action_routine);
 //
 //        viewPager = (ViewPager) view.findViewById(R.id.schedule_viewpager_1);
 //        setupViewPager(viewPager);
@@ -69,54 +53,13 @@
 //        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
 //        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
 //
-//        btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), AddingRoutineActivity.class);
-//                startActivityForResult(intent,1);
-//            }
-//        });
-//
-//        btnAddingActivity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LayoutInflater inflater1 = LayoutInflater.from(getContext());
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-//                alertDialogBuilder.setCancelable(false);
-//                // Inflate the popup dialog from a layout xml file.
-//                View popupInputDialogView = inflater1.inflate(R.layout.popup_input_activity, null);
-//                final EditText edTitle = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_title);
-//                final EditText edHour = (EditText) popupInputDialogView.findViewById(R.id.adding_routine_hours);
-//                Button btnAdd = popupInputDialogView.findViewById(R.id.btn_adding_routine_add);
-//                Button btnCancel = popupInputDialogView.findViewById(R.id.btn_adding_routine_cancel);
-//
-//                alertDialogBuilder.setView(popupInputDialogView);
-//                final AlertDialog alertDialog = alertDialogBuilder.create();
-//                alertDialog.show();
-//                btnAdd.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        // save to database
-//                        saveActivity(edTitle.getText().toString(), Integer.parseInt(edHour.getText().toString()));
-//                        alertDialog.cancel();
-//                    }
-//                });
-//
-//                btnCancel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        alertDialog.cancel();
-//                    }
-//                });
-//            }
-//        });
 //
 //        return view;
 //    }
 //
 //    private void setupViewPager(ViewPager viewPager) {
 //        Log.d("TAG","Call again");
-//        ScheduleViewPagerAdapter adapter = new ScheduleViewPagerAdapter(getChildFragmentManager());
+//        DashboardViewPagerAdapter adapter = new DashboardViewPagerAdapter(getChildFragmentManager());
 //        adapter.addFragment(new ScheduleRoutinePagerFragment(getContext()),"Routine");
 //        adapter.addFragment(new ScheduleActivityPagerFragment(), "Activity");
 //        viewPager.setAdapter(adapter);
