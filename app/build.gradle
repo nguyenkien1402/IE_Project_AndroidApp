@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -36,6 +39,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.0.0'
     implementation 'com.google.firebase:firebase-storage:19.0.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // SQL
     implementation "android.arch.persistence.room:runtime:1.1.1"
@@ -79,4 +84,6 @@ dependencies {
 
     //MP Android Chart
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
 }

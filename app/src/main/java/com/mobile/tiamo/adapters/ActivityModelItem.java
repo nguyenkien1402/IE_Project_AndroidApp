@@ -3,10 +3,6 @@ package com.mobile.tiamo.adapters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.room.ColumnInfo;
-
-import java.io.Serializable;
-
 public class ActivityModelItem implements Parcelable {
     private long uid;
     private String title;
@@ -16,6 +12,7 @@ public class ActivityModelItem implements Parcelable {
     private int isHighPriority;
     private int hourPractice;
     private int minutePractice;
+    private int totalMinutesLeft;
 
     public ActivityModelItem() {
     }
@@ -31,7 +28,7 @@ public class ActivityModelItem implements Parcelable {
         this.minutePractice = minutePractice;
     }
 
-    protected ActivityModelItem(Parcel in) {
+    private ActivityModelItem(Parcel in) {
         uid = in.readLong();
         title = in.readString();
         hours = in.readInt();
@@ -133,5 +130,13 @@ public class ActivityModelItem implements Parcelable {
 
     public void setMinutePractice(int minutePractice) {
         this.minutePractice = minutePractice;
+    }
+
+    public int getTotalMinutesLeft() {
+        return totalMinutesLeft;
+    }
+
+    public void setTotalMinutesLeft(int totalMinutesLeft) {
+        this.totalMinutesLeft = totalMinutesLeft;
     }
 }

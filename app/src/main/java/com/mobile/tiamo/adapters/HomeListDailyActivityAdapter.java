@@ -5,15 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.dao.ActivitiesModel;
-import com.mobile.tiamo.dao.Schedule;
-import com.mobile.tiamo.fragments.ScheduleActivityPagerFragment;
+import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
 
     public static class ViewHolder{
         TextView txtTile, txtHour;
+        ImageView img;
     }
     public HomeListDailyActivityAdapter(List<ActivityModelItem> datasets, Context context){
         super(context, R.layout.item_schedule_activity, datasets);
@@ -46,13 +46,15 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
             convertView = inflater.inflate(R.layout.item_schedule_activity, parent, false);
             viewHolder.txtTile = (TextView) convertView.findViewById(R.id.item_schedule_activity_title);
             viewHolder.txtHour = (TextView) convertView.findViewById(R.id.item_schedule_activity_hour);
-
+            viewHolder.img = (ImageView) convertView.findViewById(R.id.daily_activity_icon);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.txtTile.setText(activitiesModel.getTitle());
+        viewHolder.img.setImageDrawable(context.getResources().getDrawable(OtherUtilities.getIcon(activitiesModel.getTitle())));
+
 //        if(activitiesModel.getHourPractice() == 0 && activitiesModel.getMinutePractice() == 0){
 //            if(activitiesModel.getMinutes() == 0) {
 //                String text = activitiesModel.getHours() + " hours per week";

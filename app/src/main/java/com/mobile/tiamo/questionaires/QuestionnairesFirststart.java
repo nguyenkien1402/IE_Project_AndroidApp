@@ -27,31 +27,35 @@ import java.util.List;
  */
 public class QuestionnairesFirststart extends AppCompatActivity {
 
-    ViewPager viewPager;
+    NoSwipeableViewpager viewPager;
     LinearLayout main_view_pager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaires_firststart);
-        viewPager = (ViewPager) findViewById(R.id.questionaries_viewpager);
+        viewPager = (NoSwipeableViewpager) findViewById(R.id.questionaries_viewpager);
         main_view_pager = (LinearLayout) findViewById(R.id.main_view_pager);
         viewPager.setAdapter(new QuestionariesAdapter(getSupportFragmentManager()));
+        viewPager.setSwipeLocked(true);
         final View parentLayout = findViewById(android.R.id.content);
         final Button btnNext = findViewById(R.id.btnQNext);
-        Button btnBack = findViewById(R.id.btnQBack);
-        Toast.makeText(this,"Number of page:"+viewPager.getAdapter().getCount(),Toast.LENGTH_LONG).show();
+        final Button btnBack = findViewById(R.id.btnQBack);
+        btnBack.setVisibility(View.GONE);
+//        viewPager.invalidate();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Tab 1
                 if(viewPager.getCurrentItem() == 0){
+
                     String workingStartTime = FirstQuestionFragment.Companion.getTimeRangeStart();
                     String workingEndTime = FirstQuestionFragment.Companion.getTimeRangeEnd();
                     ArrayList<String> workingDay = FirstQuestionFragment.Companion.getDay();
                     if(workingStartTime == null || workingDay.size() == 0 || workingEndTime == null){
                         Snackbar.make(parentLayout,"You need to select the working day",Snackbar.LENGTH_SHORT).show();
                     }else{
+                        btnBack.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(getItem(+1),true);
                         return;
                     }
@@ -66,14 +70,9 @@ public class QuestionnairesFirststart extends AppCompatActivity {
 
                 // Tab 3
                 if(viewPager.getCurrentItem() == 2){
-//                    List<String> hobbies = ThirdQuestionFragment.listHobbies;
-//                    if(hobbies.size() == 0){
-//                        Snackbar.make(parentLayout,"You need select hobbies",Snackbar.LENGTH_SHORT).show();
-//                    }else{
                     btnNext.setVisibility(View.GONE);
                     viewPager.setCurrentItem(getItem(+1),true);
                     return;
-//                    }
                 }
 
             }
@@ -82,6 +81,9 @@ public class QuestionnairesFirststart extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(viewPager.getCurrentItem()-1==0){
+                    btnBack.setVisibility(View.GONE);
+                }
                 btnNext.setVisibility(View.VISIBLE);
                 viewPager.setCurrentItem(getItem(-1),true);
             }

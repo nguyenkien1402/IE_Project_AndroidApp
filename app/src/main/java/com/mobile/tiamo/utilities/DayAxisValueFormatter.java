@@ -24,3 +24,4 @@ public class DayAxisValueFormatter extends ValueFormatter
         }
 
 }
+

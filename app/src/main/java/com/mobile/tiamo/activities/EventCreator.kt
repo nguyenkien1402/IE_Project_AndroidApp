@@ -26,7 +26,7 @@ object EventCreator {
             weekDays
                     .map { dayOfWeek ->
                         startTime = LocalTime.of(8 + random.nextInt(1), random.nextInt(60))
-                        while (startTime.isBefore(LocalTime.of(15, 0))) {
+                        while (startTime.isBefore(LocalTime.of(22, 0))) {
                             val endTime = startTime.plusMinutes(minEventLength + random.nextInt(maxEventLength - minEventLength).toLong())
                             this.add(createSampleEntry(dayOfWeek, startTime, endTime))
                             startTime = endTime.plusMinutes(5 + random.nextInt(95).toLong())

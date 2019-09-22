@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Tiamo</string>
+    <string name="app_name">Liberzy</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_schedule">Setting</string>
-    <string name="title_activity_main2">Adding Schedule</string>
+    <string name="title_activity_main2">Adding Routines</string>
 
     <string name="title_activity_questionnaires_firststart">QuestionnairesFirststart</string>
 
@@ -53,12 +53,26 @@
         <item>Learn Magic</item>
         <item>Origami</item>
         <item>Visit Local Museums</item>
-        <item>Play Sudoku</item>
         <item>Photography</item>
         <item>Cycling</item>
-        <item>Whittling</item>
         <item>Baking</item>
         <item>Pottery</item>
-
     </string-array>
+
+    <integer-array name="chip_icons">
+        <item>@drawable/yoga_24</item>
+        <item>@drawable/cooking_24</item>
+        <item>@drawable/drawing_art_24</item>
+        <item>@drawable/yoga_24</item>
+        <item>@drawable/writing_24</item>
+        <item>@drawable/dancing_24</item>
+        <item>@drawable/magic_24</item>
+        <item>@drawable/origami_24</item>
+        <item>@drawable/museum_24</item>
+        <item>@drawable/photography_24</item>
+        <item>@drawable/cycling_24</item>
+        <item>@drawable/baking_24</item>
+        <item>@drawable/pottery_24</item>
+    </integer-array>
 </resources>
+

@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:hint="Title"
+                android:layout_marginRight="8dp"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />

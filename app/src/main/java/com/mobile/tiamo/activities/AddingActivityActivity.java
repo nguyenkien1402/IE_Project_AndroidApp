@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.chip.Chip;
@@ -26,6 +29,7 @@ import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,7 @@ public class AddingActivityActivity extends AppCompatActivity {
 
     public static int CODE_RESULT = 2;
     private static String[] chipSuggestion = null;
+    private TypedArray chipSugesstionIcon = null;
     private ChipGroup chipCurrentGroup;
     private ChipGroup chipSuggesstionGroup;
     private View popupInputDialogView, popupInputHobby;
@@ -43,12 +48,12 @@ public class AddingActivityActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private EditText edInputActivity;
     private List<ActivitiesModel> activitiesModels;
+    private TextView title_suggesstion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_hobby);
-
         initComponent();
         fabButtonAction();
     }
@@ -68,6 +73,13 @@ public class AddingActivityActivity extends AppCompatActivity {
             saveHobbiesToDatabaseAsync.execute();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SaveHobbiesToDatabaseAsync saveHobbiesToDatabaseAsync = new SaveHobbiesToDatabaseAsync();
+        saveHobbiesToDatabaseAsync.execute();
     }
 
     private class SaveHobbiesToDatabaseAsync extends AsyncTask<Void,Void,Void>{
@@ -104,13 +116,14 @@ public class AddingActivityActivity extends AppCompatActivity {
         // init database
         db = SQLiteDatabase.getTiamoDatabase(this);
         chipSuggestion = getResources().getStringArray(R.array.chip_suggestion);
+        chipSugesstionIcon = getResources().obtainTypedArray(R.array.chip_icons);
         chipCurrentGroup = findViewById(R.id.adding_current_chip);
         chipSuggesstionGroup = findViewById(R.id.adding_suggestion_chip);
         fab = findViewById(R.id.fab_adding_activity);
         Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar_adding_activity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("Hobbies");
+        getSupportActionBar().setTitle("Adding Activities");
 
         activitiesModels = new ArrayList<ActivitiesModel>();
         // Fill down the chip suggestion.
@@ -137,17 +150,18 @@ public class AddingActivityActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        if(edInputActivity.getText().toString() != null){
+                        if(!edInputActivity.getText().toString().trim().equals("") &&
+                            edInputActivity.getText() != null){
                             model.setHours(timePicker.getHour());
                             model.setMinutes(timePicker.getMinute());
                             String activity = edInputActivity.getText().toString();
                             model.setTitle(activity);
-                            addingNewChip(model);
+                            addingNewChip(model,-1);
+                            alertDialog.dismiss();
                         }else{
-
+                            edInputActivity.setError("Please Enter Title for Activity");
                         }
 
-                        alertDialog.dismiss();
 
                     }
                 });
@@ -181,6 +195,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         for(int i = 0 ; i < list.size() ; i++){
             Chip chip = (Chip) inflater.inflate(R.layout.item_chip,chipCurrentGroup,false);
+            chip.setChipIcon(getResources().getDrawable(OtherUtilities.getIcon(list.get(i).getTitle())));
             if(list.get(i).getHours() == 0) {
                 String text = list.get(i).getTitle() + " (" + list.get(i).getMinutes() + " minutes)";
                 chip.setText(text);
@@ -204,6 +219,7 @@ public class AddingActivityActivity extends AppCompatActivity {
                         alertDialogBuilder.setCancelable(false);
                         // Init popup dialog view and it's ui controls.
                         initPopupViewControls();
+                        title_suggesstion.setText(OtherUtilities.suggestion(c.getText().toString()));
                         alertDialogBuilder.setView(popupInputDialogView);
                         final AlertDialog alertDialog = alertDialogBuilder.create();
                         alertDialog.show();
@@ -227,8 +243,6 @@ public class AddingActivityActivity extends AppCompatActivity {
                                     String text = c.getText().toString() + " ("+hour+" hours, "+minute+" minutes)";
                                     c.setText(text);
                                 }
-
-
                                 alertDialog.cancel();
                             }
                         });
@@ -241,16 +255,43 @@ public class AddingActivityActivity extends AppCompatActivity {
                         });
                     }else{
                         String match = c.getText().toString().split("\\(")[0].trim();
-                        c.setText(match);
+                        removeCorrespondingViewInSuggestion(match);
                         for(int i = 0 ; i < activitiesModels.size() ; i++){
                             if(match.equals(activitiesModels.get(i).getTitle().trim())){
                                 activitiesModels.remove(i);
                                 break;
                             }
                         }
+                        chipCurrentGroup.removeView(c);
                     }
                 }
             });
+        }
+    }
+    private void removeCorrespondingViewInSuggestion(String match) {
+        Log.d("TAG","Remove view at suggestion");
+        for(int i = 0 ; i < chipSuggesstionGroup.getChildCount(); i++){
+            Chip c = (Chip) chipSuggesstionGroup.getChildAt(i);
+            if(match.equals(c.getText())){
+                c.setChecked(false);
+            }
+        }
+    }
+
+    private void removeCorrespondingViewInCurrent(String match){
+        Log.d("TAG","Remove view at current");
+        for(int i = 0 ; i < activitiesModels.size() ; i++){
+            if(match.equals(activitiesModels.get(i).getTitle().trim())){
+                activitiesModels.remove(i);
+                break;
+            }
+        }
+        for(int i = 0 ; i < chipCurrentGroup.getChildCount(); i++){
+            Chip c = (Chip) chipCurrentGroup.getChildAt(i);
+            if(match.equals(c.getText().toString().split("\\(")[0].trim())){
+                chipCurrentGroup.removeView(c);
+                break;
+            }
         }
     }
 
@@ -259,10 +300,12 @@ public class AddingActivityActivity extends AppCompatActivity {
         for(int i = 0 ; i < chipSuggestion.length ; i++){
             Chip chip = (Chip) inflater.inflate(R.layout.item_chip,chipSuggesstionGroup,false);
             chip.setText(chipSuggestion[i]);
+            chip.setChipIcon(getResources().getDrawable(chipSugesstionIcon.getResourceId(i,0)));
             chipSuggesstionGroup.addView(chip);
         }
         for(int i = 0 ; i < chipSuggesstionGroup.getChildCount(); i++){
             final Chip c = (Chip) chipSuggesstionGroup.getChildAt(i);
+            final int finalI = i;
             c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -271,6 +314,7 @@ public class AddingActivityActivity extends AppCompatActivity {
                         alertDialogBuilder.setCancelable(false);
                         // Init popup dialog view and it's ui controls.
                         initPopupViewControls();
+                        title_suggesstion.setText(OtherUtilities.suggestion(c.getText().toString()));
                         alertDialogBuilder.setView(popupInputDialogView);
                         final AlertDialog alertDialog = alertDialogBuilder.create();
                         alertDialog.show();
@@ -284,18 +328,17 @@ public class AddingActivityActivity extends AppCompatActivity {
                                 a.setTitle(c.getText().toString());
                                 a.setMinutes(minute);
                                 a.setHours(hour);
-                                activitiesModels.add(a);
-
-                                if(minute == 0){
-                                    String text = c.getText().toString() +" ("+hour+" hours)";
-                                    c.setText(text);
-                                }else if(hour == 0){
-                                    String text = c.getText().toString() + " (" +minute+" minutes)";
-                                    c.setText(text);
-                                }else{
-                                    String text = c.getText().toString() + " ("+hour+" hours, "+minute+" minutes)";
-                                    c.setText(text);
-                                }
+//                                if(minute == 0){
+//                                    String text = c.getText().toString() +" ("+hour+" hours)";
+//                                    c.setText(text);
+//                                }else if(hour == 0){
+//                                    String text = c.getText().toString() + " (" +minute+" minutes)";
+//                                    c.setText(text);
+//                                }else{
+//                                    String text = c.getText().toString() + " ("+hour+" hours, "+minute+" minutes)";
+//                                    c.setText(text);
+//                                }
+                                addingNewChip(a, finalI);
                                 alertDialog.cancel();
                             }
                         });
@@ -309,6 +352,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                     }else{
                         String match = c.getText().toString().split("\\(")[0].trim();
                         c.setText(match);
+                        removeCorrespondingViewInCurrent(match);
+                        chipCurrentGroup.removeView(c);
                         for(int i = 0 ; i < activitiesModels.size() ; i++){
                             if(match.equals(activitiesModels.get(i).getTitle().trim())){
                                 activitiesModels.remove(i);
@@ -321,10 +366,15 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
-    public void addingNewChip(ActivitiesModel model){
+    public void addingNewChip(ActivitiesModel model,int i){
         activitiesModels.add(model);
         LayoutInflater inflater = LayoutInflater.from(this);
         final Chip c = (Chip) inflater.inflate(R.layout.item_chip,chipCurrentGroup,false);
+        if(i!=-1){
+            c.setChipIcon(getResources().getDrawable(chipSugesstionIcon.getResourceId(i,0)));
+        }else{
+            c.setChipIcon(getResources().getDrawable(R.drawable.default_activity));
+        }
         int hour = model.getHours();
         int minute = model.getMinutes();
         if(minute == 0){
@@ -347,6 +397,7 @@ public class AddingActivityActivity extends AppCompatActivity {
                     alertDialogBuilder.setCancelable(false);
                     // Init popup dialog view and it's ui controls.
                     initPopupViewControls();
+                    title_suggesstion.setText(OtherUtilities.suggestion(c.getText().toString()));
                     alertDialogBuilder.setView(popupInputDialogView);
                     final AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
@@ -383,15 +434,18 @@ public class AddingActivityActivity extends AppCompatActivity {
                             alertDialog.cancel();
                         }
                     });
-                }else{
+                }
+                else{
                     String match = c.getText().toString().split("\\(")[0].trim();
-                    c.setText(match);
+                    removeCorrespondingViewInSuggestion(match);
                     for(int i = 0 ; i < activitiesModels.size() ; i++){
                         if(match.equals(activitiesModels.get(i).getTitle().trim())){
                             activitiesModels.remove(i);
                             break;
                         }
                     }
+                    chipCurrentGroup.removeView(c);
+
                 }
             }
         });
@@ -402,6 +456,7 @@ public class AddingActivityActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(AddingActivityActivity.this);
         // Inflate the popup dialog from a layout xml file.
         popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
+        title_suggesstion = popupInputDialogView.findViewById(R.id.title_suggesstion);
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
         btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
         timePicker = popupInputDialogView.findViewById(R.id.q3_time_picker_2);

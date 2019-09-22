@@ -8,8 +8,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobile.tiamo.fragments.DashboardFragment;
+import com.mobile.tiamo.fragments.DashboardViewPagerFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
 import com.mobile.tiamo.fragments.SettingFragment;
 import com.mobile.tiamo.fragments.TestNotificationFragment;
@@ -50,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new HomeFragment();
                     break;
                 case R.id.navigation_dashboard:
-                    fragment = new DashboardFragment();
+                    fragment = new DashboardViewPagerFragment();
                     break;
                 case R.id.navigation_notifications:
                     fragment = new SettingFragment();
                     break;
-                case R.id.test_notifications:
-                    fragment = new TestNotificationFragment();
-                    break;
+//                case R.id.test_notifications:
+//                    fragment = new TestNotificationFragment();
+//                    break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AndroidThreeTen.init(this);
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);

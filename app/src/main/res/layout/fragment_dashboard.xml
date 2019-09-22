@@ -5,13 +5,13 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/activity_progress"
-        android:textSize="28sp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="@string/activity_progress"-->
+<!--        android:textSize="28sp" />-->
     <ListView
         android:id="@+id/listView_dashboard"
         android:layout_width="match_parent"

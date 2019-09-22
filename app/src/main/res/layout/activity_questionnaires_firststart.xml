@@ -11,12 +11,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.viewpager.widget.ViewPager
+        <com.mobile.tiamo.questionaires.NoSwipeableViewpager
             android:id="@+id/questionaries_viewpager"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent">
-        </androidx.viewpager.widget.ViewPager>
+        </com.mobile.tiamo.questionaires.NoSwipeableViewpager>
 
         <RelativeLayout
             android:orientation="horizontal"

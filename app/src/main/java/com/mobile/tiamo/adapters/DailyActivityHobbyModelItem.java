@@ -3,50 +3,48 @@ package com.mobile.tiamo.adapters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DailyAcitivityHobbyModelItem implements Parcelable {
-    public static final Creator<ActivityModelItem> CREATOR = new Creator<ActivityModelItem>() {
-        @Override
-        public ActivityModelItem createFromParcel(Parcel in) {
-            return new ActivityModelItem(in);
-        }
+public class DailyActivityHobbyModelItem implements Parcelable {
 
-        @Override
-        public ActivityModelItem[] newArray(int size) {
-            return new ActivityModelItem[size];
-        }
-    };
     private long uid;
     private String title;
     private int hours;
     private int minutes;
     private int dayPerWeek;
     private int isHighPriority;
-    private int hourPractice;
-    private int minutePractice;
+    public static final Creator<DailyActivityHobbyModelItem> CREATOR = new Creator<DailyActivityHobbyModelItem>() {
+        @Override
+        public DailyActivityHobbyModelItem createFromParcel(Parcel in) {
+            return new DailyActivityHobbyModelItem(in);
+        }
 
-    public DailyAcitivityHobbyModelItem() {
+        @Override
+        public DailyActivityHobbyModelItem[] newArray(int size) {
+            return new DailyActivityHobbyModelItem[size];
+        }
+    };
+    private String dateCreated;
+
+    public DailyActivityHobbyModelItem() {
     }
 
-    public DailyAcitivityHobbyModelItem(long uid, String title, int hours, int minutes, int dayPerWeek, int isHighPriority, int hourPractice, int minutePractice) {
+    public DailyActivityHobbyModelItem(long uid, String title, int hours, int dayPerWeek, int isHighPriority, int minutes, String dateCreated) {
         this.uid = uid;
         this.title = title;
         this.hours = hours;
-        this.minutes = minutes;
         this.dayPerWeek = dayPerWeek;
         this.isHighPriority = isHighPriority;
-        this.hourPractice = hourPractice;
-        this.minutePractice = minutePractice;
+        this.minutes = minutes;
+        this.dateCreated = dateCreated;
     }
 
-    protected DailyAcitivityHobbyModelItem(Parcel in) {
+    protected DailyActivityHobbyModelItem(Parcel in) {
         uid = in.readLong();
         title = in.readString();
         hours = in.readInt();
         minutes = in.readInt();
         dayPerWeek = in.readInt();
         isHighPriority = in.readInt();
-        hourPractice = in.readInt();
-        minutePractice = in.readInt();
+        dateCreated = in.readString();
     }
 
     @Override
@@ -57,8 +55,7 @@ public class DailyAcitivityHobbyModelItem implements Parcelable {
         dest.writeInt(minutes);
         dest.writeInt(dayPerWeek);
         dest.writeInt(isHighPriority);
-        dest.writeInt(hourPractice);
-        dest.writeInt(minutePractice);
+        dest.writeString(dateCreated);
     }
 
     @Override
@@ -114,19 +111,11 @@ public class DailyAcitivityHobbyModelItem implements Parcelable {
         this.isHighPriority = isHighPriority;
     }
 
-    public int getHourPractice() {
-        return hourPractice;
+    public String getDateCreated() {
+        return dateCreated;
     }
 
-    public void setHourPractice(int hourPractice) {
-        this.hourPractice = hourPractice;
-    }
-
-    public int getMinutePractice() {
-        return minutePractice;
-    }
-
-    public void setMinutePractice(int minutePractice) {
-        this.minutePractice = minutePractice;
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }
