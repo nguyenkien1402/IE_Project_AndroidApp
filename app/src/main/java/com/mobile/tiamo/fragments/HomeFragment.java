@@ -112,6 +112,7 @@ public class HomeFragment extends Fragment {
                             dailyActivityHobbyModel.setHours(timePicker.getHour());
                             dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
                             dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
+
                             SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                             saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
                             int hour = timePicker.getHour();
@@ -557,7 +558,7 @@ public class HomeFragment extends Fragment {
             // Check if some of them is already contain the data, the populate the item with information
             for(int i = 0 ; i < hobbyActivities.size() ; i++){
                 ActivityModelItem model = new ActivityModelItem();
-                model.setUid(hobbyActivities.get(i).getUid());
+//                model.setUid(hobbyActivities.get(i).getUid());
                 model.setTitle(hobbyActivities.get(i).getTitle());
                 model.setHours(hobbyActivities.get(i).getHours());
                 model.setMinutes(hobbyActivities.get(i).getMinutes());
@@ -565,6 +566,7 @@ public class HomeFragment extends Fragment {
                     if(hobbyActivities.get(i).getTitle().equals(dailyActivityHobbyModels.get(j).getTitle())){
                         model.setHourPractice(dailyActivityHobbyModels.get(j).getHours());
                         model.setMinutePractice(dailyActivityHobbyModels.get(j).getMinutes());
+                        model.setUid(dailyActivityHobbyModels.get(i).getUid());
                         break;
                     }
                 }

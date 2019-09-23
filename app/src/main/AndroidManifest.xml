@@ -12,6 +12,7 @@
         android:roundIcon="@drawable/liberzy_logo4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:screenOrientation="portrait"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.NotificationActivity"
             android:theme="@style/AppThemeActionBar"/>
