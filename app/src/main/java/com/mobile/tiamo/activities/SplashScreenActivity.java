@@ -26,7 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 goToMainActivity();
             }
-        },2000);
+        },1000);
 
     }
 
