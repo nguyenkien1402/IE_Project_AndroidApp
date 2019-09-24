@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.1'
 
     // Time slector
-    implementation 'com.sleepsci:timepicker:1.0.2'
+    implementation 'com.sleepsci:timepicker:1.0.3'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -85,5 +85,8 @@ dependencies {
     //MP Android Chart
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    //Button
+    implementation "info.hoang8f:fbutton:1.0.5"
 
 }

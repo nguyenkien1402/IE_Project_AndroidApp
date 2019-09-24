@@ -33,7 +33,7 @@
             android:id="@+id/week_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:accent_color="@color/colorAccent">
+            app:accent_color="@color/colorPrimaryDark">
 
             <TextView
                 android:layout_width="wrap_content"

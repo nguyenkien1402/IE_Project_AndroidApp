@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/title_suggesstion"
         android:textSize="20dp"
+        android:text="How many hours per week?"
         android:textColor="#000000"
         android:fontFamily="sans-serif-condensed"
         android:layout_width="match_parent"

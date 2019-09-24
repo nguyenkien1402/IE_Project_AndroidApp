@@ -2,7 +2,6 @@ package com.mobile.tiamo.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,16 @@ import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DashboardSleepingAdapter;
 import com.mobile.tiamo.adapters.DashboardSleepingItem;
-import com.mobile.tiamo.adapters.HomeListDailyActivityAdapter;
-import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
+import com.mobile.tiamo.dao.SleepingModel;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.OtherUtilities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardViewSleepingFragment extends Fragment {
-
+    private static TiamoDatabase db;
+    private static List<ActivityModelItem> activityModelItems = null;
     View view;
     ListView lv;
     DashboardSleepingAdapter adapter;
@@ -36,6 +34,7 @@ public class DashboardViewSleepingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        db = SQLiteDatabase.getTiamoDatabase(getContext());
         view = inflater.inflate(R.layout.fragment_dashboard_sleeping, container, false);
         lv = view.findViewById(R.id.dashboard_sleep_lv);
         listItems = OtherUtilities.getSleepings();
@@ -43,6 +42,9 @@ public class DashboardViewSleepingFragment extends Fragment {
         lv.setAdapter(adapter);
         setDynamicHeight(lv);
         adapter.notifyDataSetChanged();
+
+        getSleepTimeAsync getListDailyActivityAsync = new getSleepTimeAsync();
+        getListDailyActivityAsync.execute();
 
         return view;
     }
@@ -65,4 +67,13 @@ public class DashboardViewSleepingFragment extends Fragment {
         listView.setLayoutParams(layoutParams);
         listView.requestLayout();
     }
+
+    private class getSleepTimeAsync extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<SleepingModel> sleepingModels = db.sleepingModelDao().getAll();
+            return null;
+        }
+    }
+
 }

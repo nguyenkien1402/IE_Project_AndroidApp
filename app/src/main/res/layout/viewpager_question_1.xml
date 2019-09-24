@@ -12,11 +12,22 @@
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:text="How many days you work in a week?"
-            style="@style/TextQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
+
+            <TextView
+                style="@style/TextQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How many days you work in a week?"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipFirstGroup"
@@ -139,12 +150,21 @@
             </LinearLayout>
 
         </LinearLayout>
-        <TextView
-            style="@style/TextQuestion"
-            android:textSize="28dp"
-            android:text="How long for commuting?"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
+
+            <TextView
+                style="@style/TextQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How much time for commuting to work?"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
         <TimePicker
             android:id="@+id/q1_timepicker"
             android:layout_gravity="center_horizontal"

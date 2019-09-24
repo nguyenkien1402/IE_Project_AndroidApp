@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2962ff</color>
-    <color name="colorPrimaryDark">#0039cb</color>
-    <color name="colorAccent">#768fff</color>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#00ACC1</color>
+    <color name="colorAccent">#00ACC1</color>
+    <color name="colorAccentDark">#c77800</color>
+    <color name="colorText">#000000</color>
+
 
     <color name="google_red">#ea4335</color>
 
@@ -25,8 +28,8 @@
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
     <color name="white_pressed">#f1f1f1</color>
-    <color name="pink">#e91e63</color>
-    <color name="pink_pressed">#ec407a</color>
+    <color name="pink">#FFA726</color>
+    <color name="pink_pressed">#c77800</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
