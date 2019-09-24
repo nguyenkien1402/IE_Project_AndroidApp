@@ -16,7 +16,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:paddingStart="5dp"
@@ -25,7 +25,7 @@
             <TextView
                 style="@style/TextQuestion"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="What is your sleeping time?"
                 android:textColor="@color/colorText" />
         </LinearLayout>
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:lineSpacingExtra="12sp"
                 android:text=""

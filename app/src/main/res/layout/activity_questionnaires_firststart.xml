@@ -38,19 +38,19 @@
                 android:layout_gravity="right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <!-- <info.hoang8f.widget.FButton
-                 android:layout_height="wrap_content"
-                 android:layout_width="wrap_content"
-             fbutton:buttonColor="#5A99A6"
-             fbutton:shadowColor="#5A99A6"
-             fbutton:shadowEnabled="true"
-             fbutton:shadowHeight="5dp"
-             fbutton:cornerRadius="5dp"
-                 android:layout_alignParentRight="true"
-                 android:id="@+id/btnQNext"
-                 android:text="Next"
-                 android:layout_gravity="right"
-             />-->
+            <!--<info.hoang8f.widget.FButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+            fbutton:buttonColor="#5A99A6"
+            fbutton:shadowColor="#5A99A6"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/btnQNext"
+                android:text="Next"
+                android:layout_gravity="right"
+            />-->
 
         </RelativeLayout>
 

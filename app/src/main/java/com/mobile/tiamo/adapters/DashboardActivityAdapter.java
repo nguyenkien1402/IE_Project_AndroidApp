@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.github.mikephil.charting.charts.LineChart;
@@ -30,6 +32,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.utilities.DayAxisValueFormatter;
 import com.mobile.tiamo.utilities.MinutesAxisValueFormatter;
+import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +47,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
     private LinearLayout linearLayout1;
     private LineChart chart;
     private List<DailyActivityHobbyModelItem> activityHobbyModelItems;
-
+    private ImageView activityImgView;
 
     public DashboardActivityAdapter(Context context, int resource, List<ActivityModelItem> objects, List<DailyActivityHobbyModelItem> activityHobbyModelItems) {
         super(context, resource, objects);
@@ -98,6 +101,10 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
         TextView tvTime = (TextView) convertView.findViewById(R.id.dashboard_tvTime);
         String strTimeSpent = String.format("Time Left: %dh %dm", model.getTotalMinutesLeft() / 60, model.getTotalMinutesLeft() % 60);
         tvTime.setText(strTimeSpent);
+
+        //Get icons for activities
+        activityImgView = (ImageView) convertView.findViewById(R.id.dashboard_activity_icon);
+        activityImgView.setImageDrawable(ContextCompat.getDrawable(context, OtherUtilities.getIcon(model.getTitle())));
 
         showPopupBtn = (Button) convertView.findViewById(R.id.showPopupBtn);
         linearLayout1 = (LinearLayout) convertView.findViewById(R.id.linearLayout1);
@@ -277,7 +284,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
             });
 
             // set color of filled area
-            set1.setFillColor(Color.BLUE);
+            set1.setFillColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1); // add the data sets

@@ -29,6 +29,58 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/questionaries_working_time"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/timestart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="From: "
+                    android:textColor="#000000"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/timeend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingRight="20dp"
+                    android:text="To: "
+                    android:textColor="#000000"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/t1"
+                style="@style/TextQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Set Working Time"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipFirstGroup"
             android:layout_width="match_parent"
@@ -36,6 +88,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="20dp"
             app:chipSpacing="16dp"
             app:singleSelection="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,52 +157,6 @@
                 app:chipBackgroundColor="@drawable/bg_chip_state_list"
                 android:text="Sunday" />
         </com.google.android.material.chip.ChipGroup>
-
-        <LinearLayout
-            android:id="@+id/questionaries_working_time"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:layout_height="120dp">
-            <TextView
-                android:id="@+id/t1"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="Set Working Time"
-                android:textSize="25dp"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:text="From:       "
-                    android:id="@+id/timestart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:text="To:"
-                    android:id="@+id/timeend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

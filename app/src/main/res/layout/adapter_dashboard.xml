@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/dashboard_activity_icon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/default_daily_routine" />
         <TextView
             android:id="@+id/dashboard_tvTitle"
             android:layout_width="172dp"
