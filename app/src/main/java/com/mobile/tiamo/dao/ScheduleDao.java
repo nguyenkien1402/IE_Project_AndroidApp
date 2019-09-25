@@ -24,5 +24,6 @@ public interface ScheduleDao {
     @Query("SELECT * FROM schedule WHERE day_created = :date")
     List<Schedule> getListAddByDate(String date);
 
-
+    @Query("DELETE FROM Schedule")
+    void deleteAll();
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="How is your mood right now"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#535252"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/mood_happy"
+            android:src="@drawable/happy_64"
+            android:layout_weight="1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+        <ImageView
+            android:id="@+id/mood_neutral"
+            android:layout_weight="1"
+            android:src="@drawable/neutral_64"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+        <ImageView
+            android:id="@+id/mood_sad"
+            android:layout_weight="1"
+            android:src="@drawable/sad_64"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+    </LinearLayout>
+
+</LinearLayout>

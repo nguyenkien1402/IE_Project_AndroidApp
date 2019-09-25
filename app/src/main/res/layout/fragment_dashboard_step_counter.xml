@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/step_today"
                     android:textSize="22dp"
                     android:layout_marginLeft="8dp"
                     android:textColor="#000000"
@@ -68,6 +69,7 @@
                             android:background="@drawable/circle_shape_yellow"
                             android:layout_height="135dp">
                             <TextView
+                                android:id="@+id/step_takens_today"
                                 android:fontFamily="sans-serif-condensed-medium"
                                 android:layout_gravity="center"
                                 android:gravity="center"
@@ -117,6 +119,7 @@
                             android:background="@drawable/circle_shape_orange"
                             android:layout_height="135dp">
                             <TextView
+                                android:id="@+id/step_running_today"
                                 android:fontFamily="sans-serif-condensed-medium"
                                 android:layout_gravity="center"
                                 android:gravity="center"
@@ -155,11 +158,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <Button
+                    android:id="@+id/btnSetMood"
                     android:text="Are you in this mood?"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
                 <ImageView
+                    android:id="@+id/mood_view"
                     android:src="@drawable/happy_64"
                     android:layout_marginLeft="16dp"
                     android:layout_width="45dp"

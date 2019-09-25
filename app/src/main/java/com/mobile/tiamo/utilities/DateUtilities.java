@@ -72,4 +72,9 @@ public class DateUtilities {
 
     }
 
+    public static String getWeekDayAbbFromDate(Date date){
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEE"); // the day of the week spelled out completely
+        return simpleDateformat.format(date.getTime());
+    }
+
 }

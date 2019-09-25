@@ -37,4 +37,7 @@ public interface DailyActivityHobbyModelDao {
 
     @Query("UPDATE DailyActivityHobbyModel SET isStorage = 1 WHERE isStorage = 0")
     void updateStorage();
+
+    @Query("DELETE FROM DailyActivityHobbyModel")
+    void deleteAll();
 }

@@ -43,5 +43,8 @@ public interface DailyRoutineDao {
     @Query("UPDATE DailyRoutine SET isStorage = 1 WHERE isStorage = 0")
     void updateStorage();
 
+    @Query("DELETE FROM DailyRoutine")
+    void deleteAll();
+
 
 }

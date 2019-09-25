@@ -19,6 +19,9 @@ public interface SleepingModelDao {
     @Insert
     long insert(SleepingModel sleepingModel);
 
+    @Insert
+    void insertAll(List<SleepingModel> sleepingModels);
+
     @Update
     void update(SleepingModel sleepingModel);
 
@@ -30,5 +33,11 @@ public interface SleepingModelDao {
 
     @Query("UPDATE SleepingModel SET isStorage = 1 WHERE isStorage = 0")
     void updateStorageSleeping();
+
+    @Query("DELETE FROM SleepingModel")
+    void deleteAll();
+
+    @Query("SELECT * FROM sleepingmodel WHERE date BETWEEN :date1 AND :date2")
+    List<SleepingModel> getLastTenDay(String date1, String date2);
 
 }

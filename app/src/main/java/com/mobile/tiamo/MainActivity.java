@@ -19,6 +19,7 @@ import com.mobile.tiamo.questionaires.SecondQuestionFragment;
 import com.mobile.tiamo.services.ScreenOnAndOffService;
 import com.mobile.tiamo.services.SleepingNotificationBeforeTimeReceiver;
 import com.mobile.tiamo.services.UpdateDatabaseToServer;
+import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
@@ -28,13 +29,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.threeten.bp.Duration;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.TemporalField;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -86,12 +96,32 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
 
+
+        testSomething();
+
         // Run service in the mid-night.
         // Service to inform saving the data. Let's do this one first
 //        serviceUpdateDatabase();
         // Service to inform tracking sleep
 //        startSleepTrackingService();
 
+    }
+
+    private void testSomething(){
+        try {
+            String today = DateUtilities.getCurrentDateInString();
+            Log.d("Test",today + ":"+DateUtilities.getDayInAbbBySelectedDate(today));
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = dateFormat.parse(today);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
+            calendar.add(Calendar.DAY_OF_YEAR,-9);
+            Date datebefore = calendar.getTime();
+            String dateBeforeStr = dateFormat.format(datebefore);
+            Log.d("Test",dateBeforeStr +":"+DateUtilities.getDayInAbbBySelectedDate(dateBeforeStr));
+        }catch (Exception e){
+            Log.d("TAG",e.getMessage());
+        }
     }
 
     /*

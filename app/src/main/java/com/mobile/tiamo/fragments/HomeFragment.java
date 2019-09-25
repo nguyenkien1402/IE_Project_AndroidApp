@@ -438,6 +438,15 @@ public class HomeFragment extends Fragment {
     }
 
     private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
+
+        ProgressDialog pd ;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setTitle("Load Data");
+        }
+
         @Override
         protected List<DailyRoutineItem> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
@@ -446,6 +455,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<DailyRoutineItem> dailyActivityItems) {
+            super.onPostExecute(dailyActivityItems);
             if(dailyActivityItems.size() > 0){
                 datasets = dailyActivityItems;
                 adapter = new DailyActivityAdapter(datasets, getActivity());
@@ -458,10 +468,15 @@ public class HomeFragment extends Fragment {
 
                 setDynamicHeight(listViewActivity);
                 setDynamicHeight(listViewRoutine);
-
             }else{
+                if(activityModelItems.size() >0){
+                    homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
+                    listViewActivity.setAdapter(homeListDailyActivityAdapter);
+                    homeListDailyActivityAdapter.notifyDataSetChanged();
+                    setDynamicHeight(listViewActivity);
+                }
             }
-            super.onPostExecute(dailyActivityItems);
+            pd.dismiss();
         }
     }
 
@@ -566,13 +581,14 @@ public class HomeFragment extends Fragment {
                     if(hobbyActivities.get(i).getTitle().equals(dailyActivityHobbyModels.get(j).getTitle())){
                         model.setHourPractice(dailyActivityHobbyModels.get(j).getHours());
                         model.setMinutePractice(dailyActivityHobbyModels.get(j).getMinutes());
-                        model.setUid(dailyActivityHobbyModels.get(i).getUid());
+                        model.setUid(dailyActivityHobbyModels.get(j).getUid());
                         break;
                     }
                 }
                 activityModelItems.add(model);
             }
         }else{
+            Log.d("TAG","No recording activity");
             // load all the data from activity model dao
             if(db.activitiesModelDao().getAll().size() > 0) {
                 for (int i = 0; i < hobbyActivities.size(); i++) {

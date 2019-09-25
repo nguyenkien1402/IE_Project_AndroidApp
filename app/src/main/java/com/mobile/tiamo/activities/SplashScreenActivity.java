@@ -1,6 +1,7 @@
 package com.mobile.tiamo.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -30,13 +31,18 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
+
+
+
     private void goToMainActivity() {
         if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER) == 1){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }else{
             Intent i = new Intent(this, QuestionnairesFirststart.class);
             startActivity(i);
+            finish();
         }
     }
 }
