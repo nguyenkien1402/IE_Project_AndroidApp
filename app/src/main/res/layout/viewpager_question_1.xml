@@ -108,7 +108,7 @@
         <LinearLayout
             android:id="@+id/questionaries_working_time"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="140dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
