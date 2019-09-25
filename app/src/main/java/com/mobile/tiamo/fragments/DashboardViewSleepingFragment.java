@@ -78,11 +78,14 @@ public class DashboardViewSleepingFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            adapter = new DashboardSleepingAdapter(listItems,getActivity());
-            lv.setAdapter(adapter);
-            setDynamicHeight(lv);
-            adapter.notifyDataSetChanged();
-            tvYesterday.setText(listItems.get(0).getAvg());
+            if(listItems.size() > 0){
+                adapter = new DashboardSleepingAdapter(listItems,getActivity());
+                lv.setAdapter(adapter);
+                setDynamicHeight(lv);
+                adapter.notifyDataSetChanged();
+                tvYesterday.setText(listItems.get(0).getAvg());
+            }
+
         }
     }
 
@@ -104,7 +107,7 @@ public class DashboardViewSleepingFragment extends Fragment {
         tvWakeup = view.findViewById(R.id.today_wakeup);
         tvYesterday = view.findViewById(R.id.avg_yesterday);
 
-        tvToday.setText(DateUtilities.getCurrentDateInString());
+        tvToday.setText("To day: "+DateUtilities.getCurrentDateInString());
         tvInbed.setText("1:15 AM");
         tvWakeup.setText("6:50 AM");
         tvAvgSleepingToday.setText("5h 15m");

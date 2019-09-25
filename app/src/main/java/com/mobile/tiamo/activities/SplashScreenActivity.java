@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER) == 1){
+            Log.d("TAG","Go to the main: " + SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER));
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
