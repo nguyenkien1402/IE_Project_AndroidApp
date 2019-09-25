@@ -2,6 +2,7 @@ package com.mobile.tiamo.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,6 @@ public class DashboardViewSleepingFragment extends Fragment {
     private Button sleepingMood;
     private ImageView btnHappy, btnNeutral, btnTired,imvMoodView;
     private View popupView;
-    private TiamoDatabase db;
     private TextView tvToday, tvAvgSleepingToday, tvInbed, tvWakeup, tvYesterday;
 
 
@@ -57,24 +57,12 @@ public class DashboardViewSleepingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dashboard_sleeping, container, false);
-        lv = view.findViewById(R.id.dashboard_sleep_lv);
-        listItems = OtherUtilities.getSleepings();
-        adapter = new DashboardSleepingAdapter(listItems,getActivity());
-        lv.setAdapter(adapter);
-        setDynamicHeight(lv);
-        adapter.notifyDataSetChanged();
-
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
-
         initComponent();
         buttonAction();
 
         GetSleepingTimeAsync getSleepingTimeAsync = new GetSleepingTimeAsync();
         getSleepingTimeAsync.execute();
-
-
-        getSleepTimeAsync getListDailyActivityAsync = new getSleepTimeAsync();
-        getListDailyActivityAsync.execute();
 
         return view;
     }
@@ -94,10 +82,7 @@ public class DashboardViewSleepingFragment extends Fragment {
             lv.setAdapter(adapter);
             setDynamicHeight(lv);
             adapter.notifyDataSetChanged();
-
             tvYesterday.setText(listItems.get(0).getAvg());
-
-
         }
     }
 
@@ -144,13 +129,6 @@ public class DashboardViewSleepingFragment extends Fragment {
         listView.requestLayout();
     }
 
-    private class getSleepTimeAsync extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            List<SleepingModel> sleepingModels = db.sleepingModelDao().getAll();
-            return null;
-        }
-    }
 
     public void initPopupSleepMood(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
