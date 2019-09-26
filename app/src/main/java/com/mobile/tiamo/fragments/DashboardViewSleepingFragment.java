@@ -190,6 +190,12 @@ public class DashboardViewSleepingFragment extends Fragment {
 
             List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,today);
             String previousDate = "";
+            Log.d("TAG","SIZE ALL:" + db.sleepingModelDao().getAll().size());
+            List<SleepingModel> models = db.sleepingModelDao().getAll();
+            for(int i = 0 ; i < models.size() ; i++){
+                Log.d("H",models.get(i).getDate());
+            }
+            Log.d("TAG","SIZE 10:" + db.sleepingModelDao().getLastTenDay(strBefore,today).size());
             DashboardSleepingItem item = null;
             int avg = 0;
             for(int i = 0 ; i < sleepingModels.size() ; i++){

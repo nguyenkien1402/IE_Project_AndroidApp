@@ -101,14 +101,14 @@ public class SettingFragment extends Fragment {
 
     private class PopulateDataAsync extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog m;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            m = new ProgressDialog(getActivity());
-            m.setTitle("Update");
-            m.show();
-        }
+//        ProgressDialog m;
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            m = new ProgressDialog(getActivity());
+//            m.setTitle("Update");
+//            m.show();
+//        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -124,7 +124,7 @@ public class SettingFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
-            m.dismiss();
+//            m.dismiss();
         }
     }
 
@@ -418,7 +418,13 @@ public class SettingFragment extends Fragment {
         s.setIsStorage(0);
         int randomTimeSleep = rand.nextInt((60 - 0) + 1) + 0;
         if(randomTimeSleep > 15){
-            s.setTime("00:"+(randomTimeSleep-15));
+            String m="";
+            if((randomTimeSleep - 15)<9){
+                m = "0" + (randomTimeSleep-15);
+            }else{
+                m = (randomTimeSleep-15)+"";
+            }
+            s.setTime("00:"+m);
         }else{
             s.setTime("23:"+(45+randomTimeSleep));
         }
@@ -430,16 +436,20 @@ public class SettingFragment extends Fragment {
             s.setWakeupTime(now.toString());
             list.add(s);
 
-            if(now.compareTo(LocalTime.of(6,30))==1) break;
-
-            s = new SleepingModel();
-            s.setDate(date);
-            s.setIsStorage(0);
 
             // Random to go to sleep again
             int randomSleep = rand.nextInt((45-20)+1)+20;
-            now = now.plusMinutes(randomSleep);
+            s = new SleepingModel();
+            s.setDate(date);
+            s.setIsStorage(0);
             s.setTime(now.toString());
+            now = now.plusMinutes(randomSleep);
+            if(now.compareTo(LocalTime.of(6,30))==1){
+                Log.d("TAG","Populate Break");
+                break;
+            }
+
+
         }
 
         //add the real wakeup time
