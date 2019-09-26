@@ -105,6 +105,18 @@
                 android:text="Sunday" />
         </com.google.android.material.chip.ChipGroup>
 
+        <TextView
+            android:id="@+id/t1"
+            style="@style/TextQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="Set Working Time"
+            android:textColor="#000000" />
+
         <LinearLayout
             android:id="@+id/questionaries_working_time"
             android:layout_width="match_parent"
@@ -146,18 +158,6 @@
 
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/t1"
-            style="@style/TextQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Set Working Time"
-            android:textColor="#000000" />
 
 
         <LinearLayout
