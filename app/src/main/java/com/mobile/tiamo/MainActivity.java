@@ -4,6 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,6 +22,8 @@ import com.mobile.tiamo.fragments.TestNotificationFragment;
 import com.mobile.tiamo.questionaires.SecondQuestionFragment;
 import com.mobile.tiamo.services.ScreenOnAndOffService;
 import com.mobile.tiamo.services.SleepingNotificationBeforeTimeReceiver;
+import com.mobile.tiamo.services.StepDetector;
+import com.mobile.tiamo.services.StepListener;
 import com.mobile.tiamo.services.UpdateDatabaseToServer;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
@@ -46,10 +52,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private TextView mTextMessage;
-    private Toolbar toolbar;
     public static TextView textToolbar;
+
+    private StepDetector simpleStepDetector;
+    private SensorManager sensorManager;
+    private Sensor accel;
+    private int numSteps = 0;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -99,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         testSomething();
 
+        // Run service check the step
+        runStepCounterService();
         // Run service in the mid-night.
         // Service to inform saving the data. Let's do this one first
 //        serviceUpdateDatabase();
@@ -176,8 +188,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void runStepCounterService(){
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
+
+        sensorManager.registerListener(MainActivity.this,accel, SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]
+            );
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void step(long timeNs) {
+        numSteps++;
     }
 }
