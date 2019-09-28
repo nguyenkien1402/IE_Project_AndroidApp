@@ -30,30 +30,13 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
+
 import com.mobile.tiamo.R;
-import com.mobile.tiamo.adapters.ActivityModelItem;
-import com.mobile.tiamo.adapters.HomeListDailyActivityAdapter;
-import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.StepsTakenModel;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
 
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-
-import java.sql.SQLInput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,6 +57,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
     private List<StepsTakenModel> stepsTakenModels;
     private TiamoDatabase db;
     private String[] days = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
+    private int stepsToday = 0;
 
     @Nullable
     @Override
@@ -98,6 +82,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
 
         return view;
     }
+
 
     private void initComponent(){
         chart = view.findViewById(R.id.chart1);
@@ -132,10 +117,14 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 stepsTakenModelsThisWeek.add(stepsTakenModels.get(i));
             }
 
+            stepsToday = db.stepsTakenDao().getStepTakenByDate(today).getSteps();
+
         }catch (Exception e){
             Log.d("TAG",e.getMessage());
         }
     }
+
+
     private class LoadingChartAysnc extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {
@@ -169,9 +158,12 @@ public class DashboardViewStepCounterFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            tvStepTakenToday.setText(stepsToday+"");
             initChart();
         }
     }
+
+
     private void initPopupMoodView(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setCancelable(false);
@@ -243,7 +235,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 if(DateUtilities.getDayInAbbBySelectedDate(stepsTakenModelsLastWeek.get(i).getDate()).equals(
                         DateUtilities.getCurrentDayInAbb()
                 )){
-                    c.setValue("value2",658);
+                    c.setValue("value2",stepsToday);
                 }else{
                     c.setValue("value2",0);
                 }
@@ -317,6 +309,5 @@ public class DashboardViewStepCounterFragment extends Fragment {
         }
 
     }
-
 
 }

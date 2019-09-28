@@ -28,6 +28,7 @@ import com.mobile.tiamo.services.UpdateDatabaseToServer;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
+import com.mobile.tiamo.utilities.StepCounterService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -52,13 +53,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
+public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     public static TextView textToolbar;
 
-    private StepDetector simpleStepDetector;
-    private SensorManager sensorManager;
-    private Sensor accel;
+//    private StepDetector simpleStepDetector;
+//    private SensorManager sensorManager;
+//    private Sensor accel;
     private int numSteps = 0;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -109,11 +110,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         testSomething();
 
+        Intent mStepsIntent = new Intent(getApplicationContext(), StepCounterService.class);
+        startService(mStepsIntent);
+
         // Run service check the step
-        runStepCounterService();
+//        runStepCounterService();
+
         // Run service in the mid-night.
         // Service to inform saving the data. Let's do this one first
 //        serviceUpdateDatabase();
+
         // Service to inform tracking sleep
 //        startSleepTrackingService();
 
@@ -188,36 +194,42 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    private void runStepCounterService(){
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
-
-        sensorManager.registerListener(MainActivity.this,accel, SensorManager.SENSOR_DELAY_FASTEST);
-    }
+//    private void runStepCounterService(){
+//        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        simpleStepDetector = new StepDetector();
+//        simpleStepDetector.registerListener(this);
+//
+//        sensorManager.registerListener(MainActivity.this,accel, SensorManager.SENSOR_DELAY_FASTEST);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            simpleStepDetector.updateAccel(
-                    event.timestamp, event.values[0], event.values[1], event.values[2]
-            );
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    public void step(long timeNs) {
-        numSteps++;
-    }
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+//            simpleStepDetector.updateAccel(
+//                    event.timestamp, event.values[0], event.values[1], event.values[2]
+//            );
+//        }
+//    }
+//
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//    }
+//
+//    @Override
+//    public void step(long timeNs) {
+//        numSteps++;
+////        if(numSteps %100 == 0){
+////            int currentStep = SavingDataSharePreference.getDataInt(this,Messages.LOCAL_DATA_STEP,DateUtilities.getCurrentDateInString());
+////            currentStep = currentStep + numSteps;
+////            SavingDataSharePreference.savingLocalData(this,Messages.LOCAL_DATA_STEP,DateUtilities.getCurrentDateInString(),currentStep);
+////        }
+//
+//    }
 }
