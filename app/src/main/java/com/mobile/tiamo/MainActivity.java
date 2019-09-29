@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         testSomething();
 
-        Intent mStepsIntent = new Intent(getApplicationContext(), StepCounterService.class);
-        startService(mStepsIntent);
+//        Intent mStepsIntent = new Intent(getApplicationContext(), StepCounterService.class);
+//        startService(mStepsIntent);
 
         // Run service check the step
 //        runStepCounterService();

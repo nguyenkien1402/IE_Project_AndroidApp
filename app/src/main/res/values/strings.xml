@@ -1,64 +1,4 @@
 <resources>
-    <string name="app_name">Liberzy</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_schedule">Setting</string>
-    <string name="title_activity_main2">Adding Routines</string>
-
-    <string name="title_activity_questionnaires_firststart">QuestionnairesFirststart</string>
-
-    <string name="dummy_button">Dummy Button</string>
-
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="sleep_schedule">Sleep Schedule</string>
-    <string name="wake_up">Wake up</string>
-
-    <string name="sleep_schedule_hr">HR</string>
-
-    <string name="sleep_schedule_min">MIN</string>
-    <string name="bedtime">BEDTIME</string>
-
-    <string name="chosen_time_range">%1$s:%2$s - %3$s:%4$s</string>
-    <string name="chosen_time_range_only">%1$s:%2$s</string>
-    <string name="activity_progress">Activity Progress</string>
-    <string-array name="day_of_week">
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-        <item>Sunday</item>
-    </string-array>
-
-    <string-array name="day_of_week_abb">
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
-        <item>Sun</item>
-    </string-array>
-    <string-array name="chip_suggestion">
-        <item>Meditation</item>
-        <item>Learn Cooking</item>
-        <item>Drawing</item>
-        <item>Yoga</item>
-        <item>Writing</item>
-        <item>Dancing</item>
-        <item>Learn Magic</item>
-        <item>Origami</item>
-        <item>Visit Local Museums</item>
-        <item>Photography</item>
-        <item>Cycling</item>
-        <item>Baking</item>
-        <item>Pottery</item>
-    </string-array>
-
     <integer-array name="chip_icons">
         <item>@drawable/yoga_24</item>
         <item>@drawable/cooking_24</item>
@@ -74,5 +14,65 @@
         <item>@drawable/baking_24</item>
         <item>@drawable/pottery_24</item>
     </integer-array>
+    <string name="app_name">Liberzy</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_schedule">Setting</string>
+
+    <string name="title_activity_main2">Adding Routines</string>
+
+    <string name="title_activity_questionnaires_firststart">QuestionnairesFirststart</string>
+
+    <string name="dummy_button">Dummy Button</string>
+
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="sleep_schedule">Sleep Schedule</string>
+
+    <string name="wake_up">Wake up</string>
+
+    <string name="sleep_schedule_hr">HR</string>
+    <string name="sleep_schedule_min">MIN</string>
+
+    <string name="bedtime">BEDTIME</string>
+    <string name="chosen_time_range">%1$s:%2$s - %3$s:%4$s</string>
+    <string name="chosen_time_range_only">%1$s:%2$s</string>
+    <string name="activity_progress">Activity Progress</string>
+
+    <string-array name="day_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string-array name="day_of_week_abb">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string-array name="chip_suggestion">
+        <item>Meditation</item>
+        <item>Learn Cooking</item>
+        <item>Drawing</item>
+        <item>Yoga</item>
+        <item>Writing</item>
+        <item>Dancing</item>
+        <item>Learn Magic</item>
+        <item>Origami</item>
+        <item>Visit Local Museums</item>
+        <item>Photography</item>
+        <item>Cycling</item>
+        <item>Baking</item>
+        <item>Pottery</item>
+    </string-array>
 </resources>
 

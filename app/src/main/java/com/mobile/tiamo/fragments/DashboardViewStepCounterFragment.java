@@ -117,7 +117,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 stepsTakenModelsThisWeek.add(stepsTakenModels.get(i));
             }
 
-            stepsToday = db.stepsTakenDao().getStepTakenByDate(today).getSteps();
+//            stepsToday = db.stepsTakenDao().getStepTakenByDate(today).getSteps();
 
         }catch (Exception e){
             Log.d("TAG",e.getMessage());
@@ -158,7 +158,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            tvStepTakenToday.setText(stepsToday+"");
+//            tvStepTakenToday.setText(stepsToday+"");
             initChart();
         }
     }

@@ -1,6 +1,7 @@
 package com.mobile.tiamo.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.activities.MovieRecommendationActivity;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.DailyRoutine;
@@ -42,7 +44,7 @@ import java.util.Random;
 
 public class SettingFragment extends Fragment {
 
-    TextView tvAboutUs, deleteAll;
+    TextView tvAboutUs, deleteAll, btnMovies;
     TiamoDatabase db;
     Random rand = new Random();
     List<String> pickUpChildrenDay = new ArrayList<String>();
@@ -55,6 +57,7 @@ public class SettingFragment extends Fragment {
         MainActivity.textToolbar.setText(R.string.app_name);
         tvAboutUs = view.findViewById(R.id.setting_about_us);
         deleteAll = view.findViewById(R.id.deleteAll);
+        btnMovies = view.findViewById(R.id.btnMovies);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         pickUpChildrenDay.add("Mon");
         pickUpChildrenDay.add("Wed");
@@ -73,6 +76,14 @@ public class SettingFragment extends Fragment {
                 Toast.makeText(getActivity(),"Check OK",Toast.LENGTH_SHORT).show();
                 DeleteAllAsync deleteAllAsync = new DeleteAllAsync();
                 deleteAllAsync.execute();
+            }
+        });
+
+        btnMovies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MovieRecommendationActivity.class);
+                startActivity(intent);
             }
         });
         return view;
