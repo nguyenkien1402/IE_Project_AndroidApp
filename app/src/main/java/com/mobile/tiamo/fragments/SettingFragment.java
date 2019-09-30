@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.MovieRecommendationActivity;
+import com.mobile.tiamo.activities.SearchMoviesActivity;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.DailyRoutine;
@@ -82,7 +83,7 @@ public class SettingFragment extends Fragment {
         btnMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MovieRecommendationActivity.class);
+                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
                 startActivity(intent);
             }
         });

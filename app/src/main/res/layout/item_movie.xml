@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_movie_image"
+            android:src="@drawable/default_daily_routine"
+            android:layout_width="68dp"
+            android:layout_height="68dp"/>
+
+        <RelativeLayout
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="100dp">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="#000000"
+                android:id="@+id/item_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                style="?android:attr/textAppearanceMedium"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center_vertical"
+                android:text="Thor"
+                android:textSize="25dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:typeface="sans" />
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/item_movie_year"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@id/item_movie_title"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center_vertical"
+                android:text="2017"
+                android:textSize="16dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

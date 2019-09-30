@@ -4,31 +4,21 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-import com.mobile.tiamo.fragments.DashboardFragment;
 import com.mobile.tiamo.fragments.DashboardViewPagerFragment;
 import com.mobile.tiamo.fragments.HomeFragment;
 import com.mobile.tiamo.fragments.SettingFragment;
-import com.mobile.tiamo.fragments.TestNotificationFragment;
-import com.mobile.tiamo.questionaires.SecondQuestionFragment;
 import com.mobile.tiamo.services.ScreenOnAndOffService;
 import com.mobile.tiamo.services.SleepingNotificationBeforeTimeReceiver;
-import com.mobile.tiamo.services.StepDetector;
-import com.mobile.tiamo.services.StepListener;
 import com.mobile.tiamo.services.UpdateDatabaseToServer;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
-import com.mobile.tiamo.utilities.StepCounterService;
+import com.mobile.tiamo.services.StepCounterService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -41,12 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.threeten.bp.Duration;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.temporal.TemporalField;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

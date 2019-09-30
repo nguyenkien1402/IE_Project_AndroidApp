@@ -1,10 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
     tools:context=".activities.MovieRecommendationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginLeft="16dp"
+                android:text="Top Recommendations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.mobile.tiamo.utilities.HorizontalListView
+                android:id="@+id/recommendation_movie_top"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:fillViewport="true"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="#eee"-->
+<!--                android:scrollbarStyle="outsideOverlay">-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/recommendation_movie_top"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal" />-->
+<!--            </HorizontalScrollView>-->
+
+            <TextView
+                android:id="@+id/recommendation_movie_top_one_txt"
+                android:layout_marginTop="16dp"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginLeft="16dp"
+                android:text="Top Fantasy Recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.mobile.tiamo.utilities.HorizontalListView
+                android:id="@+id/recommendation_movie_top_one"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:fillViewport="true"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="#eee"-->
+<!--                android:scrollbarStyle="outsideOverlay">-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/recommendation_movie_top_one"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal" />-->
+<!--            </HorizontalScrollView>-->
+
+            <TextView
+                android:id="@+id/recommendation_movie_top_two_txt"
+                android:layout_marginTop="16dp"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginLeft="16dp"
+                android:text="Top Animation Recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.mobile.tiamo.utilities.HorizontalListView
+                android:id="@+id/recommendation_movie_top_two"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:fillViewport="true"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="#eee"-->
+<!--                android:scrollbarStyle="outsideOverlay">-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/recommendation_movie_top_two"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal" />-->
+<!--            </HorizontalScrollView>-->
+
+            <TextView
+                android:id="@+id/recommendation_movie_top_three_txt"
+                android:layout_marginTop="16dp"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginLeft="16dp"
+                android:text="Top Drama Recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.mobile.tiamo.utilities.HorizontalListView
+                android:id="@+id/recommendation_movie_top_three"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:fillViewport="true"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="#eee"-->
+<!--                android:scrollbarStyle="outsideOverlay">-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/recommendation_movie_top_three"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal" />-->
+<!--            </HorizontalScrollView>-->
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

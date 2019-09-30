@@ -1,4 +1,4 @@
-package com.mobile.tiamo.utilities;
+package com.mobile.tiamo.services;
 
 import android.app.Service;
 import android.content.Context;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.StepsTakenModel;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.utilities.DateUtilities;
 
 public class StepCounterService extends Service implements SensorEventListener {
 
