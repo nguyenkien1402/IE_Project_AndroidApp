@@ -188,7 +188,8 @@ public class DashboardViewSleepingFragment extends Fragment {
             Date before = calendar.getTime();
             String strBefore = dateFormat.format(before);
 
-            List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,today);
+            List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,"30-09-2019");
+            sleepingModels.addAll(db.sleepingModelDao().getLastTenDay("01-10-2019",today));
             String previousDate = "";
             Log.d("TAG","SIZE ALL:" + db.sleepingModelDao().getAll().size());
             List<SleepingModel> models = db.sleepingModelDao().getAll();

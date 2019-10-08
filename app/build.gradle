@@ -88,5 +88,6 @@ dependencies {
 
     //Button
     implementation "info.hoang8f:fbutton:1.0.5"
+    implementation 'com.stephentuso:welcome:1.4.1'
 
 }

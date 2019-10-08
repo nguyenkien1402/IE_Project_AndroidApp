@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.WelcomeScreen;
 import com.mobile.tiamo.questionaires.QuestionnairesFirststart;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
@@ -37,12 +38,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER) == 1){
-            Log.d("TAG","Go to the main: " + SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER));
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
         }else{
-            Intent i = new Intent(this, QuestionnairesFirststart.class);
+            Intent i = new Intent(this, WelcomeScreen.class);
             startActivity(i);
             finish();
         }

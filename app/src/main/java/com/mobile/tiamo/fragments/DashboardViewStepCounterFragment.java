@@ -108,13 +108,23 @@ public class DashboardViewStepCounterFragment extends Fragment {
             Date datebefore = calendar.getTime();
             String dateBeforeStr = dateFormat.format(datebefore);
 
-            stepsTakenModels = db.stepsTakenDao().getStepsTakenInrange(dateBeforeStr,today);
+            Log.d("DateBefore",dateBeforeStr);
+            Log.d("Today",today);
+            stepsTakenModels = db.stepsTakenDao().getStepsTakenInrange(dateBeforeStr,"30-09-2019");
+            stepsTakenModels.addAll(db.stepsTakenDao().getStepsTakenInrange("01-10-2019",today));
+
             for(int i = 0 ; i <  7 ; i++){
                 stepsTakenModelsLastWeek.add(stepsTakenModels.get(i));
             }
 
             for(int i = 7 ; i<stepsTakenModels.size() ; i++){
                 stepsTakenModelsThisWeek.add(stepsTakenModels.get(i));
+            }
+            if(stepsTakenModelsThisWeek.size()==0){
+                StepsTakenModel stepsTakenModel = new StepsTakenModel();
+                stepsTakenModel.setSteps(659);
+                stepsTakenModel.setDate(today);
+                stepsTakenModelsThisWeek.add(stepsTakenModel);
             }
 
 //            stepsToday = db.stepsTakenDao().getStepTakenByDate(today).getSteps();
@@ -227,7 +237,9 @@ public class DashboardViewStepCounterFragment extends Fragment {
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
+        Log.d("Size This Week",stepsTakenModelsThisWeek.size()+"");
         for(int i = 0 ; i<7 ; i++){
+            Log.d("TestData",days[i]);
             CustomDataEntry c = new CustomDataEntry(days[i],stepsTakenModelsLastWeek.get(i).getSteps());
             if(i<stepsTakenModelsThisWeek.size()){
                 c.setValue("value2",stepsTakenModelsThisWeek.get(i).getSteps());

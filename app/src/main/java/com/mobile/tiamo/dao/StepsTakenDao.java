@@ -25,7 +25,7 @@ public interface StepsTakenDao {
     @Query("DELETE FROM StepsTakenModel")
     void deleteAll();
 
-    @Query("SELECT * FROM StepsTakenModel WHERE date BETWEEN :date1 and :date2 ORDER BY date ASC")
+    @Query("SELECT * FROM StepsTakenModel WHERE date BETWEEN :date1 and :date2")
     List<StepsTakenModel> getStepsTakenInrange(String date1, String date2);
 
     @Update
