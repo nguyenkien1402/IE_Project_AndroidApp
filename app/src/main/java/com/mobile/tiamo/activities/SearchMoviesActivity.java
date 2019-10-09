@@ -20,11 +20,11 @@ import com.mobile.tiamo.rest.services.MovieService;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
   Title say the function
   Just enter the name of the movie user wanna search
   Get the result back
- */
+ **/
 public class SearchMoviesActivity extends AppCompatActivity {
 
     private ListView listMovie;

@@ -26,11 +26,11 @@ import org.threeten.bp.LocalTime;
 
 import java.util.Calendar;
 
-/*
+/**
  This activity is using when use request extra time for doing something
  After the period time of requesting,
  The application will send an notification to notify them
- */
+ **/
 public class RequestExtraTimeActivity extends AppCompatActivity {
 
     private Button btnSave;

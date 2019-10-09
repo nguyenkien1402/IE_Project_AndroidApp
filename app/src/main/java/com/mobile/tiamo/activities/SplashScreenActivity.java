@@ -16,9 +16,9 @@ import com.mobile.tiamo.questionaires.QuestionnairesFirststart;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
-/*
+/**
  SplashScreenActivity will open first when open the application
- */
+ **/
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override

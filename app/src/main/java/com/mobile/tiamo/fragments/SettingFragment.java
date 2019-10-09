@@ -43,6 +43,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A setting fragment
+ */
 public class SettingFragment extends Fragment {
 
     TextView tvAboutUs, deleteAll, btnMovies;
@@ -112,15 +115,6 @@ public class SettingFragment extends Fragment {
     }
 
     private class PopulateDataAsync extends AsyncTask<Void, Void, Void> {
-
-//        ProgressDialog m;
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            m = new ProgressDialog(getActivity());
-//            m.setTitle("Update");
-//            m.show();
-//        }
 
         @Override
         protected Void doInBackground(Void... voids) {

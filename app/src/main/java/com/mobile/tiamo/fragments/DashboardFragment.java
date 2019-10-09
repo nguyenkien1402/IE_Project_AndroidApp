@@ -24,13 +24,7 @@ import com.mobile.tiamo.dao.TiamoDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- A dashboard fragment of the application
- This fragment contain a slide fragment
- which is Overview of the weekly activity
- Sleeping Time
- Step Taken
- */
+
 public class DashboardFragment extends Fragment {
 
     private static View view;

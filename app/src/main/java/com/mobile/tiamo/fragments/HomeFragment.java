@@ -47,6 +47,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This is a home fragment
+ * Show the list of the routine activity and the list of the daily activity
+ */
 public class HomeFragment extends Fragment {
     public static HomeListDailyActivityAdapter homeListDailyActivityAdapter = null;
 
@@ -80,6 +84,10 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Handle all of the action from user
+     * Also handle the loading data from the time range
+     */
     private void actionButtonFromListAndTimeline() {
         listViewRoutine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,6 +112,7 @@ public class HomeFragment extends Fragment {
                     timePicker.setMinute(activityModelItems.get(position).getMinutePractice());
 
                     btnAdd.setOnClickListener(new View.OnClickListener() {
+                        // Adding the new daily activity hobby model to database
                         @Override
                         public void onClick(View v) {
                             DailyActivityHobbyModel dailyActivityHobbyModel = new DailyActivityHobbyModel();
@@ -135,9 +144,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // When user select the date from the timeline
+        // Populate the list with the new data
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
+                // make some small adjustment before of the selected day
                 month = month + 1;
                 String days = "",months="";
                 if(day <= 9){
@@ -152,12 +164,13 @@ public class HomeFragment extends Fragment {
                 }
                 String selectedDate = days +"-"+months+"-"+year;
                 MainActivity.textToolbar.setText(selectedDate);
-                Log.d(TAG,"Date:"+selectedDate);
+                // Get the data from selected date
                 GetDailyActivitiesFromSelectedDate getDailyActivitiesFromSelectedDate = new GetDailyActivitiesFromSelectedDate();
                 getDailyActivitiesFromSelectedDate.execute(selectedDate);
             }
         });
 
+        // action when click adding routine button
         btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +179,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // action when click adding activity button
         btnAddingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +189,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    /**
+     * Init the main component of the fragment
+     */
     private void initComponent() {
         listViewRoutine = (ListView) view.findViewById(R.id.home_list_routine);
         listViewActivity = (ListView) view.findViewById(R.id.home_list_activity);
@@ -192,6 +209,7 @@ public class HomeFragment extends Fragment {
         addActivityModelAsyn.execute(title,hour+"");
     }
 
+    // Adding Activity Model AsyncTask
     private class AddActivityModelAsyn extends AsyncTask<String,Void, ActivitiesModel>{
         @Override
         protected ActivitiesModel doInBackground(String... strings) {
@@ -230,10 +248,6 @@ public class HomeFragment extends Fragment {
             intent.putParcelableArrayListExtra("routine", (ArrayList<? extends Parcelable>) datasets);
             intent.putParcelableArrayListExtra("activity", (ArrayList<? extends Parcelable>) activityModelItems);
             startActivity(intent);
-//            FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
-//            AppCompatDialogFragment dateFragment = new DatePickerFragment();
-//            dateFragment.setTargetFragment(HomeFragment.this,DatePickerFragment.REQUEST_CODE);
-//            dateFragment.show(fm,"datePicker");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -252,14 +266,8 @@ public class HomeFragment extends Fragment {
         }
 
         if(requestCode == AddingActivityActivity.CODE_RESULT){
-//            activityModelItems.clear();
-//            List<ActivityModelItem> a = data.getParcelableArrayListExtra("hobbies");
-//            activityModelItems.addAll(a);
-//            homeListDailyActivityAdapter.notifyDataSetChanged();
-//            setDynamicHeight(listViewActivity);
             GetAllDailyActivityAysnc getAllDailyActivityAysnc = new GetAllDailyActivityAysnc();
             getAllDailyActivityAysnc.execute();
-//            Log.d("Array",a.size()+"");
         }
         if(requestCode == AddingRoutineActivity.CODE_RESULT){
             Log.d("TAG","Result");
@@ -268,6 +276,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // Get the list of daily activity from seleted date
+    // The date is from time range
     private class GetDailyActivitiesFromSelectedDate extends AsyncTask<String,Void,List<DailyRoutine>>{
 
         ProgressDialog dialog;
@@ -290,32 +300,12 @@ public class HomeFragment extends Fragment {
             // if currentDate less than selectedDate, then check the schedule from schedule
             // and fill the list item without saving to database
             if(DateUtilities.stringToDate(selectedDate).equals(DateUtilities.stringToDate(currentDate))){
-//                List<ActivitiesModel> hobbyActivities = db.activitiesModelDao().getAll();
-//                List<DailyActivityHobbyModel> dailyActivityHobbyModels;
-//                if(db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(currentDate).size() > 0){
-//                    dailyActivityHobbyModels = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(currentDate);
-//                    // First, loop all the hobby activities list
-//                    // Then, loop all the daily activities hobby list
-//                    // Check if some of them is already contanin the data, the populate the item with information
-//                    for(int i = 0 ; i < hobbyActivities.size() ; i++){
-//                        ActivityModelItem model = new ActivityModelItem();
-//                        model.setUid(hobbyActivities.get(i).getUid());
-//                        model.setTitle(hobbyActivities.get(i).getTitle());
-//                        model.setHours(hobbyActivities.get(i).getHours());
-//                        model.setMinutes(hobbyActivities.get(i).getMinutes());
-//                        for(int j = 0 ; j < dailyActivityHobbyModels.size() ; j++){
-//                            if(hobbyActivities.get(i).getTitle().equals(dailyActivityHobbyModels.get(j).getTitle())){
-//                                model.setHourPractice(dailyActivityHobbyModels.get(j).getHours());
-//                                model.setMinutePractice(dailyActivityHobbyModels.get(j).getMinutes());
-//                                activityModelItems.add(model);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
                 datasets = getDailyActivityList(currentDate);
                 return null;
             }
+
+            // If the selected date if before the current date
+            // Not allow to modify the data
             if(DateUtilities.stringToDate(selectedDate).before(DateUtilities.stringToDate(currentDate))){
                 if(db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(selectedDate).size() > 0) {
                     List<DailyActivityHobbyModel> dailyActivityHobbyModels = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(selectedDate);
@@ -332,6 +322,9 @@ public class HomeFragment extends Fragment {
                 Log.d("Before",list.size()+"");
                 return list;
             }
+
+            // If the selected date if after the current date
+            // Not allow to modify data as well.
             if(DateUtilities.stringToDate(selectedDate).after(DateUtilities.stringToDate(currentDate))){
                 Log.d("After","abb:"+abbDay);
                 List<Schedule> listSchedules = db.scheduleDao().getAll();
@@ -369,7 +362,8 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(List<DailyRoutine> dailyActivities) {
             super.onPostExecute(dailyActivities);
-//            adapter.notifyDataSetChanged();
+            // if the dailyactivity list is null
+            // Then adjust the current list by using the setDynamicHeight
             if(dailyActivities == null){
                 adapter = new DailyActivityAdapter(datasets, getActivity());
                 listViewRoutine.setAdapter(adapter);
@@ -384,6 +378,7 @@ public class HomeFragment extends Fragment {
                 dialog.dismiss();
                 return;
             }
+            // if the list is not null
             if(dailyActivities.size() > 0){
                 Log.d(TAG,"There is value");
                 datasets.clear();
@@ -396,6 +391,7 @@ public class HomeFragment extends Fragment {
                     model.setUid(dailyActivities.get(i).getUid());
                     datasets.add(model);
                 }
+                // Update the adapter
                 adapter.notifyDataSetChanged();
                 homeListDailyActivityAdapter.notifyDataSetChanged();
                 setDynamicHeight(listViewRoutine);
@@ -414,6 +410,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * This AsyncTask is used to get the activity result from the current date
+     */
     private class GetAllDailyActivityResultAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
         @Override
         protected List<DailyRoutineItem> doInBackground(Void... voids) {
@@ -437,8 +436,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * This AsyncTask is used to get the activity result from the current date
+     */
     private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
-
         ProgressDialog pd ;
         @Override
         protected void onPreExecute() {
@@ -480,9 +481,21 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
     public List<DailyRoutineItem> getDailyActivityList(String currentDate){
+        /**
+         * A function to return the list of the daily routine item
+         * Params:
+         *      currentDate: self-explained
+         * result:
+         *      none
+         */
         List<DailyRoutineItem> dailyActivityItems = new ArrayList<DailyRoutineItem>();
         List<DailyRoutine> dailyRoutineLists = new ArrayList<DailyRoutine>();
+
+        // if the daily activity of the current date is null
+        // then get current activity and routine from database
+        // and add those data in the daily data
         if(db.dailyActivitiesDao().getDailyActivities(currentDate).size() == 0){
             // show up all the daily activities to show in the fragment
             String currentDayAbb = DateUtilities.getCurrentDayInAbb();
@@ -520,7 +533,9 @@ public class HomeFragment extends Fragment {
                 return null;
             }
         }else{
+            // If the data is already exist
             // First, check if something new has added by today
+            // Then add the new data to the daily data
             List<Schedule> addRecently = db.scheduleDao().getListAddByDate(currentDate);
             List<Schedule> newList = new ArrayList<Schedule>();
             String dayAbb = DateUtilities.getCurrentDayInAbb();
@@ -573,7 +588,6 @@ public class HomeFragment extends Fragment {
             // Check if some of them is already contain the data, the populate the item with information
             for(int i = 0 ; i < hobbyActivities.size() ; i++){
                 ActivityModelItem model = new ActivityModelItem();
-//                model.setUid(hobbyActivities.get(i).getUid());
                 model.setTitle(hobbyActivities.get(i).getTitle());
                 model.setHours(hobbyActivities.get(i).getHours());
                 model.setMinutes(hobbyActivities.get(i).getMinutes());
@@ -622,12 +636,6 @@ public class HomeFragment extends Fragment {
             if(db.dailyActivityHobbyModelDao().checkIfExists(dailyActivityHobbyModels[0].getTitle(),
                     DateUtilities.getCurrentDateInString()).size() > 0){
                 // call update
-//                DailyActivityHobbyModel m = db.dailyActivityHobbyModelDao().checkIfExists(dailyActivityHobbyModels[0].getTitle(),
-//                        DateUtilities.getCurrentDateInString()).get(0);
-//                m.setHours(dailyActivityHobbyModels[0].getHours());
-//                m.setMinutes(dailyActivityHobbyModels[0].getMinutes());
-                Log.d("TAG","Update");
-
                 db.dailyActivityHobbyModelDao().update(dailyActivityHobbyModels[0]);
             }else{
                 db.dailyActivityHobbyModelDao().insert(dailyActivityHobbyModels[0]);

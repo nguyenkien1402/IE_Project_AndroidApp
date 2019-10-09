@@ -31,10 +31,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-/*
+/**
   This activity is used to add new daily routin
   Ex: Working, Sleeping, etc
- */
+ **/
 public class AddingRoutineActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
 
     public static int CODE_RESULT = 3;

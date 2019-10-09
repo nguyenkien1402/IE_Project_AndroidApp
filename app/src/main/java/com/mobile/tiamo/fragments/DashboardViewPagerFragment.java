@@ -19,6 +19,14 @@ import com.mobile.tiamo.adapters.DashboardViewPagerAdapter;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
 
+/*
+ A dashboard fragment of the application
+ This fragment contain a slide fragment
+ which is Overview of the weekly activity
+ Sleeping Time
+ Step Taken
+ */
+
 public class DashboardViewPagerFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -31,17 +39,22 @@ public class DashboardViewPagerFragment extends Fragment {
 //        setHasOptionsMenu(true);
     }
 
+    /*
+    Init view of the fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
+        // Find the view pager id
         viewPager = (ViewPager) view.findViewById(R.id.schedule_viewpager_1);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         MainActivity.textToolbar.setText(R.string.app_name);
 
+        // Set the tab layout
         tabLayout.setTabTextColors(Color.parseColor("#e3e3e3"), Color.parseColor("#ffffff"));
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
@@ -49,6 +62,9 @@ public class DashboardViewPagerFragment extends Fragment {
         return view;
     }
 
+    /*
+     Init view pager of the dashboard
+     */
     private void setupViewPager(ViewPager viewPager) {
         Log.d("TAG","Call again");
         DashboardViewPagerAdapter adapter = new DashboardViewPagerAdapter(getChildFragmentManager());

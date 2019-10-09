@@ -44,6 +44,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ A StepTaken Dashboard
+ **/
 public class DashboardViewStepCounterFragment extends Fragment {
 
     private View view;
@@ -67,9 +70,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
         stepsTakenModelsLastWeek = new ArrayList<StepsTakenModel>();
         stepsTakenModelsThisWeek = new ArrayList<StepsTakenModel>();
         stepsTakenModels = new ArrayList<StepsTakenModel>();
-
         initComponent();
-
         btnSetMood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,13 +78,16 @@ public class DashboardViewStepCounterFragment extends Fragment {
             }
         });
 
+        // Get the data from server
         LoadingChartAysnc loadingChartAysnc = new LoadingChartAysnc();
         loadingChartAysnc.execute();
 
         return view;
     }
 
-
+    /*
+     Init the main component of the dashboard
+     */
     private void initComponent(){
         chart = view.findViewById(R.id.chart1);
         imMood = view.findViewById(R.id.mood_view);
@@ -98,6 +102,15 @@ public class DashboardViewStepCounterFragment extends Fragment {
     }
 
     private void getData(int day){
+        /*
+          This function is used to manipulate the data before adding to the list
+          Get the database on the current day of the week
+          And the data of the last week.
+          Parameter:
+            day: day before this day
+          return:
+            None
+         */
         try {
             String today = DateUtilities.getCurrentDateInString();
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -108,8 +121,6 @@ public class DashboardViewStepCounterFragment extends Fragment {
             Date datebefore = calendar.getTime();
             String dateBeforeStr = dateFormat.format(datebefore);
 
-            Log.d("DateBefore",dateBeforeStr);
-            Log.d("Today",today);
             stepsTakenModels = db.stepsTakenDao().getStepsTakenInrange(dateBeforeStr,"30-09-2019");
             stepsTakenModels.addAll(db.stepsTakenDao().getStepsTakenInrange("01-10-2019",today));
 
@@ -127,14 +138,14 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 stepsTakenModelsThisWeek.add(stepsTakenModel);
             }
 
-//            stepsToday = db.stepsTakenDao().getStepTakenByDate(today).getSteps();
-
         }catch (Exception e){
             Log.d("TAG",e.getMessage());
         }
     }
 
-
+    /*
+      AsyncTask class to get the data
+     */
     private class LoadingChartAysnc extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {
@@ -168,12 +179,12 @@ public class DashboardViewStepCounterFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-//            tvStepTakenToday.setText(stepsToday+"");
             initChart();
         }
     }
 
 
+    // Get the mood from user
     private void initPopupMoodView(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setCancelable(false);
@@ -216,6 +227,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
         });
     }
 
+    // Init the chart to compare steps taken this week and last week
     private void initChart() {
         Cartesian cartesian = AnyChart.line();
 
