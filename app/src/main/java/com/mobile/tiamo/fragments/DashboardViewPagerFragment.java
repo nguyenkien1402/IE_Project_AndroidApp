@@ -19,13 +19,13 @@ import com.mobile.tiamo.adapters.DashboardViewPagerAdapter;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
 
-/*
+/**
  A dashboard fragment of the application
  This fragment contain a slide fragment
  which is Overview of the weekly activity
  Sleeping Time
  Step Taken
- */
+ **/
 
 public class DashboardViewPagerFragment extends Fragment {
     TabLayout tabLayout;
