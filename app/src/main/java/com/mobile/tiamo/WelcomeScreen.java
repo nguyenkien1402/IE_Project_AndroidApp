@@ -22,7 +22,7 @@ public class WelcomeScreen extends WelcomeActivity {
                 .defaultHeaderTypefacePath("Montserrat-Bold.ttf")
 
                 .page(new BasicPage(R.drawable.ic_front_desk_white,
-                        "Welcome",
+                        "Found stress with work-life",
                         "An Android library for onboarding, instructional screens, and more")
                         .background(R.color.orange_background))
 
