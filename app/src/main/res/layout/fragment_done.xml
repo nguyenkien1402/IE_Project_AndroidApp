@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/red_background"
+    android:background="@color/orange_background"
     tools:context="com.mobile.tiamo.fragments.DoneFragment"
     android:id="@+id/layout">
 
@@ -16,26 +16,37 @@
         android:maxWidth="400dp"
         android:layout_margin="8dp"/>
 
-    <TextView
-        style="@style/WelcomeScreenText.Centered"
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Liberzy keep inform you with the up to date notifications"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="15dp"/>
-
     <Button
         style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textColor="#fff"
-        android:text="Let's started"
+        android:text="Let's begin"
         android:layout_marginTop="20dp"
         android:layout_below="@id/text"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/WelcomeScreenText.Centered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="15dp"
+        android:text="Helps you manage your time and improve your work-life balance
+\n\n There will be a one time setup to get you started"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/text1"
+        style="@style/WelcomeScreenText.Centered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:layout_marginBottom="15dp"
+        android:text="Liberzy"
+        android:textSize="28dp" />
 
 </RelativeLayout>
