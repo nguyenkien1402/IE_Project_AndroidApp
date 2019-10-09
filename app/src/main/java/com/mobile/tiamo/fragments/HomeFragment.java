@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_home, container,false);
         initComponent();
 

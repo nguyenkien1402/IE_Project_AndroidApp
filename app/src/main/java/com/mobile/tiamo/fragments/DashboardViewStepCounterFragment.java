@@ -179,7 +179,10 @@ public class DashboardViewStepCounterFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            initChart();
+            if(stepsTakenModelsThisWeek.size() != 0 && stepsTakenModelsLastWeek.size() != 0){
+                initChart();
+            }
+            return;
         }
     }
 

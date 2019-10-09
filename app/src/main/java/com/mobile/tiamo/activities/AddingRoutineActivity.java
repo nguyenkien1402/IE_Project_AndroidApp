@@ -193,6 +193,13 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 s1.add(null);
                 mItems.removeAll(s1);
                 Collections.sort(mItems);
+                if(daySelected.getText().toString().equals("All Day")){
+                    for(int i = 0 ; i < 7;i++){
+                        specificDay = specificDay + " " + listDaysAbb[i];
+                    }
+                    specificDay = specificDay.trim();
+                    return;
+                }
                 if(mItems.size()==7){
                     daySelected.setText("All Day");
                     for(int i = 0 ; i < mItems.size();i++){
@@ -224,9 +231,6 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 for(int i = 0 ; i < mItems.size();i++){
                     item = item + " "+ listDaysAbb[mItems.get(i)];
                     specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
-//                    if(i != mItems.size()-1){
-//                        item = item +",";
-//                    }
                 }
                 item = item.trim();
                 specificDay = specificDay.trim();
