@@ -7,9 +7,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
-/*
+/**
  SleepingModelDao DAO interface, using to manipulate the data
- */
+ **/
 @Dao
 public interface SleepingModelDao {
 

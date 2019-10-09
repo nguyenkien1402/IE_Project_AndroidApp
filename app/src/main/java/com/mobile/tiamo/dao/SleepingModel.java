@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/*
+/**
  SleepingModel, using to store information in SQLlite
- */
+ **/
 @Entity
 public class SleepingModel {
 

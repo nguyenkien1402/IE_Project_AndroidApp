@@ -15,9 +15,9 @@ import com.mobile.tiamo.R;
 
 import java.util.List;
 
-/*
+/**
   An adapter to show the list item of the sleeping
- */
+ **/
 public class DashboardSleepingAdapter extends ArrayAdapter<DashboardSleepingItem> {
 
     private List<DashboardSleepingItem> list;

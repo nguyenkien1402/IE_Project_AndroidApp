@@ -6,9 +6,9 @@ import androidx.room.Query;
 
 import java.util.List;
 
-/*
+/**
  ScheduleDao DAO interface, using to manipulate the data
- */
+ **/
 @Dao
 public interface ScheduleDao {
 

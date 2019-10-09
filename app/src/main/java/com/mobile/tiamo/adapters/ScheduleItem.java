@@ -5,9 +5,9 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-/*
+/**
     A schedule item for the list view
- */
+ **/
 public class ScheduleItem implements Parcelable {
 
     private String title;

@@ -16,9 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/*
+/**
   An adapter to populate the list of the movie
- */
+ **/
 public class MovieAdapter extends ArrayAdapter<MovieItem> {
 
     private List<MovieItem> datasets;

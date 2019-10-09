@@ -27,11 +27,11 @@ import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
-/*
+/**
   Custom adapter for showing the activity model item
   This is the custom adapter for a list of activity
   Which is be used in the home screen
- */
+ **/
 public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private List<DailyRoutineItem> datasets;

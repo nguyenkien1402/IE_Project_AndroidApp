@@ -16,9 +16,9 @@ import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
-/*
+/**
   An adapter for the Home Fragment with the routine activity model
- */
+ **/
 public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem> implements View.OnClickListener {
 
     private List<ActivityModelItem> datasets;

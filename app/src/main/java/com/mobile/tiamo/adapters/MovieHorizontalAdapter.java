@@ -16,10 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/*
+/**
  This is a custom adapter for horizontal scroll view
-
- */
+ **/
 public class MovieHorizontalAdapter extends ArrayAdapter<MovieItem> {
     private List<MovieItem> datasets;
     private Context context;

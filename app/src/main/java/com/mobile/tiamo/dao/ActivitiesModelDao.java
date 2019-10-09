@@ -7,9 +7,9 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
-/*
+/**
  Activity Model DAO interface, using to manipulate the data
- */
+ **/
 @Dao
 public interface ActivitiesModelDao {
 

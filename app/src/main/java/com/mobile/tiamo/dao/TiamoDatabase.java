@@ -6,10 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-/*
+/**
   Actually create the database
   Give a static class, so other class can call database at anytime
- */
+ **/
 @Database(entities = {Schedule.class, DailyRoutine.class, ActivitiesModel.class,
         DailyActivityHobbyModel.class, SleepingModel.class, StepsTakenModel.class}
         , version = 2
