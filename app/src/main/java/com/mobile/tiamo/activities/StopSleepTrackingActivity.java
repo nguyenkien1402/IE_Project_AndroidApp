@@ -10,6 +10,10 @@ import android.widget.Button;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.services.ScreenOnAndOffService;
 
+/*
+  This activity is the trail activity
+  Cause the stop sleeping time is moving to the notification
+ */
 public class StopSleepTrackingActivity extends AppCompatActivity {
 
     Button btnYes, btnNo;

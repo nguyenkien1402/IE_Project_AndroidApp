@@ -16,6 +16,9 @@ import com.mobile.tiamo.questionaires.QuestionnairesFirststart;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
+/*
+ SplashScreenActivity will open first when open the application
+ */
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
@@ -23,6 +26,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        // Waiting time for 1 second
+        // Mean while, check if it is the first time open the app
         final Handler myHandler = new Handler();
         myHandler.postDelayed(new Runnable() {
             @Override
@@ -33,15 +38,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-
-
-
     private void goToMainActivity() {
+        // Not the first time, go to the Main Activity
         if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER) == 1){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
         }else{
+            // So the first time, open the welcome screen.
             Intent i = new Intent(this, WelcomeScreen.class);
             startActivity(i);
             finish();

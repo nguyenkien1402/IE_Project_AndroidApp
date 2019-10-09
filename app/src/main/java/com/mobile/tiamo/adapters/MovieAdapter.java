@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/*
+  An adapter to populate the list of the movie
+ */
 public class MovieAdapter extends ArrayAdapter<MovieItem> {
 
     private List<MovieItem> datasets;
@@ -31,6 +34,10 @@ public class MovieAdapter extends ArrayAdapter<MovieItem> {
         ImageView img;
     }
 
+
+    /*
+     Populate the view of the list of the item
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -43,7 +50,6 @@ public class MovieAdapter extends ArrayAdapter<MovieItem> {
             viewHolder.txtTile = (TextView) convertView.findViewById(R.id.item_movie_title);
             viewHolder.txtYear = (TextView) convertView.findViewById(R.id.item_movie_year);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.item_movie_image);
-
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();

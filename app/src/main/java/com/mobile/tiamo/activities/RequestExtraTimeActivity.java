@@ -26,6 +26,11 @@ import org.threeten.bp.LocalTime;
 
 import java.util.Calendar;
 
+/*
+ This activity is using when use request extra time for doing something
+ After the period time of requesting,
+ The application will send an notification to notify them
+ */
 public class RequestExtraTimeActivity extends AppCompatActivity {
 
     private Button btnSave;
@@ -60,6 +65,10 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     Update the data to database
+     To keep track the recording
+     */
     private class ScheduleNewNotificationAsync extends AsyncTask<Void, Void, DailyRoutine>{
         @Override
         protected DailyRoutine doInBackground(Void... voids) {
@@ -78,13 +87,15 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     New schedule to send notification
+     */
     private void scheduleNewNotification(DailyRoutine dailyRoutine){
         final AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intentEnd   = new Intent(this, ReminderNotificationEndAction.class);
         int hour = timePicker.getHour();
         int minute = timePicker.getMinute();
         LocalTime timeToEnd = LocalTime.of(hour,minute);
-//        timeToEnd = timeToEnd.minusMinutes(5);
         Log.d("TAG","hour: "+timeToEnd.getHour()+" minute:"+timeToEnd.getMinute());
 
         String currentDate = DateUtilities.getCurrentDateInString();

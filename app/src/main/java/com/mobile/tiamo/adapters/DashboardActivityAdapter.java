@@ -40,6 +40,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/*
+    An adapter for the list of the dashboard
+    Showing the dashboard in the fragment.
+ */
 public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
     private int mResource;
     private Context context;

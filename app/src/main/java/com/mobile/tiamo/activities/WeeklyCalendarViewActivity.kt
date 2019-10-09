@@ -19,6 +19,11 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalTime
 import java.util.*
 
+/*
+    A trail function
+    To show the weekly schedule of the application
+    Get rid of it later
+ */
 class WeeklyCalendarViewActivity : AppCompatActivity() {
 
     private val weekView: WeekView by lazy { findViewById<WeekView>(R.id.week_view) }

@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/*
+    A trail function
+    To show the weekly schedule of the application
+    Get rid of it later
+ */
 public class WeeklyViewActivity extends WeeklyBaseActivity {
 
     @Override

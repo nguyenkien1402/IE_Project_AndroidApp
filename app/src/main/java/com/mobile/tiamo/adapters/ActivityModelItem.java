@@ -3,6 +3,9 @@ package com.mobile.tiamo.adapters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+  Item for the DailyActivityAdapter
+ */
 public class ActivityModelItem implements Parcelable {
     private long uid;
     private String title;

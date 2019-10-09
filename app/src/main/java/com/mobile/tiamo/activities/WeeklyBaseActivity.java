@@ -20,6 +20,11 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+/*
+    A trail function
+    To show the weekly schedule of the application
+    Get rid of it later
+ */
 public abstract class WeeklyBaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;

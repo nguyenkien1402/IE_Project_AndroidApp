@@ -3,6 +3,10 @@ package com.mobile.tiamo.adapters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+ This is the DailyRoutineItem
+ Used to populate for the list of the item
+ */
 public class DailyRoutineItem implements Parcelable{
     private String title;
     private String hours;

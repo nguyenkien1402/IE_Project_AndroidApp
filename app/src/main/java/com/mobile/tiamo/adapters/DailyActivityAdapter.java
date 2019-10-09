@@ -27,6 +27,11 @@ import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
+/*
+  Custom adapter for showing the activity model item
+  This is the custom adapter for a list of activity
+  Which is be used in the home screen
+ */
 public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private List<DailyRoutineItem> datasets;
@@ -41,6 +46,10 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         ImageView imageView;
     }
 
+    /*
+    Construction of the adapter
+    Necessary
+     */
     public DailyActivityAdapter(List<DailyRoutineItem> datasets, Context context){
         super(context, R.layout.item_dailyactivity, datasets);
         this.datasets = datasets;
@@ -48,6 +57,9 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         db = SQLiteDatabase.getTiamoDatabase(context);
     }
 
+    /*
+    When user click the the item of the list
+     */
     @Override
     public void onClick(View v) {
         String currentDate = DateUtilities.getCurrentDateInString().trim();
@@ -78,6 +90,9 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     }
 
+    /*
+    Populate the item list view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -85,6 +100,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         ViewHolder viewHolder;
 
         if(convertView == null){
+            // Inflate the item of the list
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_dailyactivity, parent, false);
@@ -97,7 +113,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        // Set the data for each item
         viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(OtherUtilities.getIcon(dailyActivityItem.getTitle())));
         viewHolder.txtTile.setText(dailyActivityItem.getTitle());
         viewHolder.txtHour.setText(dailyActivityItem.getHours());
@@ -120,8 +136,11 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         return convertView;
     }
 
-    private class GetDailyActivityAsync extends AsyncTask<Long, Void, Void> {
 
+    /*
+     Handle the action when user click to the list of the item
+     */
+    private class GetDailyActivityAsync extends AsyncTask<Long, Void, Void> {
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(context);
@@ -143,7 +162,6 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
                 db.dailyActivitiesDao().updateIsDone(voids[0],0);
             }
             DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
-//            Log.d("Adapter", dailyRoutine.getTitle() + "-"+ dailyRoutine.getIsDone());
             return null;
         }
 
