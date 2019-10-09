@@ -29,14 +29,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+  This activity show the movie recommendation getting
+  from the MoodAndMovieTypeActivity
+ */
 public class MovieRecommendationActivity extends AppCompatActivity {
 
     private String TAG = "MovieRecommendationActivity";
     List<MovieItem> movieItems;
-//    private ViewGroup mImageTop;
-//    private ViewGroup mTopOne;
-//    private ViewGroup mTopTwo;
-//    private ViewGroup mTopThree;
     private HorizontalListView mImageTop, mTopOne,mTopTwo,mTopThree;
     private MovieHorizontalAdapter topAdapter, topOneAdapter, topTwoAdapter, topThreeAdapter;
     private List<MovieItem> listTop, listOne, listTwo, listThree;
@@ -56,11 +56,6 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         txtTopTwo = findViewById(R.id.recommendation_movie_top_two_txt);
         txtTopThree = findViewById(R.id.recommendation_movie_top_three_txt);
 
-//        mImageTop.removeAllViews();
-//        mTopOne.removeAllViews();
-//        mTopTwo.removeAllViews();
-//        mTopThree.removeAllViews();
-
         mTopOne.setVisibility(View.GONE);
         txtTopOne.setVisibility(View.GONE);
         mTopTwo.setVisibility(View.GONE);
@@ -73,6 +68,10 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         clickable();
     }
 
+    /*
+     Clickable of the movie, basically
+     When use select the movie, it going to the detail of that movie
+     */
     private void clickable(){
         mImageTop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,6 +100,9 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     Fill down the data from top recommendation
+     */
     private void fillData(){
         try {
             JSONArray topAll = new JSONArray(getIntent().getStringExtra("top_all"));
@@ -147,6 +149,10 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     Fill the data for the top one
+     Based on the type user select
+     */
     private void fillDataToTop(JSONArray data) {
         listTop = new ArrayList<MovieItem>();
         try {
@@ -157,12 +163,6 @@ public class MovieRecommendationActivity extends AppCompatActivity {
                 item.setPoster(result.getString("poster"));
                 item.setTitle(result.getString("title"));
                 listTop.add(item);
-//                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mImageTop,false);
-//                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-//                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-//                txt.setText(result.getString("title"));
-//                Picasso.get().load(result.getString("poster")).into(iv);
-//                mImageTop.addView(relativeLayout);
             }
             topAdapter = new MovieHorizontalAdapter(listTop,getApplicationContext());
             mImageTop.setAdapter(topAdapter);
@@ -172,6 +172,10 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Fill the data for the top one
+    Based on the type user select
+    */
     private void fillTopOne(JSONArray data, String title){
         listOne = new ArrayList<MovieItem>();
         try {
@@ -183,12 +187,6 @@ public class MovieRecommendationActivity extends AppCompatActivity {
                 item.setPoster(result.getString("poster"));
                 item.setTitle(result.getString("title"));
                 listOne.add(item);
-//                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mImageTop,false);
-//                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-//                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-//                txt.setText(result.getString("title"));
-//                Picasso.get().load(result.getString("poster")).into(iv);
-//                mTopOne.addView(relativeLayout);
             }
             topOneAdapter = new MovieHorizontalAdapter(listOne,getApplicationContext());
             mTopOne.setAdapter(topOneAdapter);
@@ -197,6 +195,11 @@ public class MovieRecommendationActivity extends AppCompatActivity {
             Log.d(TAG,e.toString());
         }
     }
+
+    /*
+    Fill the data for the top two
+    Based on the type user select
+    */
     private void fillTopTwo(JSONArray data, String title){
         listTwo = new ArrayList<MovieItem>();
         try {
@@ -208,12 +211,6 @@ public class MovieRecommendationActivity extends AppCompatActivity {
                 item.setPoster(result.getString("poster"));
                 item.setTitle(result.getString("title"));
                 listTwo.add(item);
-//                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mImageTop,false);
-//                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-//                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-//                txt.setText(result.getString("title"));
-//                Picasso.get().load(result.getString("poster")).into(iv);
-//                mTopTwo.addView(relativeLayout);
             }
             topTwoAdapter = new MovieHorizontalAdapter(listTwo,getApplicationContext());
             mTopTwo.setAdapter(topTwoAdapter);
@@ -223,6 +220,10 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Fill the data for the top three
+    Based on the type user select
+    */
     private void fillTopThree(JSONArray data,String title){
         listThree = new ArrayList<MovieItem>();
         try {
@@ -234,74 +235,12 @@ public class MovieRecommendationActivity extends AppCompatActivity {
                 item.setPoster(result.getString("poster"));
                 item.setTitle(result.getString("title"));
                 listThree.add(item);
-//                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mImageTop,false);
-//                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-//                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-//                txt.setText(result.getString("title"));
-//                Picasso.get().load(result.getString("poster")).into(iv);
-//                mTopThree.addView(relativeLayout);
             }
             topThreeAdapter = new MovieHorizontalAdapter(listThree,getApplicationContext());
             mTopThree.setAdapter(topThreeAdapter);
             topThreeAdapter.notifyDataSetChanged();
         }catch (Exception e){
             Log.d(TAG,e.toString());
-        }
-    }
-
-    private class GetMovieOnTopAsync extends AsyncTask<Void, Void,List<MovieItem>>{
-        @Override
-        protected List<MovieItem> doInBackground(Void... voids) {
-            movieItems = MovieService.searchMovieByTitle("The Avenger",1);
-            return movieItems;
-        }
-
-        @Override
-        protected void onPostExecute(List<MovieItem> movieItems) {
-            super.onPostExecute(movieItems);
-            for (int i = 0 ; i < movieItems.size() ; i++){
-                MovieItem item = movieItems.get(i);
-                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mTopOne,false);
-                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-                txt.setText(item.getTitle());
-                Picasso.get().load(item.getPoster()).into(iv);
-                mTopOne.addView(relativeLayout);
-            }
-        }
-    }
-
-    private class GetMovieRecommendationAsync extends AsyncTask<Void, Void, List<MovieItem>>{
-
-        ProgressDialog pd;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pd = new ProgressDialog(MovieRecommendationActivity.this);
-            pd.setTitle("Loading");
-            pd.show();
-        }
-
-        @Override
-        protected List<MovieItem> doInBackground(Void... voids) {
-            movieItems = MovieService.searchMovieByTitle("Thor",1);
-            return movieItems;
-        }
-
-        @Override
-        protected void onPostExecute(List<MovieItem> result) {
-            super.onPostExecute(result);
-            for (int i = 0 ; i < result.size() ; i++){
-                MovieItem item = result.get(i);
-                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.item_horizontal_movie,mImageTop,false);
-                ImageView iv = (ImageView) relativeLayout.findViewById(R.id.item_horizontal_movie_img);
-                TextView txt = (TextView) relativeLayout.findViewById(R.id.item_horizontal_movie_title);
-                txt.setText(item.getTitle());
-                Picasso.get().load(item.getPoster()).into(iv);
-                mImageTop.addView(relativeLayout);
-            }
-            pd.dismiss();
-
         }
     }
 }

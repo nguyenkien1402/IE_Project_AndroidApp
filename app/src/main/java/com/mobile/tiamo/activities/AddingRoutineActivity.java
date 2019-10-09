@@ -31,6 +31,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/*
+  This activity is used to add new daily routin
+  Ex: Working, Sleeping, etc
+ */
 public class AddingRoutineActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
 
     public static int CODE_RESULT = 3;
@@ -48,6 +52,10 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
     private String specificDay="";
     private List<Schedule> newRoutine = new ArrayList<Schedule>();
 
+    /*
+     Create the view of activity
+     Simultaneously to initialize component.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,12 +90,18 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         });
     }
 
+    /*
+     If u don't know what this line is, you are the dump ass
+     */
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
         timeStart.setText(hourStart +":"+minuteStart);
         timeEnd.setText(hourEnd +":"+minuteEnd);
     }
 
+    /*
+     Again, this one is using to add new routine activity
+     */
     private class AddingScheduleAsync extends AsyncTask<String,Void,Long>{
         @Override
         protected Long doInBackground(String... strings) {
@@ -143,35 +157,6 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         checkedDays = new boolean[listDays.length];
     }
 
-//    public void initPopupViewControls(){
-//        // Get layout inflater object.
-//        LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-//
-//        // Inflate the popup dialog from a layout xml file.
-//        popupInputDialogView = layoutInflater.inflate(R.layout.popup_input_task, null);
-//
-//        popup_ed_title = (EditText) popupInputDialogView.findViewById(R.id.popup_ed_title);
-//        btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel);
-//        btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add);
-//    }
-
-
-
-//    public void selectEndTime(View view){
-//        Toast.makeText(getApplicationContext(),"End",Toast.LENGTH_SHORT).show();
-//        final Calendar cldr = Calendar.getInstance();
-//        int hour = cldr.get(Calendar.HOUR_OF_DAY);
-//        int minutes = cldr.get(Calendar.MINUTE);
-//        // time picker dialog
-//        timePickerDialog = new TimePickerDialog(AddingRoutineActivity.this,
-//                new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-//                        timeEnd.setText(sHour + ":" + sMinute);
-//                    }
-//                }, hour, minutes, true);
-//        timePickerDialog.show();
-//    }
 
     public void selectStartTime(View view){
         RangeTimePickerDialog dialog = new RangeTimePickerDialog();

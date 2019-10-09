@@ -28,6 +28,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ This activity to get the movie recommendation
+ User selected type of the movie, choose their mood, mainly is already predictable
+ And the get some recommendation movie
+ */
 public class MoodAndMovieTypeActivity extends AppCompatActivity {
 
     private String TAG = "MoodAndMovieTypeActivity";
@@ -61,6 +66,9 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
 
     }
 
+    /*
+     This is using to choose the mood baby
+     */
     private void btnActionListener(){
 
         imgHappy.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +137,10 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         });
     }
 
+    /*
+      This AsyncTask is using to get the movie from server
+      The movie is suggest based on the selected
+     */
     private class GetMovieRecommendationAsync extends AsyncTask<Void, Void, JSONObject>{
 
         ProgressDialog pm;
@@ -169,11 +181,13 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
             JSONObject result = MovieService.getRecommendationMovie(1,
                     movieTitle.getText()+" ("+movieYear.getText().toString().split(":")[1].trim()+")",
                     movieType);
-//            JSONObject result = MovieService.getRecommendationMovie(1,"Toy Story (1995)","Adventure,Fantasy");
             return result;
         }
     }
 
+    /*
+       Initialize the component of the activity dump ass
+     */
     private void initComponent(){
         parentLayout = findViewById(android.R.id.content);
         imgMovie = findViewById(R.id.mood_type_movie_image);

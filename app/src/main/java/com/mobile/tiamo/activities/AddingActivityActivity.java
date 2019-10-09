@@ -34,6 +34,11 @@ import com.mobile.tiamo.utilities.OtherUtilities;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+  This activity is used to add the daily activity
+  Trigger from fab button in the homescreen
+ */
 public class AddingActivityActivity extends AppCompatActivity {
 
     public static int CODE_RESULT = 2;
@@ -82,6 +87,10 @@ public class AddingActivityActivity extends AppCompatActivity {
         saveHobbiesToDatabaseAsync.execute();
     }
 
+    /*
+      Save new activity to SQL database
+      Using AsynTask to do in background
+     */
     private class SaveHobbiesToDatabaseAsync extends AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void... voids) {
@@ -112,6 +121,10 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+      This function to initialize the component of the activity
+     */
     private void initComponent() {
         // init database
         db = SQLiteDatabase.getTiamoDatabase(this);
@@ -133,6 +146,11 @@ public class AddingActivityActivity extends AppCompatActivity {
         getCurrentChipAsync.execute();
     }
 
+
+    /*
+      Initialize the fac button action to add more activity if
+      User don't find
+     */
     private void fabButtonAction(){
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +168,10 @@ public class AddingActivityActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        /*
+                          Get the information from the activity
+                          Save into database
+                         */
                         if(!edInputActivity.getText().toString().trim().equals("") &&
                             edInputActivity.getText() != null){
                             model.setHours(timePicker.getHour());
@@ -176,6 +198,9 @@ public class AddingActivityActivity extends AppCompatActivity {
         });
     }
 
+    /*
+      Get the data of activity and fill on the chip
+     */
     private class GetCurrentChipAsync extends AsyncTask<Void, Void, List<ActivitiesModel>>{
         @Override
         protected List<ActivitiesModel> doInBackground(Void... voids) {
@@ -191,6 +216,9 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
+    /*
+      Initialize the current activity that user have
+     */
     private void fillDownCurrentChip(List<ActivitiesModel> list){
         LayoutInflater inflater = LayoutInflater.from(this);
         for(int i = 0 ; i < list.size() ; i++){
@@ -268,6 +296,11 @@ public class AddingActivityActivity extends AppCompatActivity {
             });
         }
     }
+
+    /*
+     Make sure when one chip is remove from suggestion
+     It is also being removed from the current chip.
+     */
     private void removeCorrespondingViewInSuggestion(String match) {
         Log.d("TAG","Remove view at suggestion");
         for(int i = 0 ; i < chipSuggesstionGroup.getChildCount(); i++){
@@ -278,6 +311,10 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     Make sure when one chip is removing from current chip
+     If it exists in suggesstion chip, it will be removed as well.
+     */
     private void removeCorrespondingViewInCurrent(String match){
         Log.d("TAG","Remove view at current");
         for(int i = 0 ; i < activitiesModels.size() ; i++){
@@ -295,6 +332,10 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     This is used to initialize the suggestion chip tab
+     Under the current chip
+     */
     private void fillDownChipSuggestion() {
         LayoutInflater inflater = LayoutInflater.from(this);
         for(int i = 0 ; i < chipSuggestion.length ; i++){
@@ -366,6 +407,11 @@ public class AddingActivityActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     Handle adding new chip from fab button
+     Pretty much the same when fill down the current chip and suggesstion chip
+     Need to add action for each new chip as well.
+     */
     public void addingNewChip(ActivitiesModel model,int i){
         activitiesModels.add(model);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -451,6 +497,10 @@ public class AddingActivityActivity extends AppCompatActivity {
         });
     }
 
+
+    /*
+     Initialize the popup of adding new chip
+     */
     public void initPopupViewControls(){
         // Get layout inflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(AddingActivityActivity.this);
