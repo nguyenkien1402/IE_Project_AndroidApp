@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/*
+  a step taken model, using to store the data to SQLlite
+ */
 @Entity
 public class StepsTakenModel {
 

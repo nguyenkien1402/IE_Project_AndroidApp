@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/*
+ Schedule, using to store information in SQLlite
+ */
 @Entity
 public class Schedule {
 

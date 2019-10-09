@@ -7,6 +7,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+/*
+  a steotakens dao, using to manipulate the stepstaken model
+ */
 @Dao
 public interface StepsTakenDao {
 
