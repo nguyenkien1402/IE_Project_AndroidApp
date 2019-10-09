@@ -70,33 +70,53 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
         var startMinuteString = startMinute.toString()
         var endHourString = endHour.toString()
         var endMinuteString = endMinute.toString()
-        when {
-            startHour < 9 -> startHourString = startHour.toString().prependZero()
-            startMinute < 9 -> startMinuteString = startMinute.toString().prependZero()
-            endHour < 9 -> endHourString = endHour.toString().prependZero()
-            endMinute < 9 -> endMinuteString = endMinute.toString().prependZero()
+
+        if(startHourString.length==1){
+            Log.d("TAG","One length: "+startHourString)
+            startHourString = "0"+startHourString
         }
+        if(startMinuteString.length==1){
+            Log.d("TAG","One length: "+startMinuteString)
+            startMinuteString = "0"+startMinuteString
+        }
+        if(endHourString.length==1){
+            Log.d("TAG","One length: "+endHourString)
+            endHourString = "0"+endHourString
+        }
+        if(endMinuteString.length==1){
+            Log.d("TAG","One length: "+endMinuteString)
+            endMinuteString = "0"+endMinuteString
+        }
+
+//        when {
+//            startHourString.length == 1 -> startHourString = "0"+startHour
+//            startMinuteString.length == 1 -> startMinuteString = "0"+startMinute
+//            endHourString.length == 1 -> endHourString = "0"+endHour
+//            endMinuteString.length == 1 -> endMinuteString = "0"+endMinute
+//        }
 
         val timeStart = view?.findViewById<TextView>(R.id.timestart)
         val timeEnd = view?.findViewById<TextView>(R.id.timeend)
         if (timeStart != null ) {
-            timeStart.text = getString(
-                    R.string.chosen_time_range_only,
-                    startHourString,
-                    startMinuteString
-            )
+//            timeStart.text = getString(
+//                    R.string.chosen_time_range_only,
+//                    startHourString,
+//                    startMinuteString
+//            )
+            timeStart.text = startHourString+":"+startMinuteString
             timeRangeStart = timeStart.text.toString()
             timeStart.text = "From " + timeStart.text
 
         }
         if(timeEnd != null){
-            timeEnd.text = getString(
-                    R.string.chosen_time_range_only,
-                    endHourString,
-                    endMinuteString
-            )
+//            timeEnd.text = getString(
+//                    R.string.chosen_time_range_only,
+//                    endHourString,
+//                    endMinuteString
+//            )
+            timeEnd.text = endHourString+":"+endMinuteString
             timeRangeEnd = timeEnd.text.toString()
-            timeEnd.text = "   To " + timeEnd.text
+            timeEnd.text = "To " + timeEnd.text
 
         }
 

@@ -20,16 +20,16 @@ public class WelcomeScreen extends WelcomeActivity {
         return new WelcomeConfiguration.Builder(this)
                 .defaultTitleTypefacePath("Montserrat-Bold.ttf")
                 .defaultHeaderTypefacePath("Montserrat-Bold.ttf")
-
+                .defaultBackgroundColor(R.color.red_background)
                 .page(new BasicPage(R.drawable.ic_front_desk_white,
                         "Found stress with work-life",
-                        "An Android library for onboarding, instructional screens, and more")
+                        "Let's Liberzy help you to manage your work-life balance")
                         .background(R.color.orange_background))
 
-                .page(new BasicPage(R.drawable.ic_thumb_up_white,
-                        "Simple to use",
-                        "Add a welcome screen to your app with only a few lines of code.")
-                        .background(R.color.red_background))
+//                .page(new BasicPage(R.drawable.ic_thumb_up_white,
+//                        "Simple to use",
+//                        "Add a welcome screen to your app with only a few lines of code.")
+//                        .background(R.color.red_background))
                 .page(new ParallaxPage(R.layout.parallax_example,
                         "Easy parallax",
                         "Supply a layout and parallax effects will automatically be applied")
@@ -37,11 +37,11 @@ public class WelcomeScreen extends WelcomeActivity {
                         .background(R.color.purple_background)
                 )
 
-                .page(new BasicPage(R.drawable.ic_edit_white,
-                        "Customizable",
-                        "All elements of the welcome screen can be customized easily.")
-                        .background(R.color.blue_background)
-                )
+//                .page(new BasicPage(R.drawable.ic_edit_white,
+//                        "Customizable",
+//                        "All elements of the welcome screen can be customized easily.")
+//                        .background(R.color.blue_background)
+//                )
 
                 .page(new FragmentWelcomePage() {
                     @Override
@@ -49,10 +49,9 @@ public class WelcomeScreen extends WelcomeActivity {
                         return new DoneFragment();
                     }
                 })
-
                 .useCustomDoneButton(true)
                 .canSkip(false)
-                .swipeToDismiss(true)
+                .swipeToDismiss(false)
                 .exitAnimation(android.R.anim.fade_out)
                 .build();
     }

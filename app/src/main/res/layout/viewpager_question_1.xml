@@ -120,10 +120,10 @@
         <LinearLayout
             android:id="@+id/questionaries_working_time"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <LinearLayout
