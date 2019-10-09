@@ -20,6 +20,11 @@ import com.mobile.tiamo.rest.services.MovieService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+  Title say the function
+  Just enter the name of the movie user wanna search
+  Get the result back
+ **/
 public class SearchMoviesActivity extends AppCompatActivity {
 
     private ListView listMovie;
@@ -59,6 +64,10 @@ public class SearchMoviesActivity extends AppCompatActivity {
         });
     }
 
+
+    /*
+     Init main component of the activity
+     */
     private void initComponent(){
         listMovie = findViewById(R.id.lv_movies);
         edMovieTitle = findViewById(R.id.search_input_movie);
@@ -66,6 +75,9 @@ public class SearchMoviesActivity extends AppCompatActivity {
 
     }
 
+    /*
+     Getting the movie based on the searching title
+     */
     private class SearchMovieAsync extends AsyncTask<String, Void, List<MovieItem>>{
         @Override
         protected List<MovieItem> doInBackground(String... strings) {

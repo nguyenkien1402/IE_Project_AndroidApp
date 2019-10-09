@@ -15,6 +15,9 @@ import com.mobile.tiamo.R;
 
 import java.util.List;
 
+/**
+  An adapter to show the list item of the sleeping
+ **/
 public class DashboardSleepingAdapter extends ArrayAdapter<DashboardSleepingItem> {
 
     private List<DashboardSleepingItem> list;
@@ -29,6 +32,10 @@ public class DashboardSleepingAdapter extends ArrayAdapter<DashboardSleepingItem
         this.list = list;
     }
 
+
+    /*
+      Populate the view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

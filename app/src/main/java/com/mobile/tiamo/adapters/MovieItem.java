@@ -1,5 +1,10 @@
 package com.mobile.tiamo.adapters;
 
+
+/**
+  A class of movie item
+  This class is to populate for the list of the movie
+ **/
 public class MovieItem {
 
     private String imdbID;

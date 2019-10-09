@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/*
-  This activity is used to add the daily activity
-  Trigger from fab button in the homescreen
+/**
+  * This activity is used to add the daily activity
+  * Trigger from fab button in the homescreen
  */
 public class AddingActivityActivity extends AppCompatActivity {
 

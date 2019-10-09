@@ -40,6 +40,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+    Sleeping Fragment of the dashboard
+ **/
 public class DashboardViewSleepingFragment extends Fragment {
     private static TiamoDatabase db;
     private static List<ActivityModelItem> activityModelItems = null;
@@ -53,6 +56,9 @@ public class DashboardViewSleepingFragment extends Fragment {
     private TextView tvToday, tvAvgSleepingToday, tvInbed, tvWakeup, tvYesterday;
 
 
+    /*
+     Init the view of the fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,12 +67,16 @@ public class DashboardViewSleepingFragment extends Fragment {
         initComponent();
         buttonAction();
 
+        // Get the sleeping data from database
         GetSleepingTimeAsync getSleepingTimeAsync = new GetSleepingTimeAsync();
         getSleepingTimeAsync.execute();
 
         return view;
     }
 
+    /*
+     An AsyncTask to get the sleeping time
+     */
     private class GetSleepingTimeAsync extends AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void... voids) {
@@ -113,6 +123,10 @@ public class DashboardViewSleepingFragment extends Fragment {
         tvAvgSleepingToday.setText("5h 15m");
     }
 
+    /*
+      An utility function to adjust the height of the list
+      In the case when the list is putting inside a scrollview
+     */
     public static void setDynamicHeight(ListView listView) {
         ListAdapter adapter = listView.getAdapter();
         //check adapter if null
@@ -133,6 +147,9 @@ public class DashboardViewSleepingFragment extends Fragment {
     }
 
 
+    /*
+      Init the popup of the sleeping mood
+     */
     public void initPopupSleepMood(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setCancelable(false);
@@ -176,9 +193,13 @@ public class DashboardViewSleepingFragment extends Fragment {
 
     }
 
+    // Get the data from the database
+    // Then populate to the list
     private List<DashboardSleepingItem> getSleepingTime(){
         List<DashboardSleepingItem> items = new ArrayList<DashboardSleepingItem>();
         try{
+            // Get the current day
+            // and the 10 day before that
             String today = DateUtilities.getCurrentDateInString();
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date currentDate = dateFormat.parse(today);
@@ -188,6 +209,8 @@ public class DashboardViewSleepingFragment extends Fragment {
             Date before = calendar.getTime();
             String strBefore = dateFormat.format(before);
 
+            // Get the data from database
+            // Sleeping data is in the range of the current day and the last ten day
             List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,"30-09-2019");
             sleepingModels.addAll(db.sleepingModelDao().getLastTenDay("01-10-2019",today));
             String previousDate = "";
@@ -199,9 +222,11 @@ public class DashboardViewSleepingFragment extends Fragment {
             Log.d("TAG","SIZE 10:" + db.sleepingModelDao().getLastTenDay(strBefore,today).size());
             DashboardSleepingItem item = null;
             int avg = 0;
+
+            // Loop all the data and calculate the average sleeping time of each day
+            // This should be safe in the database but will do it later
             for(int i = 0 ; i < sleepingModels.size() ; i++){
                 String date = sleepingModels.get(i).getDate();
-
                 if(!previousDate.equals(date)){
                     avg = 0;
                     item = new DashboardSleepingItem();

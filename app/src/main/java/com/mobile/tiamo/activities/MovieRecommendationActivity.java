@@ -29,10 +29,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
   This activity show the movie recommendation getting
   from the MoodAndMovieTypeActivity
- */
+ **/
 public class MovieRecommendationActivity extends AppCompatActivity {
 
     private String TAG = "MovieRecommendationActivity";

@@ -28,11 +28,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  This activity to get the movie recommendation
  User selected type of the movie, choose their mood, mainly is already predictable
  And the get some recommendation movie
- */
+ **/
 public class MoodAndMovieTypeActivity extends AppCompatActivity {
 
     private String TAG = "MoodAndMovieTypeActivity";

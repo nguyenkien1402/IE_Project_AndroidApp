@@ -1,5 +1,9 @@
 package com.mobile.tiamo.adapters;
 
+/**
+ Class for dashboard sleeping adapter
+ This is item to populate the list
+ **/
 public class DashboardSleepingItem {
     private String day;
     private String inBed;

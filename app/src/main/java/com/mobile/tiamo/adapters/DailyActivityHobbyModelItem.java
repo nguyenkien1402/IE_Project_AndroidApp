@@ -3,6 +3,10 @@ package com.mobile.tiamo.adapters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+  This is the daily activity model item
+  Not a routine
+ **/
 public class DailyActivityHobbyModelItem implements Parcelable {
 
     private long uid;

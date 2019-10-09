@@ -16,6 +16,9 @@ import com.mobile.tiamo.utilities.OtherUtilities;
 
 import java.util.List;
 
+/**
+  An adapter for the Home Fragment with the routine activity model
+ **/
 public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem> implements View.OnClickListener {
 
     private List<ActivityModelItem> datasets;
@@ -35,6 +38,7 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
 
     }
 
+    // Init view
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -55,15 +59,6 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
         viewHolder.txtTile.setText(activitiesModel.getTitle());
         viewHolder.img.setImageDrawable(context.getResources().getDrawable(OtherUtilities.getIcon(activitiesModel.getTitle())));
 
-//        if(activitiesModel.getHourPractice() == 0 && activitiesModel.getMinutePractice() == 0){
-//            if(activitiesModel.getMinutes() == 0) {
-//                String text = activitiesModel.getHours() + " hours per week";
-//                viewHolder.txtHour.setText(text);
-//            }else{
-//                String text = activitiesModel.getHours() +" hours, "+activitiesModel.getMinutes()+" minutes per week";
-//                viewHolder.txtHour.setText(text);
-//            }
-//        }else{
             if(activitiesModel.getMinutePractice() == 0 && activitiesModel.getHourPractice() != 0){
                 String text = "You've done " + activitiesModel.getHourPractice() + " hours on this day";
                 viewHolder.txtHour.setText(text);
@@ -76,11 +71,9 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
             }else{
                 viewHolder.txtHour.setText("");
             }
-//        }
 
 
 
-        // Return the completed view to render on screen
         return convertView;
     }
 }

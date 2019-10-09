@@ -15,6 +15,9 @@ import com.mobile.tiamo.R;
 
 import java.util.List;
 
+/**
+  This is deprecated, will be review in the future
+ **/
 public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> implements View.OnClickListener {
 
     private List<ScheduleItem> datasets;
