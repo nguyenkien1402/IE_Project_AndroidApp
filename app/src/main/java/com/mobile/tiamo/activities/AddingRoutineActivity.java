@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
-  This activity is used to add new daily routin
+  This activity is used to add new daily routine
   Ex: Working, Sleeping, etc
  **/
 public class AddingRoutineActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {

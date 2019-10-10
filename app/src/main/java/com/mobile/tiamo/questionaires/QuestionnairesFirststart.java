@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.mobile.tiamo.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A full-screen activity that shows and hides the system UI (i.e.
@@ -26,7 +26,7 @@ public class QuestionnairesFirststart extends AppCompatActivity {
         setContentView(R.layout.activity_questionnaires_firststart);
         viewPager = (NoSwipeableViewpager) findViewById(R.id.questionaries_viewpager);
         main_view_pager = (LinearLayout) findViewById(R.id.main_view_pager);
-        viewPager.setAdapter(new QuestionariesAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new QuestionariesAdapter(getFragmentManager()));
         viewPager.setSwipeLocked(true);
         final View parentLayout = findViewById(android.R.id.content);
         final Button btnNext = findViewById(R.id.btnQNext);
@@ -40,9 +40,9 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                 // Tab 1
                 if(viewPager.getCurrentItem() == 0){
 
-                    String workingStartTime = FirstQuestionFragment.Companion.getTimeRangeStart();
-                    String workingEndTime = FirstQuestionFragment.Companion.getTimeRangeEnd();
-                    ArrayList<String> workingDay = FirstQuestionFragment.Companion.getDay();
+                    String workingStartTime = FirstQuestionJavaFragment.timeRangeStart;
+                    String workingEndTime = FirstQuestionJavaFragment.timeRangeEnd;
+                    List<String> workingDay = FirstQuestionJavaFragment.days;
                     if(workingStartTime == null || workingDay.size() == 0 || workingEndTime == null){
                         Snackbar.make(parentLayout,"You need to select the working day",Snackbar.LENGTH_SHORT).show();
                     }else{

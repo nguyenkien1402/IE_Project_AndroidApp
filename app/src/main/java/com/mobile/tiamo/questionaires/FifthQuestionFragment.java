@@ -1,5 +1,6 @@
 package com.mobile.tiamo.questionaires;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,7 +13,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
@@ -88,9 +88,9 @@ public class FifthQuestionFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Integer... voids) {
-            String workingStartTime = FirstQuestionFragment.Companion.getTimeRangeStart();
-            String workingEndTime = FirstQuestionFragment.Companion.getTimeRangeEnd();
-            List<String> workingDay = FirstQuestionFragment.Companion.getDay();
+            String workingStartTime = FirstQuestionJavaFragment.timeRangeStart;
+            String workingEndTime = FirstQuestionJavaFragment.timeRangeEnd;
+            List<String> workingDay = FirstQuestionJavaFragment.days;
             String operationDay = getOperationDay(workingDay);
             String specificDay = getSpecificDay(workingDay);
             Schedule schedule = new Schedule();

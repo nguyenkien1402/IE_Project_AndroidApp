@@ -60,6 +60,7 @@ class FirstQuestionFragment : Fragment(),OnTimeRangeSelectedListener{
             BottomSheetTimeRangePicker
                     .newInstance(this, DateFormat.is24HourFormat(activity))
                     .show(activity?.supportFragmentManager, tagBottomSheetTimeRangePicker)
+
         }
         return view
     }

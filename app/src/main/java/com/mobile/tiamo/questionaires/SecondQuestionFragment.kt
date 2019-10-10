@@ -1,13 +1,11 @@
 package com.mobile.tiamo.questionaires
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.appsci.sleep.timepicker.SleepTimePicker
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mobile.tiamo.R
@@ -17,9 +15,8 @@ import org.threeten.bp.LocalTime
 import timber.log.Timber
 import java.util.*
 import org.threeten.bp.format.DateTimeFormatter
-import org.w3c.dom.Text
 
-class SecondQuestionFragment : Fragment(){
+class SecondQuestionFragment : android.app.Fragment(){
 
     companion object{
         var sleepTime: String? = null
