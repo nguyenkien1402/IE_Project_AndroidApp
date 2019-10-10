@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -105,7 +106,7 @@ public class HomeFragment extends Fragment {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setCancelable(false);
                     // Init popup dialog view and it's ui controls.
-                    initPopupViewControls();
+                    initPopupViewControls(activityModelItems.get(position).getTitle());
                     alertDialogBuilder.setView(popupInputDialogView);
                     final AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
@@ -663,11 +664,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void initPopupViewControls(){
+    public void initPopupViewControls(String name){
         // Get layout inflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
         // Inflate the popup dialog from a layout xml file.
         popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
+        TextView txt = popupInputDialogView.findViewById(R.id.title_suggesstion);
+        txt.setText("How much time you put in "+name+" today?");
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
         btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
         timePicker = popupInputDialogView.findViewById(R.id.q3_time_picker_2);
