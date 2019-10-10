@@ -21,7 +21,10 @@ import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.TiamoDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DashboardViewActivityFragment extends Fragment {
@@ -34,8 +37,8 @@ public class DashboardViewActivityFragment extends Fragment {
     private static void getActivityList() {
         activityModelItems = new ArrayList<>();
         // get Activity
-        if (db.activitiesModelDao().getAll().size() > 0) {
-            List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
+        List<ActivitiesModel> scheduleList = db.activitiesModelDao().getAll();
+        if (scheduleList.size() > 0) {
             for (int i = 0; i < scheduleList.size(); i++) {
                 ActivityModelItem model = new ActivityModelItem();
                 model.setUid(scheduleList.get(i).getUid());
@@ -44,7 +47,7 @@ public class DashboardViewActivityFragment extends Fragment {
                 model.setMinutes(scheduleList.get(i).getMinutes());
 
                 for (DailyActivityHobbyModelItem item : activityHobbyModelItems) {
-                    if (item.getUid() == model.getUid()) {
+                    if (item.getTitle().equals(model.getTitle())) {
 
                         int activityHrs = item.getHours();
                         int acitivityMins = item.getMinutes();
@@ -71,10 +74,19 @@ public class DashboardViewActivityFragment extends Fragment {
     private static void getActivityProgress() {
         activityHobbyModelItems = new ArrayList<>();
         // get Activity Events
-        if (db.dailyActivityHobbyModelDao().getAll().size() > 0) {
-            List<DailyActivityHobbyModel> activityProgressList = db.dailyActivityHobbyModelDao().getAll();
-            for (int i = 0; i < activityProgressList.size(); i++) {
+        List<DailyActivityHobbyModel> activityProgressListAll = db.dailyActivityHobbyModelDao().getAll();
+        List<DailyActivityHobbyModel> activityProgressList = new ArrayList<>();
+        List<String> currentWeek = getCurrentWeek("dd-MM-yyyy");
 
+        // Filter for the current week
+        for (DailyActivityHobbyModel activityProgress : activityProgressListAll) {
+            if (currentWeek.contains(activityProgress.getDateCreated())) {
+                activityProgressList.add(activityProgress);
+            }
+        }
+
+        if (activityProgressList.size() > 0) {
+            for (int i = 0; i < activityProgressList.size(); i++) {
                 DailyActivityHobbyModelItem model = new DailyActivityHobbyModelItem();
                 model.setUid(activityProgressList.get(i).getUid());
                 model.setTitle(activityProgressList.get(i).getTitle());
@@ -85,6 +97,7 @@ public class DashboardViewActivityFragment extends Fragment {
             }
         }
     }
+
 
 
     @Nullable
@@ -114,5 +127,19 @@ public class DashboardViewActivityFragment extends Fragment {
             DashboardActivityAdapter dashboardAdapter = new DashboardActivityAdapter(getContext(), R.layout.adapter_dashboard, activityModelItems, activityHobbyModelItems);
             dListView.setAdapter(dashboardAdapter);
         }
+    }
+
+    private static List<String> getCurrentWeek(String dateFormat) {
+        // Get the current week dates
+        DateFormat format = new SimpleDateFormat(dateFormat);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        List<String> days = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            days.add(format.format(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days;
     }
 }

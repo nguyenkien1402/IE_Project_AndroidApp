@@ -15,19 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.badoualy.datepicker.DatePickerTimeline;
-import com.google.android.material.chip.ChipGroup;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingActivityActivity;
@@ -44,11 +45,9 @@ import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
-import okhttp3.internal.Util;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a home fragment
@@ -66,6 +65,7 @@ public class HomeFragment extends Fragment {
     private static DatePickerTimeline timeline;
     private static String TAG="HomeFragment";
     private FloatingActionButton btnAddingRoutine, btnAddingActivity;
+    private FloatingActionsMenu fAM;
     private View popupInputDialogView;
     private Button btnAdd, btnCancel;
     private TimePicker timePicker;
@@ -176,6 +176,7 @@ public class HomeFragment extends Fragment {
         btnAddingRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fAM.collapse();
                 Intent intent = new Intent(getActivity(), AddingRoutineActivity.class);
                 startActivityForResult(intent,AddingRoutineActivity.CODE_RESULT);
             }
@@ -185,6 +186,7 @@ public class HomeFragment extends Fragment {
         btnAddingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fAM.collapse();
                 Intent intent = new Intent(getActivity(), AddingActivityActivity.class);
                 startActivityForResult(intent,AddingActivityActivity.CODE_RESULT);
             }
@@ -202,6 +204,7 @@ public class HomeFragment extends Fragment {
         activityModelItems = new ArrayList<ActivityModelItem>();
         btnAddingActivity = (FloatingActionButton) view.findViewById(R.id.home_action_activity);
         btnAddingRoutine = (FloatingActionButton) view.findViewById(R.id.home_action_routine);
+        fAM = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
         db = SQLiteDatabase.getTiamoDatabase(getContext());
         MainActivity.textToolbar.setText(DateUtilities.getCurrentDateInString());
     }

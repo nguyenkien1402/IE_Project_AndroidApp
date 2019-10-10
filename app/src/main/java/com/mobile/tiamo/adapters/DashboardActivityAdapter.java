@@ -183,7 +183,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
                     chart.getAxisRight().setEnabled(false);
                 }
 
-                setData(model.getUid());
+                setData(model.getTitle());
 
                 // draw points over time
                 chart.animateY(600);
@@ -225,7 +225,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
     }
 
 
-    private void setData(long uid) {
+    private void setData(String title) {
 
         ArrayList<Entry> values = new ArrayList<>();
         String[] currentWeek = getCurrentWeek("dd-MM-yyyy");
@@ -233,7 +233,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
         for (int i = 0; i < 7; i++) {
             float mins = 0;
             for (DailyActivityHobbyModelItem item : activityHobbyModelItems) {
-                if (item.getUid() == uid && item.getDateCreated().equals(currentWeek[i])) {
+                if (item.getTitle().equals(title) && item.getDateCreated().equals(currentWeek[i])) {
                     mins = item.getMinutes() + item.getHours() * 60;
                 }
             }
@@ -276,7 +276,7 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
             set1.setFormSize(15.f);
 
             // text size of values
-            set1.setValueTextSize(9f);
+            set1.setValueTextSize(11f);
 
             // draw selection line as dashed
             // set1.enableDashedHighlightLine(10f, 5f, 0f);
