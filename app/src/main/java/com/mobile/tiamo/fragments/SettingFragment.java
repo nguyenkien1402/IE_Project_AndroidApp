@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.activities.AboutUsActivity;
 import com.mobile.tiamo.activities.MovieRecommendationActivity;
 import com.mobile.tiamo.activities.SearchMoviesActivity;
 import com.mobile.tiamo.dao.ActivitiesModel;
@@ -69,7 +70,6 @@ public class SettingFragment extends Fragment {
         tvAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Check OK",Toast.LENGTH_SHORT).show();
                 populateData();
             }
         });
@@ -77,9 +77,8 @@ public class SettingFragment extends Fragment {
         deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Check OK",Toast.LENGTH_SHORT).show();
-                DeleteAllAsync deleteAllAsync = new DeleteAllAsync();
-                deleteAllAsync.execute();
+//                DeleteAllAsync del = new DeleteAllAsync();
+//                del.execute();
             }
         });
 
@@ -93,32 +92,19 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
+
+    private void populateData(){
+//        boolean isPopulate = SavingDataSharePreference.getDataBoolean(getActivity(), Messages.LOCAL_DATA,"isPopulate");
+//        if(isPopulate==false){
+            DeleteAllAsync deleteAllAsync = new DeleteAllAsync();
+            deleteAllAsync.execute();
+//        }
+    }
+
     private class DeleteAllAsync extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {
             deleteAllDatabase();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    private void populateData(){
-        boolean isPopulate = SavingDataSharePreference.getDataBoolean(getActivity(), Messages.LOCAL_DATA,"isPopulate");
-        if(isPopulate==false){
-            PopulateDataAsync populateDataAync = new PopulateDataAsync();
-            populateDataAync.execute();
-        }
-    }
-
-    private class PopulateDataAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-                // mean no data, insert data here
             populateDailyRoutine();
             populateDailyActivity();
             populateSleepingData();
@@ -130,6 +116,32 @@ public class SettingFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
+
+//            PopulateDataAsync populateDataAync = new PopulateDataAsync();
+//            populateDataAync.execute();
+        }
+    }
+
+
+    private class PopulateDataAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+                // mean no data, insert data here
+//            populateDailyRoutine();
+//            populateDailyActivity();
+//            populateSleepingData();
+//            populateStepData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
+
+//            Intent intent = new Intent(getActivity(),AboutUsActivity.class);
+//            startActivity(intent);
 //            m.dismiss();
         }
     }
@@ -284,8 +296,8 @@ public class SettingFragment extends Fragment {
             calendar.setTime(currentDate);
 
             for (int i = 1; i <= 10; i++) {
-                DailyActivityHobbyModel m = new DailyActivityHobbyModel();
                 calendar.add(Calendar.DAY_OF_YEAR, -1);
+                DailyActivityHobbyModel m = new DailyActivityHobbyModel();
                 Date previous = calendar.getTime();
                 String date = dateFormat.format(previous);
                 String abb = DateUtilities.getWeekDayAbbFromDate(previous);

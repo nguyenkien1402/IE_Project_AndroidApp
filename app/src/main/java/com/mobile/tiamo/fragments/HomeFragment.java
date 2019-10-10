@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import okhttp3.internal.Util;
+
 /**
  * This is a home fragment
  * Show the list of the routine activity and the list of the daily activity
@@ -71,7 +73,6 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_home, container,false);
         initComponent();
 
@@ -121,7 +122,7 @@ public class HomeFragment extends Fragment {
                             dailyActivityHobbyModel.setHours(timePicker.getHour());
                             dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
                             dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
-
+//                            Log.d(TAG,activityModelItems.get(position).getTitle()+"-"+activityModelItems.get(position).getUid());
                             SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                             saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
                             int hour = timePicker.getHour();
@@ -319,18 +320,15 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 list = db.dailyActivitiesDao().getDailyActivities(selectedDate);
-                Log.d("Before",list.size()+"");
                 return list;
             }
 
             // If the selected date if after the current date
             // Not allow to modify data as well.
             if(DateUtilities.stringToDate(selectedDate).after(DateUtilities.stringToDate(currentDate))){
-                Log.d("After","abb:"+abbDay);
                 List<Schedule> listSchedules = db.scheduleDao().getAll();
                 for(int i = 0 ; i < listSchedules.size() ; i++){
                     if(listSchedules.get(i).getSpecificDay().contains(abbDay)){
-                        Log.d("After",listSchedules.get(i).getTitle()+":"+listSchedules.get(i).getSpecificDay());
                         DailyRoutine d = new DailyRoutine();
                         d.setIsDone(0);
                         d.setScheduleId(listSchedules.get(i).getUid());
@@ -597,6 +595,8 @@ public class HomeFragment extends Fragment {
                         model.setMinutePractice(dailyActivityHobbyModels.get(j).getMinutes());
                         model.setUid(dailyActivityHobbyModels.get(j).getUid());
                         break;
+                    }else{
+
                     }
                 }
                 activityModelItems.add(model);
@@ -604,15 +604,27 @@ public class HomeFragment extends Fragment {
         }else{
             Log.d("TAG","No recording activity");
             // load all the data from activity model dao
+            List<DailyActivityHobbyModel> list = new ArrayList<DailyActivityHobbyModel>();
             if(db.activitiesModelDao().getAll().size() > 0) {
                 for (int i = 0; i < hobbyActivities.size(); i++) {
-                    ActivityModelItem model = new ActivityModelItem();
-                    model.setUid(hobbyActivities.get(i).getUid());
-                    model.setTitle(hobbyActivities.get(i).getTitle());
-                    model.setHours(hobbyActivities.get(i).getHours());
-                    model.setMinutes(hobbyActivities.get(i).getMinutes());
-                    activityModelItems.add(model);
+                    DailyActivityHobbyModel m = new DailyActivityHobbyModel();
+                    m.setTitle(hobbyActivities.get(i).getTitle());
+                    m.setDateCreated(DateUtilities.getCurrentDateInString());
+//                    ActivityModelItem model = new ActivityModelItem();
+//                    model.setUid(hobbyActivities.get(i).getUid());
+//                    model.setTitle(hobbyActivities.get(i).getTitle());
+//                    model.setHours(hobbyActivities.get(i).getHours());
+//                    model.setMinutes(hobbyActivities.get(i).getMinutes());
+//                    activityModelItems.add(model);
+                    list.add(m);
                 }
+            }
+            db.dailyActivityHobbyModelDao().insertAll(list);
+            list = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(DateUtilities.getCurrentDateInString());
+            for(int i = 0 ; i < list.size() ; i++){
+                ActivitiesModel model = new ActivitiesModel();
+                model.setTitle(list.get(i).getTitle());
+                model.setUid(list.get(i).getUid());
             }
         }
 
