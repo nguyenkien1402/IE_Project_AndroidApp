@@ -52,7 +52,7 @@ public class DashboardViewPagerFragment extends Fragment {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        MainActivity.textToolbar.setText(R.string.app_name);
+        MainActivity.textToolbar.setText(R.string.title_dashboard);
 
         // Set the tab layout
         tabLayout.setTabTextColors(Color.parseColor("#e3e3e3"), Color.parseColor("#ffffff"));
@@ -68,7 +68,7 @@ public class DashboardViewPagerFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         Log.d("TAG","Call again");
         DashboardViewPagerAdapter adapter = new DashboardViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new DashboardViewActivityFragment(), "Activity");
+        adapter.addFragment(new DashboardViewActivityFragment(), "Weekly goals");
         adapter.addFragment(new DashboardViewSleepingFragment(), "Sleeping");
         adapter.addFragment(new DashboardViewStepCounterFragment(), "Step");
         viewPager.setAdapter(adapter);

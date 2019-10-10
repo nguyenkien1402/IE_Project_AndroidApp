@@ -2,7 +2,6 @@ package com.mobile.tiamo.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DailyActivityHobbyModelItem;
 import com.mobile.tiamo.adapters.DashboardActivityAdapter;
-import com.mobile.tiamo.adapters.HomeListDailyActivityAdapter;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
@@ -93,7 +91,7 @@ public class DashboardViewActivityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dashboard, container,false);
-        MainActivity.textToolbar.setText(R.string.app_name);
+        MainActivity.textToolbar.setText(R.string.title_dashboard);
         db = SQLiteDatabase.getTiamoDatabase(getContext());
 
         GetListDailyActivityAsync getListDailyActivityAsync = new GetListDailyActivityAsync();

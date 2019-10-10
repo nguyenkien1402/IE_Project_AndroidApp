@@ -39,8 +39,8 @@ public class DoneFragment extends Fragment implements WelcomePage.OnChangeListen
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), QuestionnairesFirststart.class);
-                startActivity(i);
                 getActivity().finish();
+                startActivity(i);
             }
         });
     }

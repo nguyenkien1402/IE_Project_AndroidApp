@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,6 +126,8 @@ public class DashboardActivityAdapter extends ArrayAdapter<ActivityModelItem> {
                 // Inflate the popup dialog from a layout xml file.
 
                 closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+                closePopupBtn.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_background), PorterDuff.Mode.MULTIPLY);
+
                 TextView popUpTitle = (TextView) customView.findViewById(R.id.popup_dashboard_tvTitle);
                 popUpTitle.setText(model.getTitle());
 
