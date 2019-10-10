@@ -66,8 +66,8 @@ public class HomeFragment extends Fragment {
     private static String TAG="HomeFragment";
     private FloatingActionButton btnAddingRoutine, btnAddingActivity;
     private FloatingActionsMenu fAM;
-    private View popupInputDialogView;
-    private Button btnAdd, btnCancel;
+    private View popupInputDialogView, popupRoutine;
+    private Button btnAdd, btnCancel, btnRoutineYes, btnRoutineNo;
     private TimePicker timePicker;
 
 
@@ -143,6 +143,35 @@ public class HomeFragment extends Fragment {
                 else{
                     Toast.makeText(getActivity(),"Not Today", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        listViewRoutine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setCancelable(false);
+                // Init popup dialog view and it's ui controls.
+                initPopupViewRoutine(datasets.get(position));
+                alertDialogBuilder.setView(popupRoutine);
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+                btnRoutineYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
+                        getDailyActivityAsync.execute(datasets.get(position).getUid());
+                        alertDialog.cancel();
+                    }
+                });
+
+                btnRoutineNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
             }
         });
 
@@ -281,6 +310,35 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /*
+     Handle the action when user click to the list of the item
+     */
+    private class GetDailyActivityAsync extends AsyncTask<Long, Void, Void> {
+        ProgressDialog dialog ;
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(getContext());
+            dialog.setMessage("Updating");
+            dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Long... voids) {
+            // Change into database
+
+            db.dailyActivitiesDao().updateIsDone(voids[0],1);
+//            DailyRoutine dailyRoutine = db.dailyActivitiesDao().getDailyActivityById(voids[0]);
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(Void dailyActivities) {
+            super.onPostExecute(dailyActivities);
+            dialog.dismiss();
+        }
+    }
     // Get the list of daily activity from seleted date
     // The date is from time range
     private class GetDailyActivitiesFromSelectedDate extends AsyncTask<String,Void,List<DailyRoutine>>{
@@ -484,7 +542,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public List<DailyRoutineItem> getDailyActivityList(String currentDate){
+    private List<DailyRoutineItem> getDailyActivityList(String currentDate){
         /**
          * A function to return the list of the daily routine item
          * Params:
@@ -680,6 +738,16 @@ public class HomeFragment extends Fragment {
         timePicker.setIs24HourView(true);
         timePicker.setHour(1);
         timePicker.setMinute(0);
+    }
+
+    private void initPopupViewRoutine(DailyRoutineItem dailyRoutineItem){
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+        // Inflate the popup dialog from a layout xml file.
+        popupRoutine = layoutInflater.inflate(R.layout.popup_routine_detail, null);
+        TextView txt = popupRoutine.findViewById(R.id.popup_routine_title);
+        txt.setText("Have you finished "+dailyRoutineItem.getTitle()+"?");
+        btnRoutineYes = popupRoutine.findViewById(R.id.popup_routine_yes);
+        btnRoutineNo = popupRoutine.findViewById(R.id.popup_routine_no);
     }
 
     public static void setDynamicHeight(ListView listView) {

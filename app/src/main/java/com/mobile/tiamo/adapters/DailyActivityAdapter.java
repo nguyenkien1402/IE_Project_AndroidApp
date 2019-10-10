@@ -106,7 +106,7 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
             convertView = inflater.inflate(R.layout.item_dailyactivity, parent, false);
             viewHolder.txtTile = (TextView) convertView.findViewById(R.id.item_dailyactivity_title);
             viewHolder.txtHour = (TextView) convertView.findViewById(R.id.item_dailyactivity_hour);
-            viewHolder.aSwitch = (Switch) convertView.findViewById(R.id.simpleSwitch);
+//            viewHolder.aSwitch = (Switch) convertView.findViewById(R.id.simpleSwitch);
             viewHolder.imageView = (ImageView)convertView.findViewById(R.id.daily_routine_icon);
             convertView.setTag(viewHolder);
 

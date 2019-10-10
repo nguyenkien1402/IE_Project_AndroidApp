@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/popup_routine_title"
+        android:textSize="20dp"
+        android:text="How many hours per week?"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:theme="@style/AppTheme"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/popup_routine_yes"
+            android:layout_alignParentRight="true"
+            android:text="Yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:theme="@style/AppTheme"
+            android:id="@+id/popup_routine_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/popup_routine_yes"
+            android:layout_marginStart="0dp"
+            android:text="No" />
+    </RelativeLayout>
+
+</LinearLayout>
