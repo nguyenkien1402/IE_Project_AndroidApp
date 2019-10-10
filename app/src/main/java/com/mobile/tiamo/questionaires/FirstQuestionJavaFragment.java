@@ -118,18 +118,12 @@ public class FirstQuestionJavaFragment extends Fragment {
                     int minuteStart = data.getExtras().getInt(RangeTimePickerDialog.MINUTE_START);
                     int minuteEnd = data.getExtras().getInt(RangeTimePickerDialog.MINUTE_END);
                     // Use the returned value
-                    Toast.makeText(getActivity(), "Time start:"+hourStart+":"+minuteStart+"\nUntil: "+hourEnd+":"+minuteEnd, Toast.LENGTH_SHORT).show();
+                    timeStart.setText(hourStart+":"+minuteStart);
+                    timeEnd.setText(hourEnd+":"+minuteEnd);
+                    timeRangeStart = timeStart.getText().toString();
+                    timeRangeEnd = timeEnd.getText().toString();
                 }
             }
         }
     }
-
-    //    @Override
-//    public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
-//        Log.d("time",hourStart+":"+minuteStart +"-"+hourEnd+":"+minuteEnd);
-//        timeStart.setText(hourStart+":"+minuteStart);
-//        timeEnd.setText(hourEnd+":"+minuteEnd);
-//        timeRangeStart = timeStart.getText().toString();
-//        timeRangeEnd = timeEnd.getText().toString();
-//    }
 }
