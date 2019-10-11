@@ -94,4 +94,7 @@ dependencies {
     implementation "info.hoang8f:fbutton:1.0.5"
     implementation 'com.stephentuso:welcome:1.4.1'
 
+    // Shape of View
+    implementation 'com.github.florent37:shapeofview:1.4.7'
+
 }

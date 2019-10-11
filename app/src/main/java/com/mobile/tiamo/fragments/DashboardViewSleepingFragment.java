@@ -1,5 +1,6 @@
 package com.mobile.tiamo.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingActivityActivity;
+import com.mobile.tiamo.activities.SearchMoviesActivity;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DashboardSleepingAdapter;
 import com.mobile.tiamo.adapters.DashboardSleepingItem;
@@ -50,10 +54,11 @@ public class DashboardViewSleepingFragment extends Fragment {
     ListView lv;
     DashboardSleepingAdapter adapter;
     List<DashboardSleepingItem> listItems = null;
-    private Button sleepingMood;
+    private LinearLayout sleepingMood;
     private ImageView btnHappy, btnNeutral, btnTired,imvMoodView;
     private View popupView;
     private TextView tvToday, tvAvgSleepingToday, tvInbed, tvWakeup, tvYesterday;
+    private View mv;
 
 
     /*
@@ -106,6 +111,14 @@ public class DashboardViewSleepingFragment extends Fragment {
                 initPopupSleepMood();
             }
         });
+
+        mv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void initComponent(){
         lv = view.findViewById(R.id.dashboard_sleep_lv);
@@ -116,6 +129,8 @@ public class DashboardViewSleepingFragment extends Fragment {
         tvInbed = view.findViewById(R.id.today_inbed);
         tvWakeup = view.findViewById(R.id.today_wakeup);
         tvYesterday = view.findViewById(R.id.avg_yesterday);
+        mv = view.findViewById(R.id.dashboard_sleeping_mv);
+        mv.setVisibility(View.GONE);
 
         tvToday.setText("To day: "+DateUtilities.getCurrentDateInString());
         tvInbed.setText("1:15 AM");
@@ -169,6 +184,7 @@ public class DashboardViewSleepingFragment extends Fragment {
             public void onClick(View v) {
                 // set
                 imvMoodView.setImageResource(R.drawable.happy_64);
+                mv.setVisibility(View.GONE);
                 alertDialog.dismiss();
             }
         });
@@ -177,7 +193,8 @@ public class DashboardViewSleepingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // set
-                imvMoodView.setImageResource(R.drawable.tired_sleepy);
+                imvMoodView.setImageResource(R.drawable.sad_64);
+                mv.setVisibility(View.VISIBLE);
                 alertDialog.dismiss();
             }
         });
@@ -187,6 +204,7 @@ public class DashboardViewSleepingFragment extends Fragment {
             public void onClick(View v) {
                 // set
                 imvMoodView.setImageResource(R.drawable.neutral_64);
+                mv.setVisibility(View.VISIBLE);
                 alertDialog.dismiss();
             }
         });

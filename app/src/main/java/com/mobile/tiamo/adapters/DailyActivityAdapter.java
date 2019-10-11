@@ -117,21 +117,6 @@ public class DailyActivityAdapter extends ArrayAdapter<DailyRoutineItem> impleme
         viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(OtherUtilities.getIcon(dailyActivityItem.getTitle())));
         viewHolder.txtTile.setText(dailyActivityItem.getTitle());
         viewHolder.txtHour.setText(dailyActivityItem.getHours());
-        if(viewHolder.txtTile.getText().equals("Sleeping")){
-            viewHolder.aSwitch.setVisibility(View.GONE);
-        }else{
-            viewHolder.aSwitch.setVisibility(View.VISIBLE);
-            if(dailyActivityItem.getIsDone()==1){
-                viewHolder.aSwitch.setChecked(true);
-            }else{
-                viewHolder.aSwitch.setChecked(false);
-            }
-        }
-
-        viewHolder.aSwitch.setTag(position);
-        viewHolder.aSwitch.setOnClickListener(this);
-
-
         // Return the completed view to render on screen
         return convertView;
     }

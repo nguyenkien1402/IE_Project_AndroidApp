@@ -153,9 +153,9 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_width="match_parent"
+                android:id="@+id/dashboard_sleeping_add_emotion"
                 android:layout_height="60dp">
                 <Button
-                    android:id="@+id/dashboard_sleeping_add_emotion"
                     android:text="How your sleep last night?"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
@@ -167,6 +167,48 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"/>
             </LinearLayout>
+            <com.github.florent37.shapeofview.shapes.BubbleView
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right"
+                app:shape_bubble_arrowHeight="10dp"
+                app:shape_bubble_arrowWidth="10dp"
+                app:shape_bubble_arrowPosition="top"
+                app:shape_bubble_borderRadius="20dp"
+                android:id="@+id/dashboard_sleeping_mv"
+                android:alpha="0.9"
+                app:arrow_posititon_percent="0.73">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@color/red_background" />
+                    <TextView
+                        android:text="Wanna get something fun"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:textSize="19dp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </RelativeLayout>
+
+            </com.github.florent37.shapeofview.shapes.BubbleView>>
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/dashboard_sleeping_mv"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_height="60dp">-->
+<!--                <TextView-->
+<!--                    android:layout_width=""-->
+<!--                    android:layout_height=""-->
+<!--            </LinearLayout>-->
 
             <TextView
                 android:textColor="#000000"

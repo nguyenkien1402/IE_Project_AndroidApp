@@ -39,7 +39,7 @@
         <ImageView
             android:id="@+id/sleep_tired"
             android:layout_weight="1"
-            android:src="@drawable/tired_sleepy"
+            android:src="@drawable/sad_64"
             android:layout_width="64dp"
             android:layout_height="64dp"/>
     </LinearLayout>
