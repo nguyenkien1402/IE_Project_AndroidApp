@@ -21,7 +21,7 @@ import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.NotificationMessages;
 
 public class ReminderNotificationEndAction extends BroadcastReceiver {
-    private String notificationText = "Tiamo";
+    private String notificationText = "Liberzy";
     private String notificationTitle = "It is about to end";
 
 //    @Override

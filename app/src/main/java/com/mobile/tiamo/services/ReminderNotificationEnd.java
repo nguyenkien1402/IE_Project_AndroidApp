@@ -19,7 +19,7 @@ import com.mobile.tiamo.R;
 import com.mobile.tiamo.utilities.Messages;
 
 public class ReminderNotificationEnd extends BroadcastReceiver {
-    private String notificationText = "Tiamo";
+    private String notificationText = "Liberzy";
     private String notificationTitle = "It is about to end ";
 
     @Override
@@ -35,7 +35,7 @@ public class ReminderNotificationEnd extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
             //Configure Notification Channel
-            notificationChannel.setDescription("Tiamo End Notifications");
+            notificationChannel.setDescription("Liberzy End Notifications");
             notificationChannel.enableLights(true);
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);

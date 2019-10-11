@@ -19,7 +19,7 @@ import com.mobile.tiamo.R;
 import com.mobile.tiamo.utilities.Messages;
 
 public class ReminderNotificationStartAction extends BroadcastReceiver {
-    private String notificationText = "Tiamo";
+    private String notificationText = "Liberzy";
     private String notificationTitle = "Time to start";
 
     @Override

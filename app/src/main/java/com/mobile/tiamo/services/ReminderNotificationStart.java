@@ -20,7 +20,7 @@ import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.NotificationMessages;
 
 public class ReminderNotificationStart extends BroadcastReceiver {
-    private String notificationText = "Tiamo";
+    private String notificationText = "Liberzy";
     private String notificationTitle = "Do you miss me?";
 
     @Override
