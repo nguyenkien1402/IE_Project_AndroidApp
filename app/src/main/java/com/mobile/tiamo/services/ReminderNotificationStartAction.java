@@ -35,7 +35,7 @@ public class ReminderNotificationStartAction extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
             //Configure Notification Channel
-            notificationChannel.setDescription("Tiamo Start Notifications");
+            notificationChannel.setDescription("Liberzy Start Notifications");
             notificationChannel.enableLights(true);
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);

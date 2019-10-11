@@ -18,10 +18,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 import com.mobile.tiamo.R;
+import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
+import com.mobile.tiamo.utilities.LocalNotifications;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -39,18 +41,15 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
 
     public static int CODE_RESULT = 3;
     private TiamoDatabase db;
-    private List<Schedule> tasks;
-    private View popupInputDialogView = null;
     private EditText edTitle;
     private Button btnAddRoutine;
-    private TimePickerDialog timePickerDialog;
     private TextView timeStart,timeEnd, daySelected;
     private String[] listDays;
     private String[] listDaysAbb;
     private boolean[] checkedDays;
     private ArrayList<Integer> mItems = new ArrayList<>();
     private String specificDay="";
-    private List<Schedule> newRoutine = new ArrayList<Schedule>();
+    private LocalNotifications localNotifications;
 
     /*
      Create the view of activity
@@ -66,6 +65,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
 
         db = SQLiteDatabase.getTiamoDatabase(getApplicationContext());
         initComponent();
+        localNotifications = new LocalNotifications(getApplicationContext());
 
         btnAddRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                         AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
                         addingScheduleAsync.execute(new String[]{title,timeS,timeE,days});
                     }else{
-                        Toast.makeText(getApplicationContext(),"Please set day and time for rountines", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Please set day and time for routines", Toast.LENGTH_LONG).show();
                     }
 
                 }else{
@@ -116,6 +116,17 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
             schedule.setTitle(title);
             schedule.setOperationDay(days);
             schedule.setSpecificDay(specificDay);
+
+            String dayAbb = DateUtilities.getCurrentDayInAbb();
+            if(specificDay.contains(dayAbb)){
+                DailyRoutine dailyRoutine = new DailyRoutine();
+                dailyRoutine.setHours(schedule.getTimeStart() + " - " + schedule.getTimeEnd());
+                dailyRoutine.setTitle(schedule.getTitle());
+                dailyRoutine.setTimeStart(schedule.getTimeStart());
+                dailyRoutine.setTimeEnd(schedule.getTimeEnd());
+                dailyRoutine.setDayOperation(schedule.getSpecificDay());
+                localNotifications.scheduleNotificationForNewRoutine(dailyRoutine);
+            }
 
             DateFormat df = new SimpleDateFormat("hh:mm");
             try {
@@ -193,13 +204,23 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 s1.add(null);
                 mItems.removeAll(s1);
                 Collections.sort(mItems);
-                if(daySelected.getText().toString().equals("All Day")){
+                if(mItems.size() == 0){
                     for(int i = 0 ; i < 7;i++){
+//                        item = item + " "+ listDaysAbb[i];
                         specificDay = specificDay + " " + listDaysAbb[i];
                     }
+//                    item = item.trim();
                     specificDay = specificDay.trim();
+                    daySelected.setText("All Day");
                     return;
                 }
+//                if(mItems.size() == 0 && daySelected.getText().toString().equals("All Day")){
+//                    for(int i = 0 ; i < 7;i++){
+//                        specificDay = specificDay + " " + listDaysAbb[i];
+//                    }
+//                    specificDay = specificDay.trim();
+//                    return;
+//                }
                 if(mItems.size()==7){
                     daySelected.setText("All Day");
                     for(int i = 0 ; i < mItems.size();i++){
@@ -251,7 +272,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 for(int i = 0 ; i < checkedDays.length ; i++){
                     checkedDays[i] = false;
                     mItems.clear();
-                    daySelected.setText(".....");
+                    daySelected.setText("All Day");
                 }
             }
         });

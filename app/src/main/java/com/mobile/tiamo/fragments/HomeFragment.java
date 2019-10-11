@@ -45,6 +45,7 @@ import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
+import com.mobile.tiamo.utilities.LocalNotifications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
     private View popupInputDialogView, popupRoutine;
     private Button btnAdd, btnCancel, btnRoutineYes, btnRoutineNo;
     private TimePicker timePicker;
+    private LocalNotifications localNotifications;
 
 
     @Nullable
@@ -76,7 +78,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container,false);
         initComponent();
-
+        localNotifications = new LocalNotifications(getActivity());
         // Load the data
         GetAllDailyActivityAysnc getAllDailyActivityAysnc = new GetAllDailyActivityAysnc();
         getAllDailyActivityAysnc.execute();
@@ -149,29 +151,32 @@ public class HomeFragment extends Fragment {
         listViewRoutine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setCancelable(false);
-                // Init popup dialog view and it's ui controls.
-                initPopupViewRoutine(datasets.get(position));
-                alertDialogBuilder.setView(popupRoutine);
-                final AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                if(!datasets.get(position).getTitle().equals("Sleeping")){
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setCancelable(false);
+                    // Init popup dialog view and it's ui controls.
+                    initPopupViewRoutine(datasets.get(position));
+                    alertDialogBuilder.setView(popupRoutine);
+                    final AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
 
-                btnRoutineYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
-                        getDailyActivityAsync.execute(datasets.get(position).getUid());
-                        alertDialog.cancel();
-                    }
-                });
+                    btnRoutineYes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            GetDailyActivityAsync getDailyActivityAsync = new GetDailyActivityAsync();
+                            getDailyActivityAsync.execute(datasets.get(position).getUid());
+                            alertDialog.cancel();
+                        }
+                    });
 
-                btnRoutineNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.cancel();
-                    }
-                });
+                    btnRoutineNo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.cancel();
+                        }
+                    });
+                }
+
             }
         });
 
@@ -625,16 +630,18 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-            List<DailyRoutine> dailyRoutineList = db.dailyActivitiesDao().getDailyActivities(currentDate);
-            for(int i = 0; i < dailyRoutineList.size(); i++){
+            dailyRoutineLists = db.dailyActivitiesDao().getDailyActivities(currentDate);
+
+            for(int i = 0; i < dailyRoutineLists.size(); i++){
                 DailyRoutineItem model = new DailyRoutineItem();
-                model.setIsDone(dailyRoutineList.get(i).getIsDone());
-                model.setTitle(dailyRoutineList.get(i).getTitle());
-                model.setHours(dailyRoutineList.get(i).getHours());
-                model.setUid(dailyRoutineList.get(i).getUid());
+                model.setIsDone(dailyRoutineLists.get(i).getIsDone());
+                model.setTitle(dailyRoutineLists.get(i).getTitle());
+                model.setHours(dailyRoutineLists.get(i).getHours());
+                model.setUid(dailyRoutineLists.get(i).getUid());
                 dailyActivityItems.add(model);
             }
         }
+        localNotifications.scheduleNotification(dailyRoutineLists);
 
         // get Hobbies activity
         // First, get the data for current day

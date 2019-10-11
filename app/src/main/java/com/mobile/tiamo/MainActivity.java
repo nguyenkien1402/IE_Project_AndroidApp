@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     fragment = new SettingFragment();
                     break;
-//                case R.id.test_notifications:
-//                    fragment = new TestNotificationFragment();
-//                    break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
 
 
-        testSomething();
+//        testSomething();
 
 //        Intent mStepsIntent = new Intent(getApplicationContext(), StepCounterService.class);
 //        startService(mStepsIntent);
@@ -110,22 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void testSomething(){
-        try {
-            String today = DateUtilities.getCurrentDateInString();
-            Log.d("Test",today + ":"+DateUtilities.getDayInAbbBySelectedDate(today));
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date currentDate = dateFormat.parse(today);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentDate);
-            calendar.add(Calendar.DAY_OF_YEAR,-9);
-            Date datebefore = calendar.getTime();
-            String dateBeforeStr = dateFormat.format(datebefore);
-            Log.d("Test",dateBeforeStr +":"+DateUtilities.getDayInAbbBySelectedDate(dateBeforeStr));
-        }catch (Exception e){
-            Log.d("TAG",e.getMessage());
-        }
-    }
+//    private void testSomething(){
+//        try {
+//            String today = DateUtilities.getCurrentDateInString();
+//            Log.d("Test",today + ":"+DateUtilities.getDayInAbbBySelectedDate(today));
+//            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//            Date currentDate = dateFormat.parse(today);
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(currentDate);
+//            calendar.add(Calendar.DAY_OF_YEAR,-9);
+//            Date datebefore = calendar.getTime();
+//            String dateBeforeStr = dateFormat.format(datebefore);
+//            Log.d("Test",dateBeforeStr +":"+DateUtilities.getDayInAbbBySelectedDate(dateBeforeStr));
+//        }catch (Exception e){
+//            Log.d("TAG",e.getMessage());
+//        }
+//    }
 
     /*
      * Service for updating database at the midnight
