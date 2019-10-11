@@ -96,5 +96,6 @@ dependencies {
 
     // Shape of View
     implementation 'com.github.florent37:shapeofview:1.4.7'
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
 
 }

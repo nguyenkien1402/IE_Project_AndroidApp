@@ -31,7 +31,7 @@ public class LocalNotifications {
 
     public void scheduleNotification(List<DailyRoutine> result) {
         String currentDate = DateUtilities.getCurrentDateInString();
-        if(SavingDataSharePreference.getDataBoolean(context,Messages.LOCAL_DATA,currentDate)==false){
+        if(SavingDataSharePreference.getDataBoolean(context,Messages.LOCAL_DATA,"No-"+currentDate)==false){
             Log.d("Notification","Size of list:"+result.size()+"");
             Intent intentStart, intentEnd;
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -92,7 +92,7 @@ public class LocalNotifications {
                 PendingIntent pendingIntentE = PendingIntent.getBroadcast(context, 2000+i, intentEnd, PendingIntent.FLAG_ONE_SHOT);
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, e_calendar.getTimeInMillis(), pendingIntentE);
             }
-            SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,currentDate,true);
+            SavingDataSharePreference.savingLocalData(context,Messages.LOCAL_DATA,"No-"+currentDate,true);
         }else{
         }
 

@@ -154,6 +154,7 @@ public class SettingFragment extends Fragment {
         db.dailyActivitiesDao().deleteAll();
         db.scheduleDao().deleteAll();
         SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",false);
+        SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"No-"+DateUtilities.getCurrentDateInString(),false);
     }
 
     private void populateDailyRoutine(){

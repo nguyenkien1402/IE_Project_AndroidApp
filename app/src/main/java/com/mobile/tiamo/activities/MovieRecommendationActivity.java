@@ -3,6 +3,7 @@ package com.mobile.tiamo.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -76,28 +77,68 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         mImageTop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),listTop.get(position).getTitle(),Toast.LENGTH_LONG).show();
+
+                MovieItem movieItem = listTop.get(position);
+                Toast.makeText(getApplicationContext(),listTop.get(position).getImdbID(),Toast.LENGTH_LONG).show();
+                GetMovieDetailAsync getMovieDetailAsync = new GetMovieDetailAsync();
+                getMovieDetailAsync.execute(movieItem);
             }
         });
 
         mTopOne.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),listOne.get(position).getTitle(),Toast.LENGTH_LONG).show();
+                MovieItem movieItem = listOne.get(position);
+                Toast.makeText(getApplicationContext(),listOne.get(position).getImdbID(),Toast.LENGTH_LONG).show();
+                GetMovieDetailAsync getMovieDetailAsync = new GetMovieDetailAsync();
+                getMovieDetailAsync.execute(movieItem);
             }
         });
         mTopTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),listTwo.get(position).getTitle(),Toast.LENGTH_LONG).show();
+                MovieItem movieItem = listTwo.get(position);
+                Toast.makeText(getApplicationContext(),listTwo.get(position).getImdbID(),Toast.LENGTH_LONG).show();
+                GetMovieDetailAsync getMovieDetailAsync = new GetMovieDetailAsync();
+                getMovieDetailAsync.execute(movieItem);
             }
         });
         mTopThree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),listThree.get(position).getTitle(),Toast.LENGTH_LONG).show();
+                MovieItem movieItem = listThree.get(position);
+                Toast.makeText(getApplicationContext(),listThree.get(position).getImdbID(),Toast.LENGTH_LONG).show();
+                GetMovieDetailAsync getMovieDetailAsync = new GetMovieDetailAsync();
+                getMovieDetailAsync.execute(movieItem);
             }
         });
+    }
+
+    private class GetMovieDetailAsync extends AsyncTask<MovieItem, Void, JSONObject>{
+
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MovieRecommendationActivity.this);
+            progressDialog.setTitle("Loading");
+            progressDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(MovieItem... movieItems) {
+            String imdbId = getImdbId(movieItems[0].getImdbID());
+            return MovieService.getMovieById(imdbId);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            Intent intent = new Intent(getApplicationContext(),MovieDetailActivity.class);
+            intent.putExtra("data",jsonObject.toString());
+            startActivity(intent);
+            progressDialog.dismiss();
+        }
     }
 
     /*
@@ -242,6 +283,14 @@ public class MovieRecommendationActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.d(TAG,e.toString());
         }
+    }
+
+    private String getImdbId(String imdbId){
+        while (imdbId.length() < 7){
+            imdbId = "0" + imdbId;
+        }
+        imdbId = "tt"+imdbId;
+        return imdbId;
     }
 }
 
