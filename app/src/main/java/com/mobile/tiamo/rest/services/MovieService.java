@@ -43,6 +43,29 @@ public class MovieService {
         return result;
     }
 
+    public static JSONObject getRecommendationMovieWithoutTitle(int userId, String types){
+        String url = RestServiceApiURL.MOVIE_RECOMMENDATION_NOTITLE+userId+"?types="+types;
+        Log.d(TAG,"URL:"+url);
+        JSONObject result = null;
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).build();
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("Content-Type","application/json")
+                .build();
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            if(response.code() == 200){
+                Log.d(TAG,"Go on");
+                result = new JSONObject(response.body().string());
+                Log.d(TAG,"Wel wel wel");
+            }
+        }catch (Exception e){
+            Log.d(TAG,"Error:"+e.toString());
+        }
+        return result;
+    }
+
     public static List<MovieItem> searchMovieByTitle(String title, int page){
         List<MovieItem> movieItems = null;
         OkHttpClient okHttpClient = new OkHttpClient();

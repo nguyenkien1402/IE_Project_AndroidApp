@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  This activity to get the movie recommendation
@@ -54,13 +55,14 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
     private List<String> types= new ArrayList<String>();
     private String movieType = "";
     private AutoCompleteTextView txtSearch;
-
+    private int randomNumber = 0;
+    private Random randomGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_and_movie_type);
-
+        randomGenerator = new Random();
         initComponent();
 
         GetAllMoviesAsync getAllMoviesAsync = new GetAllMoviesAsync();
@@ -85,7 +87,6 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
             List<String> moviesTitle = new ArrayList<String>();
             try {
                 JSONArray array = MovieService.getAllMovies();
-                Log.d(TAG,"Size:"+array.length());
                 for (int i = 0; i < array.length(); i++) {
                     moviesTitle.add(array.getJSONObject(i).getString("title"));
                 }
@@ -98,7 +99,6 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<String> result) {
             super.onPostExecute(result);
-            Log.d("TAG",result.size()+"-"+result.get(0));
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MoodAndMovieTypeActivity.this,android.R.layout.select_dialog_item, result);
             txtSearch.setThreshold(2);
             txtSearch.setAdapter(adapter);
@@ -122,6 +122,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
                     imgHappy.setSelected(true);
                     mood = "Happy";
                     imgHappy.setColorFilter(R.color.background);
+                    randomNumber = randomGenerator.nextInt(400)+200;
                 }
                 imgNeutral.setSelected(false);
                 imgNeutral.setColorFilter(null);
@@ -141,6 +142,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
                     imgSad.setSelected(true);
                     mood = "Sad";
                     imgSad.setColorFilter(R.color.background);
+                    randomNumber = randomGenerator.nextInt(200)+1;
                 }
                 imgHappy.setSelected(false);
                 imgHappy.setColorFilter(null);
@@ -161,6 +163,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
                     imgNeutral.setSelected(true);
                     mood = "Neutral";
                     imgNeutral.setColorFilter(R.color.background);
+                    randomNumber = randomGenerator.nextInt(600)+400;
                 }
                 imgHappy.setSelected(false);
                 imgHappy.setColorFilter(null);
@@ -171,12 +174,60 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetMovieRecommendationAsync getMovieRecommendationAsync = new GetMovieRecommendationAsync();
-                getMovieRecommendationAsync.execute();
+                if(txtSearch.getText().toString().trim().equals("")){
+                    GetMovieWithoutMovieAsync getMovieWithoutMovieAsync = new GetMovieWithoutMovieAsync();
+                    getMovieWithoutMovieAsync.execute();
+                }else{
+                    GetMovieRecommendationAsync getMovieRecommendationAsync = new GetMovieRecommendationAsync();
+                    getMovieRecommendationAsync.execute();
+                }
+
             }
         });
     }
 
+    /**
+     * This method is using to get the movie without movie similarity
+     */
+    private class GetMovieWithoutMovieAsync extends AsyncTask<Void, Void, JSONObject>{
+
+        ProgressDialog pm;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pm = new ProgressDialog(MoodAndMovieTypeActivity.this);
+            pm.setTitle("Getting Recommendation...");
+            pm.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            movieType = "";
+            for(String k : types){
+                movieType = movieType + k+",";
+            }
+            JSONObject result = MovieService.getRecommendationMovieWithoutTitle(randomNumber, movieType);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject result) {
+            super.onPostExecute(result);
+            Intent intent = new Intent(getApplication(),MovieRecommendationActivity.class);
+            try {
+                for (String type : types) {
+                    intent.putExtra(type, result.getString(type));
+                }
+                intent.putExtra("top_all",result.getString("top_all"));
+                intent.putExtra("typeName",movieType);
+                pm.dismiss();
+                startActivity(intent);
+            }catch (Exception e){
+                Log.d(TAG,e.toString());
+                pm.dismiss();
+            }
+        }
+    }
     /**
       This AsyncTask is using to get the movie from server
       The movie is suggest based on the selected
@@ -213,11 +264,12 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(Void... voids) {
+            movieType = "";
             for(String k : types){
                 movieType = movieType + k+",";
             }
             movieType = movieType.substring(0,movieType.length()-1);
-            JSONObject result = MovieService.getRecommendationMovie(1,
+            JSONObject result = MovieService.getRecommendationMovie(randomNumber,
                     movieTitle.getText()+" ("+movieYear.getText().toString().split(":")[1].trim()+")",
                     movieType);
             return result;

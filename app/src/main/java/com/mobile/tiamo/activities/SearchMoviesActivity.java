@@ -66,9 +66,9 @@ public class SearchMoviesActivity extends AppCompatActivity {
     }
 
 
-    /*
+    /**
      Init main component of the activity
-     */
+     **/
     private void initComponent(){
         listMovie = findViewById(R.id.lv_movies);
         edMovieTitle = findViewById(R.id.search_input_movie);
