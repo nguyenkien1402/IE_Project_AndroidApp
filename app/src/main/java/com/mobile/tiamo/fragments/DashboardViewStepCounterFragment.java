@@ -192,7 +192,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
 
     @Override
     public void step(long timeNs) {
-        stepsToday++;
+        stepsTaken++;
         tvStepTakenToday.setText(stepsTaken);
     }
 
