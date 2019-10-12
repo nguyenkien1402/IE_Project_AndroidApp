@@ -98,8 +98,8 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         LoadingChartAysnc loadingChartAysnc = new LoadingChartAysnc();
         loadingChartAysnc.execute();
 
-        Intent intent = new Intent(getActivity(), StepsCounterService.class);
-        startActivity(intent);
+        Intent service = new Intent(getActivity(), StepsCounterService.class);
+        getActivity().startService(service);
 
         return view;
     }
@@ -120,9 +120,16 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("StepCounter","Pause");
+        sensorManager.unregisterListener(this);
+    }
+
     /*
-     Init the main component of the dashboard
-     */
+         Init the main component of the dashboard
+         */
     private void initComponent(){
         chart = view.findViewById(R.id.chart1);
         imMood = view.findViewById(R.id.mood_view);
@@ -136,7 +143,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     }
 
     private void getData(int day){
-        /*
+        /**
           This function is used to manipulate the data before adding to the list
           Get the database on the current day of the week
           And the data of the last week.
@@ -144,7 +151,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
             day: day before this day
           return:
             None
-         */
+         **/
         try {
             String today = DateUtilities.getCurrentDateInString();
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -194,6 +201,20 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     public void step(long timeNs) {
         stepsTaken++;
         tvStepTakenToday.setText(stepsTaken);
+
+        if(stepsTaken % 10 ==0){
+            if(SavingDataSharePreference.getDataInt(getActivity(),Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString()) != -1){
+                int current = SavingDataSharePreference.getDataInt(getActivity(),Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
+                current = current + stepsTaken;
+                SavingDataSharePreference.savingLocalData(getActivity(), Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString(),current);
+            }
+            String currentDate = DateUtilities.getCurrentDateInString();
+            if(db.stepsTakenDao().getStepTakenByDate(currentDate) != null){
+                StepsTakenModel model = db.stepsTakenDao().getStepTakenByDate(currentDate);
+                model.setSteps(model.getSteps() + stepsTaken);
+                db.stepsTakenDao().update(model);
+            }
+        }
     }
 
     /*
