@@ -88,4 +88,26 @@ public class MovieService {
         return result;
     }
 
+    public static JSONArray getAllMovies(){
+        JSONArray result = null;
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).build();
+        String url = RestServiceApiURL.GET_ALL_MOVIES;
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("Content-Type","application/json")
+                .build();
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            if(response.code() == 200){
+                result = new JSONArray(response.body().string());
+                Log.d(TAG,result.length()+"");
+                Log.d(TAG,result.getJSONObject(0).getString("title"));
+            }
+        }catch (Exception e){
+            Log.d(TAG,e.getMessage());
+        }
+        return result;
+    }
+
 }

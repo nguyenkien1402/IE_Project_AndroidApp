@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.mobile.tiamo.adapters.MovieItem;
 import com.mobile.tiamo.rest.services.MovieService;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,25 +53,62 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
     private View parentLayout;
     private List<String> types= new ArrayList<String>();
     private String movieType = "";
+    private AutoCompleteTextView txtSearch;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_and_movie_type);
-        imdbId = getIntent().getStringExtra("imdbId");
 
         initComponent();
 
-        GetRequestMovieInformation getRequestInformationAsync = new GetRequestMovieInformation();
-        getRequestInformationAsync.execute();
+        GetAllMoviesAsync getAllMoviesAsync = new GetAllMoviesAsync();
+        getAllMoviesAsync.execute();
 
         btnActionListener();
-
-
     }
 
-    /*
+    private class GetAllMoviesAsync extends AsyncTask<Void, Void, List<String>>{
+        ProgressDialog pm;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pm = new ProgressDialog(MoodAndMovieTypeActivity.this);
+            pm.setTitle("Loading");
+            pm.show();
+        }
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            List<String> moviesTitle = new ArrayList<String>();
+            try {
+                JSONArray array = MovieService.getAllMovies();
+                Log.d(TAG,"Size:"+array.length());
+                for (int i = 0; i < array.length(); i++) {
+                    moviesTitle.add(array.getJSONObject(i).getString("title"));
+                }
+            }catch (Exception e){
+                Log.d(TAG,"GetAllMoviesAsync JSON Parser");
+            }
+            return moviesTitle;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> result) {
+            super.onPostExecute(result);
+            Log.d("TAG",result.size()+"-"+result.get(0));
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MoodAndMovieTypeActivity.this,android.R.layout.select_dialog_item, result);
+            txtSearch.setThreshold(2);
+            txtSearch.setAdapter(adapter);
+            pm.dismiss();
+        }
+    }
+
+    /**
      This is using to choose the mood baby
-     */
+     **/
     private void btnActionListener(){
 
         imgHappy.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +177,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
       This AsyncTask is using to get the movie from server
       The movie is suggest based on the selected
      */
@@ -148,7 +188,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pm = new ProgressDialog(MoodAndMovieTypeActivity.this);
-            pm.setTitle("Getting Recommendation..");
+            pm.setTitle("Getting Recommendation...");
             pm.show();
         }
 
@@ -164,7 +204,6 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
                 intent.putExtra("typeName",movieType);
                 pm.dismiss();
                 startActivity(intent);
-//
             }catch (Exception e){
                 Log.d(TAG,e.toString());
                 pm.dismiss();
@@ -185,9 +224,9 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         }
     }
 
-    /*
+    /**
        Initialize the component of the activity dump ass
-     */
+     **/
     private void initComponent(){
         parentLayout = findViewById(android.R.id.content);
         imgHappy = findViewById(R.id.mood_type_happy);
@@ -195,6 +234,7 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
         imgSad = findViewById(R.id.mood_type_sad);
         chipGroup = findViewById(R.id.chip_movies);
         btn = findViewById(R.id.mood_type_btn);
+        txtSearch = (AutoCompleteTextView) findViewById(R.id.search_input_movie);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         for(int i = 0 ; i < movieTypes.length ; i++){

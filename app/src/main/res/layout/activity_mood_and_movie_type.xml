@@ -94,21 +94,23 @@
                         app:layout_constraintStart_toStartOf="parent">
                     </com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
-
-                <Button
-                    android:layout_gravity="center"
-                    android:id="@+id/mood_type_btn"
-                    android:text="GO ON"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="Any favourite movies or any movies you watch recently?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
@@ -116,29 +118,28 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content">
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/search_input_movie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Movie Name"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:singleLine="true" />
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:ems="10"
+                        android:inputType="text">
+                        <requestFocus/>
+                    </AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
-                <ImageView
-                    android:id="@+id/btnSearchMovie"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/search_24"
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
 
-            <ListView
-                android:id="@+id/lv_movies"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
+            </LinearLayout>
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/mood_type_btn"
+                android:text="GO ON"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>

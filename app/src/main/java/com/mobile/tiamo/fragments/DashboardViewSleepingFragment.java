@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AddingActivityActivity;
+import com.mobile.tiamo.activities.MoodAndMovieTypeActivity;
 import com.mobile.tiamo.activities.SearchMoviesActivity;
 import com.mobile.tiamo.adapters.ActivityModelItem;
 import com.mobile.tiamo.adapters.DashboardSleepingAdapter;
@@ -121,7 +122,7 @@ public class DashboardViewSleepingFragment extends Fragment {
         mv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
+                Intent intent = new Intent(getActivity(), MoodAndMovieTypeActivity.class);
                 startActivity(intent);
             }
         });
