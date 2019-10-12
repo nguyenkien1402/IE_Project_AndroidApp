@@ -15,161 +15,131 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="280dp">
-                <ImageView
-                    android:src="@drawable/liberzy_logo4"
-                    android:id="@+id/mood_type_movie_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
                     android:orientation="vertical"
-                    android:alpha="0.7"
-                    android:background="#F3F0F0"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:id="@+id/mood_type_movie_title"
                         android:textColor="#000000"
-                        android:textSize="23dp"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        android:text=""
+                        android:textSize="20dp"
                         android:fontFamily="sans-serif-condensed-medium"
+                        android:text="How is your mood currently?"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                    <RelativeLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
                         android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/mood_type_movie_year"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:text=""
-                            android:textColor="#000000"
-                            android:textSize="18dp" />
-                        <TextView
-                            android:id="@+id/mood_type_movie_imdb"
-                            android:textColor="#000000"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:textSize="18dp"
-                            android:gravity="right"
-                            android:text=""
-                            android:layout_marginRight="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                    <TextView
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:textColor="#000000"
-                        android:fontFamily="sans-serif-condensed-medium"
-                        android:text=""
-                        android:id="@+id/mood_type_movie_plot"
-                        android:maxLines="5"
-                        android:scrollbars="vertical"
-                        android:paddingBottom="8dp"
-                        android:ellipsize="end"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        <ImageView
+                            android:id="@+id/mood_type_happy"
+                            android:src="@drawable/happy_64"
+                            android:layout_weight="1"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"/>
+                        <ImageView
+                            android:layout_marginLeft="50dp"
+                            android:layout_toRightOf="@id/mood_type_happy"
+                            android:id="@+id/mood_type_neutral"
+                            android:layout_weight="1"
+                            android:src="@drawable/neutral_64"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"/>
+                        <ImageView
+                            android:layout_marginLeft="50dp"
+                            android:id="@+id/mood_type_sad"
+                            android:layout_toRightOf="@id/mood_type_neutral"
+                            android:layout_weight="1"
+                            android:src="@drawable/sad_64"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="#000000"
-                    android:textSize="20dp"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:text="How is your mood currently?"
+                <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <RelativeLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/mood_type_happy"
-                        android:src="@drawable/happy_64"
-                        android:layout_weight="1"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"/>
-                    <ImageView
-                        android:layout_marginLeft="50dp"
-                        android:layout_toRightOf="@id/mood_type_happy"
-                        android:id="@+id/mood_type_neutral"
-                        android:layout_weight="1"
-                        android:src="@drawable/neutral_64"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"/>
-                    <ImageView
-                        android:layout_marginLeft="50dp"
-                        android:id="@+id/mood_type_sad"
-                        android:layout_toRightOf="@id/mood_type_neutral"
-                        android:layout_weight="1"
-                        android:src="@drawable/sad_64"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"/>
-                </RelativeLayout>
-            </LinearLayout>
+                    <TextView
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:text="What is your favorite type?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_movies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="24dp"
+                        app:chipSpacing="16dp"
+                        app:singleSelection="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+
+                <Button
+                    android:layout_gravity="center"
+                    android:id="@+id/mood_type_btn"
+                    android:text="GO ON"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             <LinearLayout
-                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
                 android:layout_marginLeft="16dp"
-                android:orientation="vertical"
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="#000000"
-                    android:textSize="20dp"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:text="What is your favorite type?"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_movies"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="24dp"
-                    app:chipSpacing="16dp"
-                    app:singleSelection="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-                </com.google.android.material.chip.ChipGroup>
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/search_input_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Movie Name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <ImageView
+                    android:id="@+id/btnSearchMovie"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/search_24"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"/>
             </LinearLayout>
 
-            <Button
-                android:layout_gravity="center"
-                android:id="@+id/mood_type_btn"
-                android:text="GO ON"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
+            <ListView
+                android:id="@+id/lv_movies"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>

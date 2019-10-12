@@ -152,6 +152,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/btnSetMood2"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"

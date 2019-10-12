@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
+    private LinearLayout btnSetMood2;
 
     @Nullable
     @Override
@@ -89,6 +91,12 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         stepsTakenModels = new ArrayList<StepsTakenModel>();
         initComponent();
         btnSetMood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initPopupMoodView();
+            }
+        });
+        btnSetMood2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPopupMoodView();
@@ -128,7 +136,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         sensorManager.unregisterListener(this);
     }
 
-    /*
+    /**
          Init the main component of the dashboard
          */
     private void initComponent(){
@@ -138,7 +146,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         tvToday = view.findViewById(R.id.step_today);
         tvStepTakenToday = view.findViewById(R.id.step_takens_today);
         tvStepRunningToday = view.findViewById(R.id.step_running_today);
-
+        btnSetMood2 = view.findViewById(R.id.btnSetMood2);
         tvToday.setText(DateUtilities.getCurrentDateInString());
         tvStepRunningToday.setText("0.12 km");
     }

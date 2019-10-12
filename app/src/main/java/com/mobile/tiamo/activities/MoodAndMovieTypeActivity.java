@@ -190,11 +190,6 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
      */
     private void initComponent(){
         parentLayout = findViewById(android.R.id.content);
-        imgMovie = findViewById(R.id.mood_type_movie_image);
-        movieTitle = findViewById(R.id.mood_type_movie_title);
-        movieYear = findViewById(R.id.mood_type_movie_year);
-        moviePlot = findViewById(R.id.mood_type_movie_plot);
-        movieImdb = findViewById(R.id.mood_type_movie_imdb);
         imgHappy = findViewById(R.id.mood_type_happy);
         imgNeutral = findViewById(R.id.mood_type_neutral);
         imgSad = findViewById(R.id.mood_type_sad);

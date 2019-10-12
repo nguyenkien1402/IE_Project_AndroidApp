@@ -59,6 +59,7 @@ public class DashboardViewSleepingFragment extends Fragment {
     private View popupView;
     private TextView tvToday, tvAvgSleepingToday, tvInbed, tvWakeup, tvYesterday;
     private View mv;
+    private Button changeEmotion;
 
 
     /*
@@ -111,7 +112,12 @@ public class DashboardViewSleepingFragment extends Fragment {
                 initPopupSleepMood();
             }
         });
-
+        changeEmotion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initPopupSleepMood();
+            }
+        });
         mv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +135,7 @@ public class DashboardViewSleepingFragment extends Fragment {
         tvInbed = view.findViewById(R.id.today_inbed);
         tvWakeup = view.findViewById(R.id.today_wakeup);
         tvYesterday = view.findViewById(R.id.avg_yesterday);
+        changeEmotion = view.findViewById(R.id.dashboard_sleeping_add_emotion_2);
         mv = view.findViewById(R.id.dashboard_sleeping_mv);
         mv.setVisibility(View.GONE);
 
