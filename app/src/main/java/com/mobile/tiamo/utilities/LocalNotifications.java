@@ -38,6 +38,8 @@ public class LocalNotifications {
             intentStart = new Intent(context.getApplicationContext(), ReminderNotificationStart.class);
             intentEnd   = new Intent(context.getApplicationContext(), ReminderNotificationEndAction.class);
             for(int i = 0 ; i < result.size() ; i++){
+                if(result.get(i).getTitle().equals("Sleeping"))
+                    continue;
                 DailyRoutine dailyRoutine = result.get(i);
                 String timeStart = dailyRoutine.getTimeStart();
                 String timeEnd = dailyRoutine.getTimeEnd();
