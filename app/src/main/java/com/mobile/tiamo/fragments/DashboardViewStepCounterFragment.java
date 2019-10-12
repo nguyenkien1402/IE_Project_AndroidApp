@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.room.Update;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -67,7 +68,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     private ImageView imHappy, imSad, imNeutral, imMood;
     private Button btnSetMood;
     private TextView tvToday, tvStepRunningToday, tvStepTakenToday;
-    public static int stepsTaken = 0;
+    public int stepsTaken = 0;
     private List<StepsTakenModel> stepsTakenModelsLastWeek;
     private List<StepsTakenModel> stepsTakenModelsThisWeek;
     private List<StepsTakenModel> stepsTakenModels;
@@ -105,11 +106,11 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     }
 
     private void gettingStepsTaken(){
-        int stepTaken = SavingDataSharePreference.getDataInt(getActivity(), Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
-        if(stepTaken == -1){
+        stepsTaken = SavingDataSharePreference.getDataInt(getActivity(), Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
+        if(stepsTaken == -1){
             tvStepTakenToday.setText(0+"");
         }else{
-            tvStepTakenToday.setText(stepTaken);
+            tvStepTakenToday.setText(stepsTaken+"");
         }
 
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
@@ -200,22 +201,18 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
     @Override
     public void step(long timeNs) {
         stepsTaken++;
-        tvStepTakenToday.setText(stepsTaken);
-
-        if(stepsTaken % 10 ==0){
+        tvStepTakenToday.setText(stepsTaken+"");
+        Log.d("SleepingFragment",stepsTaken+"");
+        if(stepsTaken % 20 ==0){
             if(SavingDataSharePreference.getDataInt(getActivity(),Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString()) != -1){
                 int current = SavingDataSharePreference.getDataInt(getActivity(),Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
                 current = current + stepsTaken;
                 SavingDataSharePreference.savingLocalData(getActivity(), Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString(),current);
             }
-            String currentDate = DateUtilities.getCurrentDateInString();
-            if(db.stepsTakenDao().getStepTakenByDate(currentDate) != null){
-                StepsTakenModel model = db.stepsTakenDao().getStepTakenByDate(currentDate);
-                model.setSteps(model.getSteps() + stepsTaken);
-                db.stepsTakenDao().update(model);
-            }
         }
     }
+
+
 
     /*
       AsyncTask class to get the data

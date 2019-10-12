@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,6 +73,13 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
             public void onClick(View v) {
                 if(edTitle.getText() != null && !edTitle.getText().toString().equals("")){
                     if(timeStart.getText() != null && timeEnd.getText() != null && daySelected.getText() != null){
+                        if(daySelected.getText().toString().equals("All Day")){
+                            for(int i = 0 ; i < 7;i++){
+                                specificDay = specificDay + " " + listDaysAbb[i];
+                            }
+                            Log.d("SpecificDay",specificDay);
+                            specificDay = specificDay.trim();
+                        }
                         String timeS = timeStart.getText().toString();
                         String timeE = timeEnd.getText().toString();
                         String days = daySelected.getText().toString();
@@ -204,23 +212,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 s1.add(null);
                 mItems.removeAll(s1);
                 Collections.sort(mItems);
-                if(mItems.size() == 0){
-                    for(int i = 0 ; i < 7;i++){
-//                        item = item + " "+ listDaysAbb[i];
-                        specificDay = specificDay + " " + listDaysAbb[i];
-                    }
-//                    item = item.trim();
-                    specificDay = specificDay.trim();
-                    daySelected.setText("All Day");
-                    return;
-                }
-//                if(mItems.size() == 0 && daySelected.getText().toString().equals("All Day")){
-//                    for(int i = 0 ; i < 7;i++){
-//                        specificDay = specificDay + " " + listDaysAbb[i];
-//                    }
-//                    specificDay = specificDay.trim();
-//                    return;
-//                }
+
                 if(mItems.size()==7){
                     daySelected.setText("All Day");
                     for(int i = 0 ; i < mItems.size();i++){
@@ -250,6 +242,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 // remove null value
 
                 for(int i = 0 ; i < mItems.size();i++){
+                    Log.d("Item",mItems.get(i)+"");
                     item = item + " "+ listDaysAbb[mItems.get(i)];
                     specificDay = specificDay + " " + listDaysAbb[mItems.get(i)];
                 }

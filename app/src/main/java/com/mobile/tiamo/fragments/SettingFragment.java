@@ -102,6 +102,16 @@ public class SettingFragment extends Fragment {
     }
 
     private class DeleteAllAsync extends AsyncTask<Void, Void, Void>{
+
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Loading");
+            progressDialog.show();
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             deleteAllDatabase();
@@ -116,7 +126,7 @@ public class SettingFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
-
+            progressDialog .dismiss();
 //            PopulateDataAsync populateDataAync = new PopulateDataAsync();
 //            populateDataAync.execute();
         }

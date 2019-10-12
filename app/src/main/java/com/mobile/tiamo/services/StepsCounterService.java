@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class StepsCounterService extends Service implements SensorEventListener 
     @Override
     public void onSensorChanged(SensorEvent event) {
         numSteps++;
-        Log.d("STEPTAKEN",numSteps+"");
+        Log.d("StepsTakenService",numSteps+"");
         if(numSteps % 10 ==0){
             if(SavingDataSharePreference.getDataInt(this,Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString()) != -1){
                 int current = SavingDataSharePreference.getDataInt(this,Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
@@ -62,10 +63,21 @@ public class StepsCounterService extends Service implements SensorEventListener 
             }else{
                 SavingDataSharePreference.savingLocalData(this, Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString(),numSteps);
             }
+
+            UpdateStepsTakenToDatabaseAsync updateStepsTakenToDatabaseAsync = new UpdateStepsTakenToDatabaseAsync();
+            updateStepsTakenToDatabaseAsync.execute(numSteps);
+            numSteps = 0;
+        }
+    }
+
+    private class UpdateStepsTakenToDatabaseAsync extends AsyncTask<Integer,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
             String currentDate = DateUtilities.getCurrentDateInString();
             if(db.stepsTakenDao().getStepTakenByDate(currentDate) != null){
                 StepsTakenModel model = db.stepsTakenDao().getStepTakenByDate(currentDate);
-                model.setSteps(model.getSteps() + numSteps);
+                model.setSteps(model.getSteps() + integers[0]);
                 db.stepsTakenDao().update(model);
             }else{
                 StepsTakenModel model = new StepsTakenModel();
@@ -73,10 +85,13 @@ public class StepsCounterService extends Service implements SensorEventListener 
                 model.setSteps(10);
                 db.stepsTakenDao().insert(model);
             }
-            numSteps = 0;
+            return null;
         }
 
-
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 
     @Override
