@@ -40,7 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         // Not the first time, go to the Main Activity
-        if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER) == 1){
+        if(SavingDataSharePreference.getDataInt(getApplicationContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER_QUESTUONARIES) == 1){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
