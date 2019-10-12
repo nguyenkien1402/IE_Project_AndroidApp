@@ -116,15 +116,23 @@ public class FirstQuestionJavaFragment extends Fragment {
                     // Use the returned value
                     if(hourStart <9){
                         s_hourStart = "0"+hourStart;
+                    }else{
+                        s_hourStart = hourStart +"";
                     }
                     if(hourEnd < 9){
                         s_hourEnd = "0" + hourEnd;
+                    }else{
+                        s_hourEnd = hourEnd+"";
                     }
                     if(minuteStart < 9){
                         s_minuteStart = "0" + minuteStart;
+                    }else{
+                        s_minuteStart = minuteStart + "";
                     }
                     if(minuteEnd < 9){
                         s_minuteEnd = "0" + minuteEnd;
+                    }else{
+                        s_minuteEnd = minuteEnd + "";
                     }
                     timeRangeStart = s_hourStart+":"+s_minuteStart;
                     timeRangeStart = timeRangeStart.trim();

@@ -1,5 +1,11 @@
 package com.mobile.tiamo.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,11 +37,17 @@ import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.StepsTakenModel;
 import com.mobile.tiamo.dao.TiamoDatabase;
+import com.mobile.tiamo.services.StepDetector;
+import com.mobile.tiamo.services.StepListener;
+import com.mobile.tiamo.services.StepsCounterService;
 import com.mobile.tiamo.utilities.DateUtilities;
+import com.mobile.tiamo.utilities.Messages;
+import com.mobile.tiamo.utilities.SavingDataSharePreference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,20 +59,24 @@ import java.util.List;
 /**
  A StepTaken Dashboard
  **/
-public class DashboardViewStepCounterFragment extends Fragment {
+public class DashboardViewStepCounterFragment extends Fragment implements SensorEventListener, StepListener {
 
     private View view;
     private AnyChartView chart;
     private View popupView;
     private ImageView imHappy, imSad, imNeutral, imMood;
     private Button btnSetMood;
-    private TextView tvToday, tvStepTakenToday, tvStepRunningToday;
+    private TextView tvToday, tvStepRunningToday, tvStepTakenToday;
+    public static int stepsTaken = 0;
     private List<StepsTakenModel> stepsTakenModelsLastWeek;
     private List<StepsTakenModel> stepsTakenModelsThisWeek;
     private List<StepsTakenModel> stepsTakenModels;
     private TiamoDatabase db;
     private String[] days = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
     private int stepsToday = 0;
+    private StepDetector simpleStepDetector;
+    private SensorManager sensorManager;
+    private Sensor accel;
 
     @Nullable
     @Override
@@ -77,12 +93,31 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 initPopupMoodView();
             }
         });
-
+        gettingStepsTaken();
         // Get the data from server
         LoadingChartAysnc loadingChartAysnc = new LoadingChartAysnc();
         loadingChartAysnc.execute();
 
+        Intent intent = new Intent(getActivity(), StepsCounterService.class);
+        startActivity(intent);
+
         return view;
+    }
+
+    private void gettingStepsTaken(){
+        int stepTaken = SavingDataSharePreference.getDataInt(getActivity(), Messages.LOCAL_DATA_STEP, DateUtilities.getCurrentDateInString());
+        if(stepTaken == -1){
+            tvStepTakenToday.setText(0+"");
+        }else{
+            tvStepTakenToday.setText(stepTaken);
+        }
+
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
+        sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
+
     }
 
     /*
@@ -97,7 +132,6 @@ public class DashboardViewStepCounterFragment extends Fragment {
         tvStepRunningToday = view.findViewById(R.id.step_running_today);
 
         tvToday.setText(DateUtilities.getCurrentDateInString());
-        tvStepTakenToday.setText("658");
         tvStepRunningToday.setText("0.12 km");
     }
 
@@ -141,6 +175,25 @@ public class DashboardViewStepCounterFragment extends Fragment {
         }catch (Exception e){
             Log.d("TAG",e.getMessage());
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void step(long timeNs) {
+        stepsToday++;
+        tvStepTakenToday.setText(stepsTaken);
     }
 
     /*
@@ -298,18 +351,7 @@ public class DashboardViewStepCounterFragment extends Fragment {
                 .anchor(Anchor.LEFT_CENTER)
                 .offsetX(5d)
                 .offsetY(5d);
-//
-//        Line series3 = cartesian.line(series3Mapping);
-//        series3.name("Tequila");
-//        series3.hovered().markers().enabled(true);
-//        series3.hovered().markers()
-//                .type(MarkerType.CIRCLE)
-//                .size(4d);
-//        series3.tooltip()
-//                .position("right")
-//                .anchor(Anchor.LEFT_CENTER)
-//                .offsetX(5d)
-//                .offsetY(5d);
+
 
         cartesian.legend().enabled(true);
         cartesian.legend().fontSize(13d);

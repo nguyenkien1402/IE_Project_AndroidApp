@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobile.tiamo">
 
+<!--    <uses-feature android:name="android.hardware.sensor.stepcounter"-->
+<!--        android:required="true"/>-->
+<!--    <uses-feature android:name="android.hardware.sensor.stepdetector" />-->
+<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -14,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.MovieDetailActivity"></activity>
+
+        <activity android:name=".activities.MovieDetailActivity" />
         <activity
             android:name=".activities.AboutUsActivity"
             android:theme="@style/AppTheme" />
@@ -61,9 +67,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.SplashScreenActivity"
+            android:name=".activities.TestStepTakenActivity"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,6 +106,9 @@
         <receiver
             android:name=".services.SleepingNotificationBeforeTimeReceiver"
             android:enabled="true" />
+
+        <service android:name=".services.StepCounterService"/>
+        <service android:name=".services.StepsCounterService"/>
 
         <service android:name=".services.ScreenOnAndOffService">
             <intent-filter>
