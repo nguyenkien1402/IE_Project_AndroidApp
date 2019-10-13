@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobile.tiamo">
 
-<!--    <uses-feature android:name="android.hardware.sensor.stepcounter"-->
-<!--        android:required="true"/>-->
-<!--    <uses-feature android:name="android.hardware.sensor.stepdetector" />-->
-<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+
 
     <application
         android:allowBackup="true"
