@@ -26,8 +26,8 @@ import java.util.List;
 
 public class FirstQuestionJavaFragment extends Fragment {
 
-    public static String timeRangeStart = "";
-    public static String timeRangeEnd = "";
+    public static String timeRangeStart = null;
+    public static String timeRangeEnd = null;
     public static List<String> days = new ArrayList<String>();
     public static String commuting = "";
     private TextView timeStart, timeEnd;
@@ -124,7 +124,7 @@ public class FirstQuestionJavaFragment extends Fragment {
             {
                 if (data.getExtras().containsKey(RangeTimePickerDialog.HOUR_START))
                 {
-                    String s_hourStart="", s_hourEnd="", s_minuteStart="", s_minuteEnd="";
+                    String s_hourStart=null, s_hourEnd=null, s_minuteStart=null, s_minuteEnd=null;
                     int hourStart = data.getExtras().getInt(RangeTimePickerDialog.HOUR_START);
                     int hourEnd = data.getExtras().getInt(RangeTimePickerDialog.HOUR_END);
                     int minuteStart = data.getExtras().getInt(RangeTimePickerDialog.MINUTE_START);
@@ -150,10 +150,12 @@ public class FirstQuestionJavaFragment extends Fragment {
                     }else{
                         s_minuteEnd = minuteEnd + "";
                     }
-                    timeRangeStart = s_hourStart+":"+s_minuteStart;
-                    timeRangeStart = timeRangeStart.trim();
-                    timeRangeEnd = s_hourEnd+":"+s_minuteEnd;
-                    timeRangeEnd = timeRangeEnd.trim();
+                    if(s_hourStart != null && s_minuteStart != null){
+                        timeRangeStart = s_hourStart+":"+s_minuteStart;
+                    }
+                    if(s_hourEnd != null && s_minuteEnd != null){
+                        timeRangeEnd = s_hourEnd+":"+s_minuteEnd;
+                    }
                     timeStart.setText("From: "+timeRangeStart);
                     timeEnd.setText("To: "+timeRangeEnd);
                 }

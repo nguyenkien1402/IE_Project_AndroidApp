@@ -44,7 +44,7 @@ public class QuestionnairesFirststart extends AppCompatActivity {
                     String workingEndTime = FirstQuestionJavaFragment.timeRangeEnd;
                     List<String> workingDay = FirstQuestionJavaFragment.days;
                     if(workingStartTime == null || workingDay.size() == 0 || workingEndTime == null){
-                        Snackbar.make(parentLayout,"You need to select the working day",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(parentLayout,"You need to select the working day and working time",Snackbar.LENGTH_SHORT).show();
                     }else{
                         btnBack.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(getItem(+1),true);
