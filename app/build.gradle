@@ -94,6 +94,9 @@ dependencies {
     implementation "info.hoang8f:fbutton:1.0.5"
     implementation 'com.stephentuso:welcome:1.4.1'
 
+    //Showcase view
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+
     // Shape of View
     implementation 'com.github.florent37:shapeofview:1.4.7'
     implementation 'com.flaviofaria:kenburnsview:1.0.7'

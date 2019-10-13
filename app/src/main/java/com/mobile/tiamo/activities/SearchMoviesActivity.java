@@ -1,7 +1,5 @@
 package com.mobile.tiamo.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,15 +8,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.adapters.MovieAdapter;
 import com.mobile.tiamo.adapters.MovieItem;
 import com.mobile.tiamo.rest.services.MovieService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +40,8 @@ public class SearchMoviesActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edMovieTitle.getText() != null){
+                if (!edMovieTitle.getText().toString().trim().equals("") &&
+                        edMovieTitle.getText() != null) {
                     String title = edMovieTitle.getText().toString();
                     SearchMovieAsync searchMovieAsync = new SearchMovieAsync();
                     searchMovieAsync.execute(title);

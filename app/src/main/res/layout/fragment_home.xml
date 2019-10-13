@@ -27,7 +27,7 @@
                     android:textColor="#000000"
                     android:paddingLeft="16dp"
                     android:text="Routine"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ListView
                     android:layout_marginTop="16dp"
@@ -54,7 +54,7 @@
                     android:textColor="#000000"
                     android:paddingLeft="16dp"
                     android:text="Daily Activity"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <ListView

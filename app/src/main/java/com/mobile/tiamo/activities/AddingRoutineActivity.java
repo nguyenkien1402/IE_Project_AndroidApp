@@ -1,7 +1,6 @@
 package com.mobile.tiamo.activities;
 
 import android.app.FragmentManager;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -71,7 +70,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         btnAddRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edTitle.getText() != null && !edTitle.getText().toString().equals("")){
+                if (edTitle.getText() != null && !edTitle.getText().toString().trim().equals("")) {
                     if(timeStart.getText() != null && timeEnd.getText() != null && daySelected.getText() != null){
                         if(daySelected.getText().toString().equals("All Day")){
                             for(int i = 0 ; i < 7;i++){

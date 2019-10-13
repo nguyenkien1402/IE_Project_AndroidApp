@@ -100,7 +100,7 @@ public class OtherUtilities {
 
 
     public static String suggestion(String title){
-        String s = "Setup time for this activity";
+        String s = "Set your weekly goals in hours";
         switch (title){
             case "Gym":
                 s = "We recommend 8 hours per week, 1.5 hours per day";

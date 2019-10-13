@@ -1,17 +1,14 @@
 package com.mobile.tiamo.questionaires;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +33,7 @@ public class ThirdQuestionFragment extends Fragment {
     View popupInputDialogView, popupInputHobby;
     Button btnAdd, btnCancel, btnAddHobby, btnInputAdd, btnInputCancel;
     ChipGroup chipGroup;
-    TimePicker timePicker, timePicker2;
+    private NumberPicker npMin, npHour, npMin2, npHour2;
 
     @Nullable
     @Override
@@ -60,9 +57,9 @@ public class ThirdQuestionFragment extends Fragment {
                 btnInputAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        model.setHours(timePicker.getHour());
-                        model.setMinutes(timePicker.getMinute());
-                        if(edInputActivity.getText().toString() != null){
+                        model.setHours(npHour2.getValue());
+                        model.setMinutes(npMin2.getValue() * 5);
+                        if (edInputActivity.getText() != null && !edInputActivity.getText().toString().trim().equals("")) {
                             String activity = edInputActivity.getText().toString();
                             model.setTitle(activity);
                             activitiesModels.add(model);
@@ -113,8 +110,8 @@ public class ThirdQuestionFragment extends Fragment {
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            model.setHours(timePicker2.getHour());
-                            model.setMinutes(timePicker2.getMinute());
+                            model.setHours(npHour.getValue());
+                            model.setMinutes(npMin.getValue() * 5);
                             if(model.getMinutes() == 0){
                                 c.setText(c.getText().toString() +" ("+model.getHours()+" hours)");
                             }else{
@@ -171,8 +168,8 @@ public class ThirdQuestionFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
 //                                listHobbies.add(c.getText().toString());
-                                model.setHours(timePicker2.getHour());
-                                model.setMinutes(timePicker2.getMinute());
+                                model.setHours(npHour.getValue());
+                                model.setMinutes(npMin.getValue() * 5);
                                 if(model.getMinutes() == 0){
                                     c.setText(c.getText().toString() +" ("+model.getHours()+" hours)");
                                 }else{
@@ -212,10 +209,9 @@ public class ThirdQuestionFragment extends Fragment {
         popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
         btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
-        timePicker2 = popupInputDialogView.findViewById(R.id.q3_time_picker_2);
-        timePicker2.setIs24HourView(true);
-        timePicker2.setHour(1);
-        timePicker2.setMinute(0);
+        npMin = popupInputDialogView.findViewById(R.id.numberPickerMin);
+        npHour = popupInputDialogView.findViewById(R.id.numberPickerHour);
+        setupNumberPickers(npMin, npHour);
     }
 
     public void initPopupInputActivity(){
@@ -224,10 +220,22 @@ public class ThirdQuestionFragment extends Fragment {
         edInputActivity = popupInputHobby.findViewById(R.id.input_your_activity);
         btnInputAdd = popupInputHobby.findViewById(R.id.popup_btn_add_hobby);
         btnInputCancel = popupInputHobby.findViewById(R.id.popup_btn_cancel_hobby);
-        timePicker = popupInputHobby.findViewById(R.id.q3_time_picker);
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(1);
-        timePicker.setMinute(0);
+        npMin2 = popupInputHobby.findViewById(R.id.numberPickerMin2);
+        npHour2 = popupInputHobby.findViewById(R.id.numberPickerHour2);
+        setupNumberPickers(npMin2, npHour2);
+    }
+
+    private void setupNumberPickers(NumberPicker min, NumberPicker hour) {
+        hour.setMinValue(0);
+        hour.setMaxValue(12);
+        hour.setValue(1);
+
+        String[] mins5 = {"00", "05", "10", "15", "20", "25", "30", "35", "40",
+                "45", "50", "55"};
+        min.setMinValue(0);
+        min.setMaxValue(mins5.length - 1);
+        min.setValue(0);
+        min.setDisplayedValues(mins5);
     }
 
     public static ThirdQuestionFragment newInstance(String text){

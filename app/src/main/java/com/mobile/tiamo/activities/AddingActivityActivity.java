@@ -1,9 +1,5 @@
 package com.mobile.tiamo.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -18,8 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -48,12 +48,13 @@ public class AddingActivityActivity extends AppCompatActivity {
     private ChipGroup chipSuggesstionGroup;
     private View popupInputDialogView, popupInputHobby;
     private Button btnAdd, btnCancel,btnInputAdd, btnInputCancel;
-    private TimePicker timePicker;
+
     private TiamoDatabase db;
     private FloatingActionButton fab;
     private EditText edInputActivity;
     private List<ActivitiesModel> activitiesModels;
     private TextView title_suggesstion;
+    private NumberPicker npMin, npHour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +175,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                          */
                         if(!edInputActivity.getText().toString().trim().equals("") &&
                             edInputActivity.getText() != null){
-                            model.setHours(timePicker.getHour());
-                            model.setMinutes(timePicker.getMinute());
+                            model.setHours(npHour.getValue());
+                            model.setMinutes(npMin.getValue() * 5);
                             String activity = edInputActivity.getText().toString();
                             model.setTitle(activity);
                             addingNewChip(model,-1);
@@ -254,8 +255,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int hour = timePicker.getHour();
-                                int minute = timePicker.getMinute();
+                                int hour = npHour.getValue();
+                                int minute = npMin.getValue() * 5;
                                 ActivitiesModel a = new ActivitiesModel();
                                 a.setTitle(c.getText().toString());
                                 a.setMinutes(minute);
@@ -363,8 +364,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int hour = timePicker.getHour();
-                                int minute = timePicker.getMinute();
+                                int hour = npHour.getValue();
+                                int minute = npMin.getValue() * 5;
                                 ActivitiesModel a = new ActivitiesModel();
                                 a.setTitle(c.getText().toString());
                                 a.setMinutes(minute);
@@ -453,8 +454,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int hour = timePicker.getHour();
-                            int minute = timePicker.getMinute();
+                            int hour = npHour.getValue();
+                            int minute = npMin.getValue() * 5;
                             ActivitiesModel a = new ActivitiesModel();
                             a.setTitle(c.getText().toString());
                             a.setMinutes(minute);
@@ -509,10 +510,9 @@ public class AddingActivityActivity extends AppCompatActivity {
         title_suggesstion = popupInputDialogView.findViewById(R.id.title_suggesstion);
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
         btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
-        timePicker = popupInputDialogView.findViewById(R.id.q3_time_picker_2);
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(1);
-        timePicker.setMinute(0);
+        npMin = popupInputDialogView.findViewById(R.id.numberPickerMin);
+        npHour = popupInputDialogView.findViewById(R.id.numberPickerHour);
+        setupNumberPickers();
     }
 
     public void initPopupInputActivity(){
@@ -521,9 +521,21 @@ public class AddingActivityActivity extends AppCompatActivity {
         edInputActivity = popupInputHobby.findViewById(R.id.input_your_activity);
         btnInputAdd = popupInputHobby.findViewById(R.id.popup_btn_add_hobby);
         btnInputCancel = popupInputHobby.findViewById(R.id.popup_btn_cancel_hobby);
-        timePicker = popupInputHobby.findViewById(R.id.q3_time_picker);
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(1);
-        timePicker.setMinute(0);
+        npMin = popupInputHobby.findViewById(R.id.numberPickerMin2);
+        npHour = popupInputHobby.findViewById(R.id.numberPickerHour2);
+        setupNumberPickers();
+    }
+
+    private void setupNumberPickers() {
+        npHour.setMinValue(0);
+        npHour.setMaxValue(12);
+        npHour.setValue(1);
+
+        String[] mins5 = {"00", "05", "10", "15", "20", "25", "30", "35", "40",
+                "45", "50", "55"};
+        npMin.setMinValue(0);
+        npMin.setMaxValue(mins5.length - 1);
+        npMin.setValue(0);
+        npMin.setDisplayedValues(mins5);
     }
 }

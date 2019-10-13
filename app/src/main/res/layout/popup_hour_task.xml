@@ -7,20 +7,62 @@
     android:paddingRight="30dp"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <NumberPicker
+                android:id="@+id/numberPickerHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:text="Hours"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <NumberPicker
+                android:id="@+id/numberPickerMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mins"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/title_suggesstion"
         android:textSize="20dp"
-        android:text="How many hours per week?"
+        android:text="Set your weekly goals in hours"
         android:textColor="#000000"
         android:fontFamily="sans-serif-condensed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TimePicker
-        android:id="@+id/q3_time_picker_2"
-        android:layout_marginTop="16dp"
-        android:timePickerMode="spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
     <RelativeLayout
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"

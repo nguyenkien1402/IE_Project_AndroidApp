@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +20,10 @@ import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.SQLiteDatabase;
 import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
-import com.mobile.tiamo.services.ScreenOnAndOffService;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.Messages;
 import com.mobile.tiamo.utilities.OtherUtilities;
 import com.mobile.tiamo.utilities.SavingDataSharePreference;
-
-import org.threeten.bp.LocalTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,12 +130,16 @@ public class FifthQuestionFragment extends Fragment {
             dialog.dismiss();
             if(aVoid == 0){
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER_QUESTUONARIES,1);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 0);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_DASHBOARD, 0);
                 Intent i = new Intent(getActivity(), AddingRoutineActivity.class);
 
                 getActivity().finish();
                 startActivity(i);
             }else{
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_IS_ANSWER_QUESTUONARIES,1);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 0);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_DASHBOARD, 0);
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 getActivity().finish();
                 startActivity(i);

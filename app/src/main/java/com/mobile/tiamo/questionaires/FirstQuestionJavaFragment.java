@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 import com.mobile.tiamo.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class FirstQuestionJavaFragment extends Fragment {
     public static List<String> days = new ArrayList<String>();
     public static String commuting = "";
     private TextView timeStart, timeEnd;
+    private NumberPicker npMin, npHour;
+    private int commute_minutes, commute_hours;
 
     @Nullable
     @Override
@@ -37,12 +42,13 @@ public class FirstQuestionJavaFragment extends Fragment {
         timeStart = view.findViewById(R.id.timestart);
         timeEnd = view.findViewById(R.id.timeend);
         ChipGroup chipGroup = view.findViewById(R.id.chipFirstGroup);
-        TimePicker timePicker = view.findViewById(R.id.q1_timepicker);
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(0);
-        timePicker.setMinute(20);
+        npMin = view.findViewById(R.id.numberPickerMin_q1);
+        npHour = view.findViewById(R.id.numberPickerHour_q1);
+        setupNumberPickers();
 
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+
+
+   /*     timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 String s_hourOfDay, s_minutes;
@@ -58,7 +64,7 @@ public class FirstQuestionJavaFragment extends Fragment {
                 }
                 commuting = s_hourOfDay + ":" + s_minutes;
             }
-        });
+        });*/
         for(int i = 0 ; i < chipGroup.getChildCount() ; i++){
             final Chip chip = (Chip) chipGroup.getChildAt(i);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -83,6 +89,34 @@ public class FirstQuestionJavaFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void setupNumberPickers() {
+        npHour.setMinValue(0);
+        npHour.setMaxValue(2);
+        npHour.setValue(0);
+
+        String[] mins5 = {"00", "05", "10", "15", "20", "25", "30", "35", "40",
+                "45", "50", "55"};
+        npMin.setMinValue(0);
+        npMin.setMaxValue(mins5.length - 1);
+        npMin.setValue(4);
+        npMin.setDisplayedValues(mins5);
+
+        npMin.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                //Display the newly selected number from picker
+                commute_minutes = newVal * 5;
+            }
+        });
+        npHour.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                //Display the newly selected number from picker
+                commute_hours = newVal;
+            }
+        });
     }
 
 

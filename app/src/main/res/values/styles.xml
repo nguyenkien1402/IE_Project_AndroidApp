@@ -83,5 +83,24 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="CustomShowcaseTheme2" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">#1565C0</item>
+        <item name="sv_showcaseColor">@color/colorPrimary</item>
+        <item name="sv_buttonText">Alright</item>
+        <item name="sv_titleTextAppearance">@style/CustomTitle2</item>
+        <item name="sv_detailTextAppearance">@style/CustomText2</item>
+    </style>
+
+
+    <style name="CustomTitle2" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">35dp</item>
+    </style>
+
+    <style name="CustomText2" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
 
 </resources>

@@ -17,8 +17,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +46,9 @@ import com.mobile.tiamo.dao.Schedule;
 import com.mobile.tiamo.dao.TiamoDatabase;
 import com.mobile.tiamo.utilities.DateUtilities;
 import com.mobile.tiamo.utilities.LocalNotifications;
+import com.mobile.tiamo.utilities.Messages;
+import com.mobile.tiamo.utilities.SavingDataSharePreference;
+import com.mobile.tiamo.utilities.ShowcaseViews;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +72,7 @@ public class HomeFragment extends Fragment {
     private FloatingActionsMenu fAM;
     private View popupInputDialogView, popupRoutine;
     private Button btnAdd, btnCancel, btnRoutineYes, btnRoutineNo;
-    private TimePicker timePicker;
+    private NumberPicker npMin, npHour;
     private LocalNotifications localNotifications;
 
 
@@ -112,8 +115,10 @@ public class HomeFragment extends Fragment {
                     alertDialogBuilder.setView(popupInputDialogView);
                     final AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-                    timePicker.setHour(activityModelItems.get(position).getHourPractice());
-                    timePicker.setMinute(activityModelItems.get(position).getMinutePractice());
+
+                    npMin.setValue(activityModelItems.get(position).getMinutePractice() / 5);
+                    npHour.setValue(activityModelItems.get(position).getHourPractice());
+
 
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         // Adding the new daily activity hobby model to database
@@ -122,14 +127,14 @@ public class HomeFragment extends Fragment {
                             DailyActivityHobbyModel dailyActivityHobbyModel = new DailyActivityHobbyModel();
                             dailyActivityHobbyModel.setTitle(activityModelItems.get(position).getTitle());
                             dailyActivityHobbyModel.setDateCreated(DateUtilities.getCurrentDateInString());
-                            dailyActivityHobbyModel.setHours(timePicker.getHour());
-                            dailyActivityHobbyModel.setMinutes(timePicker.getMinute());
+                            dailyActivityHobbyModel.setHours(npHour.getValue());
+                            dailyActivityHobbyModel.setMinutes(npMin.getValue() * 5);
                             dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
 //                            Log.d(TAG,activityModelItems.get(position).getTitle()+"-"+activityModelItems.get(position).getUid());
                             SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                             saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
-                            int hour = timePicker.getHour();
-                            int minute = timePicker.getMinute();
+                            int hour = npHour.getValue();
+                            int minute = npMin.getValue() * 5;
                             activityModelItems.get(position).setHourPractice(hour);
                             activityModelItems.get(position).setMinutePractice(minute);
                             alertDialog.cancel();
@@ -501,49 +506,19 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    /**
-     * This AsyncTask is used to get the activity result from the current date
-     */
-    private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
-        ProgressDialog pd ;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pd = new ProgressDialog(getActivity());
-            pd.setTitle("Load Data");
-        }
+    public void initPopupViewControls(String name) {
+        // Get layout inflater object.
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+        // Inflate the popup dialog from a layout xml file.
+        popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
+        TextView txt = popupInputDialogView.findViewById(R.id.title_suggesstion);
+        txt.setText("How much time you put in " + name + " today?");
+        btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
+        btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
 
-        @Override
-        protected List<DailyRoutineItem> doInBackground(Void... voids) {
-            String currentDate = DateUtilities.getCurrentDateInString();
-            return getDailyActivityList(currentDate);
-        }
-
-        @Override
-        protected void onPostExecute(List<DailyRoutineItem> dailyActivityItems) {
-            super.onPostExecute(dailyActivityItems);
-            if(dailyActivityItems.size() > 0){
-                datasets = dailyActivityItems;
-                adapter = new DailyActivityAdapter(datasets, getActivity());
-                listViewRoutine.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-                homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
-                listViewActivity.setAdapter(homeListDailyActivityAdapter);
-                homeListDailyActivityAdapter.notifyDataSetChanged();
-
-                setDynamicHeight(listViewActivity);
-                setDynamicHeight(listViewRoutine);
-            }else{
-                if(activityModelItems.size() >0){
-                    homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
-                    listViewActivity.setAdapter(homeListDailyActivityAdapter);
-                    homeListDailyActivityAdapter.notifyDataSetChanged();
-                    setDynamicHeight(listViewActivity);
-                }
-            }
-            pd.dismiss();
-        }
+        npMin = popupInputDialogView.findViewById(R.id.numberPickerMin);
+        npHour = popupInputDialogView.findViewById(R.id.numberPickerHour);
+        setupNumberPickers();
     }
 
 
@@ -732,19 +707,52 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void initPopupViewControls(String name){
-        // Get layout inflater object.
-        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        // Inflate the popup dialog from a layout xml file.
-        popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
-        TextView txt = popupInputDialogView.findViewById(R.id.title_suggesstion);
-        txt.setText("How much time you put in "+name+" today?");
-        btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
-        btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
-        timePicker = popupInputDialogView.findViewById(R.id.q3_time_picker_2);
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(1);
-        timePicker.setMinute(0);
+    private void setupNumberPickers() {
+        npHour.setMinValue(0);
+        npHour.setMaxValue(12);
+        npHour.setValue(1);
+
+        String[] mins5 = {"00", "05", "10", "15", "20", "25", "30", "35", "40",
+                "45", "50", "55"};
+        npMin.setMinValue(0);
+        npMin.setMaxValue(mins5.length - 1);
+        npMin.setValue(0);
+        npMin.setDisplayedValues(mins5);
+    }
+
+    private void generateShowcaseView() {
+
+        new ShowcaseViews.Builder(getActivity())
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .setShotMode(ShowcaseViews.SHOT_MODE_MULTIPLE)
+                .addView(new ShowcaseViews.ViewProperties(
+                        R.id.tv1,
+                        "Routine",
+                        "These are events that you must complete on specific days.")
+                )
+                .addView(new ShowcaseViews.ViewProperties(
+                        R.id.tv2,
+                        "Activity",
+                        "These are extra curricular activities that you may want to introduce to your daily life.")
+                )
+                .addView(new ShowcaseViews.ViewProperties(
+                        R.id.home_action_routine,
+                        "You can add new Routines and Activities",
+                        "")
+                )
+
+                .setListener(new ShowcaseViews.ShowcaseViewsListener() {
+                    @Override
+                    public void onShowcaseStart() {
+                        // do some stuff before first target shows
+                    }
+
+                    @Override
+                    public void onShowcaseEnd(boolean hadViews) {
+                        // do some stuff after last target shows
+                    }
+                })
+                .show();
     }
 
     private void initPopupViewRoutine(DailyRoutineItem dailyRoutineItem){
@@ -774,5 +782,58 @@ public class HomeFragment extends Fragment {
         layoutParams.height = height + (listView.getDividerHeight() * (adapter.getCount() - 1));
         listView.setLayoutParams(layoutParams);
         listView.requestLayout();
+    }
+
+    /**
+     * This AsyncTask is used to get the activity result from the current date
+     */
+    private class GetAllDailyActivityAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>> {
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setTitle("Load Data");
+        }
+
+        @Override
+        protected List<DailyRoutineItem> doInBackground(Void... voids) {
+            String currentDate = DateUtilities.getCurrentDateInString();
+            return getDailyActivityList(currentDate);
+        }
+
+        @Override
+        protected void onPostExecute(List<DailyRoutineItem> dailyActivityItems) {
+            super.onPostExecute(dailyActivityItems);
+            if (dailyActivityItems.size() > 0) {
+                datasets = dailyActivityItems;
+                adapter = new DailyActivityAdapter(datasets, getActivity());
+                listViewRoutine.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
+                listViewActivity.setAdapter(homeListDailyActivityAdapter);
+                homeListDailyActivityAdapter.notifyDataSetChanged();
+
+                setDynamicHeight(listViewActivity);
+                setDynamicHeight(listViewRoutine);
+            } else {
+                if (activityModelItems.size() > 0) {
+                    homeListDailyActivityAdapter = new HomeListDailyActivityAdapter(activityModelItems, getActivity());
+                    listViewActivity.setAdapter(homeListDailyActivityAdapter);
+                    homeListDailyActivityAdapter.notifyDataSetChanged();
+                    setDynamicHeight(listViewActivity);
+                }
+            }
+            pd.dismiss();
+
+            // Generate ShowcaseView only for the first time
+            if (SavingDataSharePreference.getDataInt(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME) == 0) {
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 1);
+                generateShowcaseView();
+            }
+
+        }
     }
 }
