@@ -7,6 +7,14 @@
     android:paddingRight="30dp"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/title_suggesstion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Set your weekly goals in hours"
+        android:textColor="#000000"
+        android:textSize="20dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,15 +64,6 @@
 
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:id="@+id/title_suggesstion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:text="Set your weekly goals in hours"
-        android:textColor="#000000"
-        android:textSize="20dp" />
-
 
     <RelativeLayout
         android:layout_marginTop="16dp"
