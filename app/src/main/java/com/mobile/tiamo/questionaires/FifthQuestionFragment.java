@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,13 +134,13 @@ public class FifthQuestionFragment extends Fragment {
             super.onPostExecute(aVoid);
             dialog.dismiss();
             if(aVoid == 0){
-                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,Messages.FLAG_IS_ANSWER_QUESTUONARIES,1);
                 Intent i = new Intent(getActivity(), AddingRoutineActivity.class);
 
                 getActivity().finish();
                 startActivity(i);
             }else{
-                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA,"flagAnswer",1);
+                SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_IS_ANSWER_QUESTUONARIES,1);
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 getActivity().finish();
                 startActivity(i);
