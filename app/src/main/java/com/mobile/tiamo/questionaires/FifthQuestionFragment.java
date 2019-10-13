@@ -64,8 +64,6 @@ public class FifthQuestionFragment extends Fragment {
             }
         });
 
-        // Start service to store the sleeping data.
-
         return view;
     }
 
@@ -84,6 +82,7 @@ public class FifthQuestionFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Integer... voids) {
+            List<Schedule> initSchedule = new ArrayList<Schedule>();
             String workingStartTime = FirstQuestionJavaFragment.timeRangeStart;
             String workingEndTime = FirstQuestionJavaFragment.timeRangeEnd;
             List<String> workingDay = FirstQuestionJavaFragment.days;
@@ -97,19 +96,21 @@ public class FifthQuestionFragment extends Fragment {
             schedule.setTimeStart(workingStartTime);
             schedule.setTimeEnd(workingEndTime);
             schedule.setTimeStart(workingStartTime);
-            db.scheduleDao().insert(schedule);
+            initSchedule.add(schedule);
+//            db.scheduleDao().insert(schedule);
 
             // Adding the Sleeping time
-            schedule = new Schedule();
+            Schedule scheduleSleeping = new Schedule();
             String sleepingTime = SecondQuestionFragment.Companion.getSleepTime();
             String wakeupTime = SecondQuestionFragment.Companion.getWakeupTime();
-            schedule.setDayCreated(DateUtilities.getCurrentDateInString());
-            schedule.setTimeStart(sleepingTime);
-            schedule.setTimeEnd(wakeupTime);
-            schedule.setTitle("Sleeping");
-            schedule.setOperationDay("All Day");
-            schedule.setSpecificDay("Mon Tue Wed Thu Fri Sat Sun");
-            db.scheduleDao().insert(schedule);
+            scheduleSleeping.setDayCreated(DateUtilities.getCurrentDateInString());
+            scheduleSleeping.setTimeStart(sleepingTime);
+            scheduleSleeping.setTimeEnd(wakeupTime);
+            scheduleSleeping.setTitle("Sleeping");
+            scheduleSleeping.setOperationDay("All Day");
+            scheduleSleeping.setSpecificDay("Mon Tue Wed Thu Fri Sat Sun");
+            initSchedule.add(scheduleSleeping);
+//            db.scheduleDao().insert(schedule);
 
             // Adding the daily activity
             // First, get the gym time
@@ -120,6 +121,7 @@ public class FifthQuestionFragment extends Fragment {
             }
             // Now, add to SQL
             db.activitiesModelDao().insertAll(activitiesModels);
+            db.scheduleDao().insertAll(initSchedule);
 
             return voids[0];
         }

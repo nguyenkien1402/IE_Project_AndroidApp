@@ -47,24 +47,6 @@ public class FirstQuestionJavaFragment extends Fragment {
         setupNumberPickers();
 
 
-
-   /*     timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                String s_hourOfDay, s_minutes;
-                if(hourOfDay < 9) {
-                    s_hourOfDay = "0" + hourOfDay;
-                }else {
-                    s_hourOfDay = hourOfDay + "";
-                }
-                if(minute < 9) {
-                    s_minutes = "0" + minute;
-                }else {
-                    s_minutes = minute + "";
-                }
-                commuting = s_hourOfDay + ":" + s_minutes;
-            }
-        });*/
         for(int i = 0 ; i < chipGroup.getChildCount() ; i++){
             final Chip chip = (Chip) chipGroup.getChildAt(i);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

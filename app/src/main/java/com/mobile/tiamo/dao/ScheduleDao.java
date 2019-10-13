@@ -18,6 +18,9 @@ public interface ScheduleDao {
     @Insert
     long insert(Schedule schedule);
 
+    @Insert
+    void insertAll(List<Schedule> schedules);
+
     @Query("SELECT * FROM schedule where specific_day LIKE :day")
     List<Schedule> getScheduleByDay(String day);
 

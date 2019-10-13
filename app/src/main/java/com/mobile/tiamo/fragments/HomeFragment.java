@@ -484,6 +484,16 @@ public class HomeFragment extends Fragment {
      * This AsyncTask is used to get the activity result from the current date
      */
     private class GetAllDailyActivityResultAysnc extends AsyncTask<Void, Void, List<DailyRoutineItem>>{
+
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setTitle("Update");
+            dialog.show();
+        }
+
         @Override
         protected List<DailyRoutineItem> doInBackground(Void... voids) {
             String currentDate = DateUtilities.getCurrentDateInString();
@@ -492,6 +502,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<DailyRoutineItem> dailyActivityItems) {
+            super.onPostExecute(dailyActivityItems);
             if(dailyActivityItems.size() > 0){
                 datasets.clear();
                 datasets = dailyActivityItems;
@@ -502,7 +513,7 @@ public class HomeFragment extends Fragment {
 
             }else{
             }
-            super.onPostExecute(dailyActivityItems);
+            dialog.dismiss();
         }
     }
 
@@ -666,9 +677,10 @@ public class HomeFragment extends Fragment {
             db.dailyActivityHobbyModelDao().insertAll(list);
             list = db.dailyActivityHobbyModelDao().getDailyActivityHobbyByDate(DateUtilities.getCurrentDateInString());
             for(int i = 0 ; i < list.size() ; i++){
-                ActivitiesModel model = new ActivitiesModel();
+                ActivityModelItem model = new ActivityModelItem();
                 model.setTitle(list.get(i).getTitle());
                 model.setUid(list.get(i).getUid());
+                activityModelItems.add(model);
             }
         }
 
@@ -826,13 +838,13 @@ public class HomeFragment extends Fragment {
                     setDynamicHeight(listViewActivity);
                 }
             }
-            pd.dismiss();
 
             // Generate ShowcaseView only for the first time
             if (SavingDataSharePreference.getDataInt(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME) == 0) {
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 1);
                 generateShowcaseView();
             }
+            pd.dismiss();
 
         }
     }
