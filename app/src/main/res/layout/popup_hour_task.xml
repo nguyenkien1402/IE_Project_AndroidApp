@@ -20,11 +20,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <NumberPicker
-                android:id="@+id/numberPickerHour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,6 +27,12 @@
                 android:text="Hours"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+            <NumberPicker
+                android:id="@+id/numberPickerHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -40,28 +41,30 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <NumberPicker
-                android:id="@+id/numberPickerMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mins"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <NumberPicker
+                android:id="@+id/numberPickerMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
         </LinearLayout>
     </LinearLayout>
-
     <TextView
         android:id="@+id/title_suggesstion"
-        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:text="Set your weekly goals in hours"
         android:textColor="#000000"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textSize="20dp" />
+
 
     <RelativeLayout
         android:layout_marginTop="16dp"
