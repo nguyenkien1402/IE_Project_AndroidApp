@@ -173,6 +173,10 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         listDays = getResources().getStringArray(R.array.day_of_week);
         listDaysAbb = getResources().getStringArray(R.array.day_of_week_abb);
         checkedDays = new boolean[listDays.length];
+        for(int i = 0 ; i < 7;i++){
+            checkedDays[i] = true;
+            mItems.add(i);
+        }
     }
 
 
@@ -209,9 +213,13 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 String item = "";
                 List s1=new ArrayList();
                 s1.add(null);
+                Log.d("Item Size", mItems.size()+"");
                 mItems.removeAll(s1);
                 Collections.sort(mItems);
-
+                if(mItems.size() == 0){
+                    daySelected.setText("All Day");
+                    return;
+                }
                 if(mItems.size()==7){
                     daySelected.setText("All Day");
                     for(int i = 0 ; i < mItems.size();i++){

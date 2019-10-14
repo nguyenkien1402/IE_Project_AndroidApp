@@ -90,7 +90,7 @@ public class AddingActivityActivity extends AppCompatActivity {
 
     /*
       Save new activity to SQL database
-      Using AsynTask to do in background
+      Using AsyncTask to do in background
      */
     private class SaveHobbiesToDatabaseAsync extends AsyncTask<Void,Void,Void>{
         @Override
