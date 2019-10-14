@@ -38,7 +38,8 @@
             <NumberPicker
                 android:id="@+id/numberPickerHour"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"/>
 
 
         </LinearLayout>
@@ -59,7 +60,8 @@
             <NumberPicker
                 android:id="@+id/numberPickerMin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"/>
 
 
         </LinearLayout>

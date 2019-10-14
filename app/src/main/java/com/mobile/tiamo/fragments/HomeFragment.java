@@ -523,7 +523,7 @@ public class HomeFragment extends Fragment {
         // Inflate the popup dialog from a layout xml file.
         popupInputDialogView = layoutInflater.inflate(R.layout.popup_hour_task, null);
         TextView txt = popupInputDialogView.findViewById(R.id.title_suggesstion);
-        txt.setText("How much time you put in " + name + " today?");
+        txt.setText("How much time did you put in " + name + " today?");
         btnCancel = popupInputDialogView.findViewById(R.id.popup_btn_cancel_q);
         btnAdd = popupInputDialogView.findViewById(R.id.popup_btn_add_q);
 

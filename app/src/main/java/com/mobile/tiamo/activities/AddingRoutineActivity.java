@@ -184,7 +184,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         RangeTimePickerDialog dialog = new RangeTimePickerDialog();
         dialog.newInstance();
         dialog.setRadiusDialog(20); // Set radius of dialog (default is 50)
-        dialog.setIs24HourView(false); // Indicates if the format should be 24 hours
+        dialog.setIs24HourView(true); // Indicates if the format should be 24 hours
         dialog.setColorBackgroundHeader(R.color.colorPrimary); // Set Color of Background header dialog
         dialog.setColorTextButton(R.color.white); // Set Text color of button
         dialog.setColorBackgroundTimePickerHeader(R.color.colorPrimaryDark);
