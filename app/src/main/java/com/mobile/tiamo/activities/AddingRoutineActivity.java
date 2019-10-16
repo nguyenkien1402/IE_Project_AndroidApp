@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
@@ -50,6 +51,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
     private ArrayList<Integer> mItems = new ArrayList<>();
     private String specificDay="";
     private LocalNotifications localNotifications;
+    private int isStart;
 
     /*
      Create the view of activity
@@ -61,8 +63,12 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         setContentView(R.layout.activity_adding_schedule);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        isStart = getIntent().getIntExtra("IsStart",-1);
+        if(isStart==-1){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else{
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         db = SQLiteDatabase.getTiamoDatabase(getApplicationContext());
         initComponent();
         localNotifications = new LocalNotifications(getApplicationContext());
@@ -161,10 +167,17 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             if(aLong != null){
-                Toast.makeText(getApplicationContext(),"Add Routine Successfully",Toast.LENGTH_SHORT).show();
-                Intent returnIntent = new Intent();
-                setResult(AboutUsActivity.RESULT_OK,returnIntent);
-                finish();
+                if(isStart==-1){
+                    Toast.makeText(getApplicationContext(),"Add Routine Successfully",Toast.LENGTH_SHORT).show();
+                    Intent returnIntent = new Intent();
+                    setResult(AboutUsActivity.RESULT_OK,returnIntent);
+                    finish();
+                }else{
+                    Intent i = new Intent(AddingRoutineActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
             }
         }
     }
@@ -292,7 +305,13 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
     public boolean onSupportNavigateUp() {
 //        Intent returnIntent = new Intent();
 //        setResult(CODE_RESULT,returnIntent);
-        finish();
+        if(isStart==-1){
+            finish();
+        }else{
+            Intent i = new Intent(AddingRoutineActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
         return true;
     }
 

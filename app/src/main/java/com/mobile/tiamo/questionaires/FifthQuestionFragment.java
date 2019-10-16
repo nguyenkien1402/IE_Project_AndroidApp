@@ -135,16 +135,18 @@ public class FifthQuestionFragment extends Fragment {
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 0);
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_DASHBOARD, 0);
                 Intent i = new Intent(getActivity(), AddingRoutineActivity.class);
-
-                getActivity().finish();
+                i.putExtra("IsStart",1);
                 startActivity(i);
+                getActivity().finish();
+
             }else{
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_IS_ANSWER_QUESTUONARIES,1);
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_HOME, 0);
                 SavingDataSharePreference.savingLocalData(getContext(), Messages.LOCAL_DATA, Messages.FLAG_TUTORIAL_DASHBOARD, 0);
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                getActivity().finish();
                 startActivity(i);
+                getActivity().finish();
+
             }
         }
     }
