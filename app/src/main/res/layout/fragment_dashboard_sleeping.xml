@@ -189,7 +189,7 @@
                         android:scaleType="centerCrop"
                         android:src="@color/red_background" />
                     <TextView
-                        android:text="Wanna get something fun"
+                        android:text="Would you like to see some movies?"
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:textSize="19dp"
@@ -198,18 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
-
             </com.github.florent37.shapeofview.shapes.BubbleView>>
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/dashboard_sleeping_mv"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:layout_height="60dp">-->
-<!--                <TextView-->
-<!--                    android:layout_width=""-->
-<!--                    android:layout_height=""-->
-<!--            </LinearLayout>-->
 
             <TextView
                 android:textColor="#000000"

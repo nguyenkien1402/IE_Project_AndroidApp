@@ -49,7 +49,7 @@ import java.util.Random;
  */
 public class SettingFragment extends Fragment {
 
-    TextView tvAboutUs, deleteAll, btnMovies;
+    TextView tvAboutUs, tvNotiSetting, tvRoutineSetting, tvDailySetting;
     TiamoDatabase db;
     Random rand = new Random();
     List<String> pickUpChildrenDay = new ArrayList<String>();
@@ -61,12 +61,20 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         MainActivity.textToolbar.setText(R.string.app_name);
         tvAboutUs = view.findViewById(R.id.setting_about_us);
-        deleteAll = view.findViewById(R.id.deleteAll);
-//        btnMovies = view.findViewById(R.id.btnMovies);
+        tvNotiSetting = view.findViewById(R.id.notification_setting);
+        tvRoutineSetting = view.findViewById(R.id.routine_setting);
+        tvDailySetting = view.findViewById(R.id.activity_setting);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         pickUpChildrenDay.add("Mon");
         pickUpChildrenDay.add("Wed");
         pickUpChildrenDay.add("Fri");
+
+        buttonAction();
+
+        return view;
+    }
+
+    private void buttonAction(){
         tvAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,31 +82,31 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        deleteAll.setOnClickListener(new View.OnClickListener() {
+
+        tvNotiSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                DeleteAllAsync del = new DeleteAllAsync();
-//                del.execute();
+                Toast.makeText(getActivity(),"Incoming Feature",Toast.LENGTH_SHORT).show();
             }
         });
-
-//        btnMovies.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        return view;
+        tvRoutineSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Incoming Feature",Toast.LENGTH_SHORT).show();
+            }
+        });
+        tvDailySetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Incoming Feature",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
     private void populateData(){
-//        boolean isPopulate = SavingDataSharePreference.getDataBoolean(getActivity(), Messages.LOCAL_DATA,"isPopulate");
-//        if(isPopulate==false){
             DeleteAllAsync deleteAllAsync = new DeleteAllAsync();
             deleteAllAsync.execute();
-//        }
     }
 
     private class DeleteAllAsync extends AsyncTask<Void, Void, Void>{
@@ -127,34 +135,10 @@ public class SettingFragment extends Fragment {
             super.onPostExecute(aVoid);
             SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
             progressDialog .dismiss();
-//            PopulateDataAsync populateDataAync = new PopulateDataAsync();
-//            populateDataAync.execute();
         }
     }
 
 
-    private class PopulateDataAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-                // mean no data, insert data here
-//            populateDailyRoutine();
-//            populateDailyActivity();
-//            populateSleepingData();
-//            populateStepData();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            SavingDataSharePreference.savingLocalData(getActivity(),Messages.LOCAL_DATA,"isPopulate",true);
-
-//            Intent intent = new Intent(getActivity(),AboutUsActivity.class);
-//            startActivity(intent);
-//            m.dismiss();
-        }
-    }
 
     private void deleteAllDatabase(){
         db.stepsTakenDao().deleteAll();

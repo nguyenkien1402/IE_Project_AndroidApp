@@ -4,6 +4,48 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/notification_setting"
+        android:layout_margin="16dp"
+        android:text="Notification Setting"
+        android:textSize="20dp"
+        android:paddingLeft="16dp"
+        android:textColor="#000000"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/circle_bg"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:id="@+id/routine_setting"
+        android:layout_margin="16dp"
+        android:text="Routine Setting"
+        android:textSize="20dp"
+        android:paddingLeft="16dp"
+        android:textColor="#000000"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/circle_bg"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:id="@+id/activity_setting"
+        android:layout_margin="16dp"
+        android:text="Daily Activity Setting"
+        android:textSize="20dp"
+        android:paddingLeft="16dp"
+        android:textColor="#000000"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/circle_bg"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
         android:id="@+id/setting_about_us"
         android:layout_margin="16dp"
         android:text="About Us"
@@ -16,34 +58,5 @@
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-
-    <TextView
-        android:id="@+id/deleteAll"
-        android:layout_margin="16dp"
-        android:text="Version 1.2"
-        android:textSize="20dp"
-        android:paddingLeft="16dp"
-        android:textColor="#000000"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:background="@drawable/circle_bg"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-
-<!--    <TextView-->
-<!--        android:id="@+id/btnMovies"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:text="Movie Recommendation"-->
-<!--        android:textSize="20dp"-->
-<!--        android:paddingLeft="16dp"-->
-<!--        android:textColor="#000000"-->
-<!--        android:foreground="?android:attr/selectableItemBackground"-->
-<!--        android:background="@drawable/circle_bg"-->
-<!--        android:fontFamily="sans-serif-condensed-medium"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"/>-->
-
 
 </LinearLayout>
