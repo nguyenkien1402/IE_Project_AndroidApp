@@ -156,8 +156,7 @@ public class ShowcaseViews implements OnShowcaseEventListener {
                 .setContentTitle(viewProperties.title)
                 .setContentText(viewProperties.message)
                 .setShowcaseEventListener(this)
-                .setStyle(showcaseStyleResId)
-                .hideOnTouchOutside();
+                .setStyle(showcaseStyleResId);
 
         if (shotMode != SHOT_MODE_MULTIPLE) {
             builder.singleShot(viewProperties.id);

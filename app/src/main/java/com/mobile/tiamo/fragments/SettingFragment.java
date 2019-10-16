@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment;
 import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.activities.AboutUsActivity;
-import com.mobile.tiamo.activities.MovieRecommendationActivity;
-import com.mobile.tiamo.activities.SearchMoviesActivity;
 import com.mobile.tiamo.dao.ActivitiesModel;
 import com.mobile.tiamo.dao.DailyActivityHobbyModel;
 import com.mobile.tiamo.dao.DailyRoutine;
@@ -37,9 +35,7 @@ import org.threeten.bp.LocalTime;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +45,7 @@ import java.util.Random;
  */
 public class SettingFragment extends Fragment {
 
-    TextView tvAboutUs, tvNotiSetting, tvRoutineSetting, tvDailySetting;
+    TextView tvAboutUs, tvNotiSetting, tvRoutineSetting, tvDailySetting, tvAddData;
     TiamoDatabase db;
     Random rand = new Random();
     List<String> pickUpChildrenDay = new ArrayList<String>();
@@ -60,10 +56,11 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         MainActivity.textToolbar.setText(R.string.app_name);
-        tvAboutUs = view.findViewById(R.id.setting_about_us);
+        tvAddData = view.findViewById(R.id.setting_add_data);
         tvNotiSetting = view.findViewById(R.id.notification_setting);
         tvRoutineSetting = view.findViewById(R.id.routine_setting);
         tvDailySetting = view.findViewById(R.id.activity_setting);
+        tvAboutUs = view.findViewById(R.id.setting_about_us);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         pickUpChildrenDay.add("Mon");
         pickUpChildrenDay.add("Wed");
@@ -75,13 +72,21 @@ public class SettingFragment extends Fragment {
     }
 
     private void buttonAction(){
-        tvAboutUs.setOnClickListener(new View.OnClickListener() {
+        tvAddData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 populateData();
             }
         });
 
+        tvAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AboutUsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         tvNotiSetting.setOnClickListener(new View.OnClickListener() {
             @Override
