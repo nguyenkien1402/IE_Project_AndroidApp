@@ -140,7 +140,7 @@
                             android:textSize="25dp"
                             android:textColor="#5E0D80"
                             android:fontFamily="sans-serif-condensed-medium"
-                            android:text="6h 50m"
+                            android:text=""
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

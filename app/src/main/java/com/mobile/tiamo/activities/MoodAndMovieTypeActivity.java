@@ -243,6 +243,21 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
             pm.show();
         }
 
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            movieType = "";
+            for(String k : types){
+                movieType = movieType + k+",";
+            }
+            movieType = movieType.substring(0,movieType.length()-1);
+            JSONObject result = MovieService.getRecommendationMovie(randomNumber,
+                    txtSearch.getText().toString(),
+//                            +" ("+movieYear.getText().toString().split(":")[1].trim()+")",
+                    movieType);
+            return result;
+        }
+
         @Override
         protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
@@ -256,23 +271,10 @@ public class MoodAndMovieTypeActivity extends AppCompatActivity {
                 pm.dismiss();
                 startActivity(intent);
             }catch (Exception e){
-                Log.d(TAG,e.toString());
+//                Log.d(TAG,e.toString());
                 pm.dismiss();
 
             }
-        }
-
-        @Override
-        protected JSONObject doInBackground(Void... voids) {
-            movieType = "";
-            for(String k : types){
-                movieType = movieType + k+",";
-            }
-            movieType = movieType.substring(0,movieType.length()-1);
-            JSONObject result = MovieService.getRecommendationMovie(randomNumber,
-                    movieTitle.getText()+" ("+movieYear.getText().toString().split(":")[1].trim()+")",
-                    movieType);
-            return result;
         }
     }
 
