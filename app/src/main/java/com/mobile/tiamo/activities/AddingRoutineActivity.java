@@ -71,7 +71,11 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
             @Override
             public void onClick(View v) {
                 if (edTitle.getText() != null && !edTitle.getText().toString().trim().equals("")) {
-                    if(timeStart.getText() != null && timeEnd.getText() != null && daySelected.getText() != null){
+                    if(mItems.size() == 0){
+                        Toast.makeText(getApplicationContext(),"Please select days for routine", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if(!timeStart.getText().toString().trim().equals("") && !timeEnd.getText().toString().equals("")){
                         if(daySelected.getText().toString().equals("All Day")){
                             for(int i = 0 ; i < 7;i++){
                                 specificDay = specificDay + " " + listDaysAbb[i];
@@ -86,7 +90,8 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                         AddingScheduleAsync addingScheduleAsync = new AddingScheduleAsync();
                         addingScheduleAsync.execute(new String[]{title,timeS,timeE,days});
                     }else{
-                        Toast.makeText(getApplicationContext(),"Please set day and time for routines", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Please set time for routines", Toast.LENGTH_LONG).show();
+                        return;
                     }
 
                 }else{
@@ -274,7 +279,7 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
                 for(int i = 0 ; i < checkedDays.length ; i++){
                     checkedDays[i] = false;
                     mItems.clear();
-                    daySelected.setText("All Day");
+                    daySelected.setText("No Selected Days");
                 }
             }
         });

@@ -62,7 +62,7 @@ public class SettingFragment extends Fragment {
         MainActivity.textToolbar.setText(R.string.app_name);
         tvAboutUs = view.findViewById(R.id.setting_about_us);
         deleteAll = view.findViewById(R.id.deleteAll);
-        btnMovies = view.findViewById(R.id.btnMovies);
+//        btnMovies = view.findViewById(R.id.btnMovies);
         db = SQLiteDatabase.getTiamoDatabase(getActivity());
         pickUpChildrenDay.add("Mon");
         pickUpChildrenDay.add("Wed");

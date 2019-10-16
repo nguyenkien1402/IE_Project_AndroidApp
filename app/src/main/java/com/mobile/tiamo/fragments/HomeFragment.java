@@ -130,7 +130,6 @@ public class HomeFragment extends Fragment {
                             dailyActivityHobbyModel.setHours(npHour.getValue());
                             dailyActivityHobbyModel.setMinutes(npMin.getValue() * 5);
                             dailyActivityHobbyModel.setUid(activityModelItems.get(position).getUid());
-//                            Log.d(TAG,activityModelItems.get(position).getTitle()+"-"+activityModelItems.get(position).getUid());
                             SaveHobbiesActivityAsync saveHobbiesActivityAsync = new SaveHobbiesActivityAsync();
                             saveHobbiesActivityAsync.execute(dailyActivityHobbyModel);
                             int hour = npHour.getValue();
@@ -310,12 +309,10 @@ public class HomeFragment extends Fragment {
         }
 
         if(requestCode == AddingActivityActivity.CODE_RESULT && resultCode == Activity.RESULT_OK){
-            Log.d("TAG","Back From Activity");
             GetAllDailyActivityAysnc getAllDailyActivityAysnc = new GetAllDailyActivityAysnc();
             getAllDailyActivityAysnc.execute();
         }
         if(requestCode == AddingRoutineActivity.CODE_RESULT && resultCode == Activity.RESULT_OK){
-            Log.d("TAG","Result");
             GetAllDailyActivityResultAysnc getAllDailyActivityAysnc = new GetAllDailyActivityResultAysnc();
             getAllDailyActivityAysnc.execute();
         }
@@ -451,7 +448,6 @@ public class HomeFragment extends Fragment {
             }
             // if the list is not null
             if(dailyActivities.size() > 0){
-                Log.d(TAG,"There is value");
                 datasets.clear();
                 // Show to the list
                 for(int i = 0 ; i < dailyActivities.size(); i++){
@@ -660,7 +656,6 @@ public class HomeFragment extends Fragment {
                 activityModelItems.add(model);
             }
         }else{
-            Log.d("TAG","No recording activity");
             // load all the data from activity model dao
             List<DailyActivityHobbyModel> list = new ArrayList<DailyActivityHobbyModel>();
             if(db.activitiesModelDao().getAll().size() > 0) {
