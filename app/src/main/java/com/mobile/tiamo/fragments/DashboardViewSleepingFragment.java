@@ -144,6 +144,7 @@ public class DashboardViewSleepingFragment extends Fragment {
         tvInbed.setText("No record");
         tvWakeup.setText("No record");
         tvAvgSleepingToday.setText("No record");
+        tvYesterday.setText("No record");
     }
 
     /*
