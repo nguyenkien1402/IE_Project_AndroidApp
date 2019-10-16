@@ -141,9 +141,9 @@ public class DashboardViewSleepingFragment extends Fragment {
         mv.setVisibility(View.GONE);
 
         tvToday.setText("To day: "+DateUtilities.getCurrentDateInString());
-        tvInbed.setText("1:15 AM");
-        tvWakeup.setText("6:50 AM");
-        tvAvgSleepingToday.setText("5h 15m");
+        tvInbed.setText("No record");
+        tvWakeup.setText("No record");
+        tvAvgSleepingToday.setText("No record");
     }
 
     /*
@@ -237,17 +237,17 @@ public class DashboardViewSleepingFragment extends Fragment {
 
             // Get the data from database
             // Sleeping data is in the range of the current day and the last ten day
-            List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,"30-09-2019");
-            sleepingModels.addAll(db.sleepingModelDao().getLastTenDay("01-10-2019",today));
+            List<SleepingModel> sleepingModels = db.sleepingModelDao().getLastTenDay(strBefore,today);
+//            sleepingModels.addAll(db.sleepingModelDao().getLastTenDay("01-10-2019",today));
             String previousDate = "";
-            Log.d("TAG","SIZE ALL:" + db.sleepingModelDao().getAll().size());
-            List<SleepingModel> models = db.sleepingModelDao().getAll();
-            for(int i = 0 ; i < models.size() ; i++){
-                Log.d("H",models.get(i).getDate());
-            }
-            Log.d("TAG","SIZE 10:" + db.sleepingModelDao().getLastTenDay(strBefore,today).size());
+//            List<SleepingModel> models = db.sleepingModelDao().getAll();
+//            for(int i = 0 ; i < models.size() ; i++){
+//                Log.d("H",models.get(i).getDate());
+//            }
             DashboardSleepingItem item = null;
             int avg = 0;
+
+            // get date avg for today
 
             // Loop all the data and calculate the average sleeping time of each day
             // This should be safe in the database but will do it later
@@ -282,6 +282,12 @@ public class DashboardViewSleepingFragment extends Fragment {
                 }
 
             }
+            DashboardSleepingItem lastItem = items.get(0);
+            Log.d("Sleeping",lastItem.getDay()+":"+lastItem.getInBed());
+            tvInbed.setText(lastItem.getInBed());
+            tvWakeup.setText(lastItem.getWakeUp());
+            tvAvgSleepingToday.setText(lastItem.getAvg());
+            items.remove(0);
 
         }catch (Exception e){
             Log.d("Dashboard",e.getMessage());

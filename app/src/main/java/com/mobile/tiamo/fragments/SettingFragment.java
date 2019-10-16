@@ -82,13 +82,13 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        btnMovies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnMovies.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), SearchMoviesActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         return view;
     }
 
@@ -419,6 +419,9 @@ public class SettingFragment extends Fragment {
         List<SleepingModel> sleepingModels;
         try {
             String today = DateUtilities.getCurrentDateInString();
+            sleepingModels = getSleepingModel(today);
+            db.sleepingModelDao().insertAll(sleepingModels);
+
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date currentDate = dateFormat.parse(today);
             Calendar calendar = Calendar.getInstance();

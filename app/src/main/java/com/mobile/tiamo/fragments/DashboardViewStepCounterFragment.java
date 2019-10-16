@@ -148,7 +148,7 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         tvStepRunningToday = view.findViewById(R.id.step_running_today);
         btnSetMood2 = view.findViewById(R.id.btnSetMood2);
         tvToday.setText(DateUtilities.getCurrentDateInString());
-        tvStepRunningToday.setText("0.12 km");
+        tvStepRunningToday.setText("0 km");
     }
 
     private void getData(int day){
@@ -171,8 +171,8 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
             Date datebefore = calendar.getTime();
             String dateBeforeStr = dateFormat.format(datebefore);
 
-            stepsTakenModels = db.stepsTakenDao().getStepsTakenInrange(dateBeforeStr,"30-09-2019");
-            stepsTakenModels.addAll(db.stepsTakenDao().getStepsTakenInrange("01-10-2019",today));
+            stepsTakenModels = db.stepsTakenDao().getStepsTakenInrange(dateBeforeStr,today);
+//            stepsTakenModels.addAll(db.stepsTakenDao().getStepsTakenInrange("01-10-2019",today));
 
             for(int i = 0 ; i <  7 ; i++){
                 stepsTakenModelsLastWeek.add(stepsTakenModels.get(i));
@@ -181,12 +181,12 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
             for(int i = 7 ; i<stepsTakenModels.size() ; i++){
                 stepsTakenModelsThisWeek.add(stepsTakenModels.get(i));
             }
-            if(stepsTakenModelsThisWeek.size()==0){
-                StepsTakenModel stepsTakenModel = new StepsTakenModel();
-                stepsTakenModel.setSteps(659);
-                stepsTakenModel.setDate(today);
-                stepsTakenModelsThisWeek.add(stepsTakenModel);
-            }
+//            if(stepsTakenModelsThisWeek.size()==0){
+//                StepsTakenModel stepsTakenModel = new StepsTakenModel();
+//                stepsTakenModel.setSteps(659);
+//                stepsTakenModel.setDate(today);
+//                stepsTakenModelsThisWeek.add(stepsTakenModel);
+//            }
 
         }catch (Exception e){
             Log.d("TAG",e.getMessage());
@@ -333,14 +333,13 @@ public class DashboardViewStepCounterFragment extends Fragment implements Sensor
         List<DataEntry> seriesData = new ArrayList<>();
         Log.d("Size This Week",stepsTakenModelsThisWeek.size()+"");
         for(int i = 0 ; i<7 ; i++){
-            Log.d("TestData",days[i]);
             CustomDataEntry c = new CustomDataEntry(days[i],stepsTakenModelsLastWeek.get(i).getSteps());
             if(i<stepsTakenModelsThisWeek.size()){
                 c.setValue("value2",stepsTakenModelsThisWeek.get(i).getSteps());
             }else{
                 if(DateUtilities.getDayInAbbBySelectedDate(stepsTakenModelsLastWeek.get(i).getDate()).equals(
-                        DateUtilities.getCurrentDayInAbb()
-                )){
+                        DateUtilities.getCurrentDayInAbb()))
+                {
                     c.setValue("value2",stepsToday);
                 }else{
                     c.setValue("value2",0);
