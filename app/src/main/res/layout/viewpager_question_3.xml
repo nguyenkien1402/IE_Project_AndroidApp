@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="What is your sleeping time?"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"
+                android:layout_marginVertical="10dp"/>
         </LinearLayout>
 
 
