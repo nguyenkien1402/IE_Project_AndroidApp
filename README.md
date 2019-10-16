@@ -2,7 +2,7 @@
 
 This repository is an Android mobile application for the mental health project which is developed in 12 week project of IE.
 The API RESTful web service of the project can be found [here](https://github.com/nguyenkien1402/IE_Project_WebAPI)
-The repository for movie recommendation service power by AI and Google App Engine can be found in this [link](link here)
+The repository for movie recommendation service power by AI and Google App Engine can be found in this [link](https://github.com/nguyenkien1402/IE_Project_Movie_Recommendation)
 
 The whole project is intened to develop a mobile application under the theme mental health. We work as a group of 4 and we've done almost everything from business analyst, target customer, customer insight to develop application with the help of Agile and Scrum.
 
