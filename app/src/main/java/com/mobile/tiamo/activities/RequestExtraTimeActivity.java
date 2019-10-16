@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import com.mobile.tiamo.MainActivity;
 import com.mobile.tiamo.R;
 import com.mobile.tiamo.dao.DailyRoutine;
 import com.mobile.tiamo.dao.SQLiteDatabase;
@@ -82,14 +83,24 @@ public class RequestExtraTimeActivity extends AppCompatActivity {
         protected void onPostExecute(DailyRoutine aVoid) {
             super.onPostExecute(aVoid);
             if(aVoid != null){
+                Intent intent = new Intent(RequestExtraTimeActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         }
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = new Intent(RequestExtraTimeActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+        return true;
+    }
+
     /*
-     New schedule to send notification
-     */
+         New schedule to send notification
+         */
     private void scheduleNewNotification(DailyRoutine dailyRoutine){
         final AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intentEnd   = new Intent(this, ReminderNotificationEndAction.class);
