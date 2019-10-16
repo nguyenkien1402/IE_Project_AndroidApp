@@ -69,7 +69,7 @@ public class HomeListDailyActivityAdapter extends ArrayAdapter<ActivityModelItem
                 String text = "You've done " + activitiesModel.getHourPractice() +" hours and "+activitiesModel.getMinutePractice() + " minutes on this day";
                 viewHolder.txtHour.setText(text);
             }else{
-                viewHolder.txtHour.setText("Touch to add activate time");
+                viewHolder.txtHour.setText("Touch to add time");
             }
 
 

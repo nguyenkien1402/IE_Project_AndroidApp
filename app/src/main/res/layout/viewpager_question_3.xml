@@ -6,6 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:rcBackgroundPadding="1dp"
+        app:rcProgress="2"
+        app:rcMax="3"
+        app:rcProgressColor="@color/colorPrimary"
+        app:rcBackgroundColor="#BEB9B9" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
