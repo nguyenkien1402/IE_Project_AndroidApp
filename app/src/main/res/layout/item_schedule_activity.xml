@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_add_time"
                 android:text="Add time"
-                android:focusable="true"
+                android:focusable="false"
                 android:layout_alignRight="@id/item_schedule_activity_title"/>
         </RelativeLayout>
         <!--<TextView-->

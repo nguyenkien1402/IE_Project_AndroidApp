@@ -1,5 +1,6 @@
 package com.mobile.tiamo.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.anychart.core.resource.Activities;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -60,6 +62,10 @@ public class AddingActivityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_hobby);
+        Toolbar toolbar = findViewById(R.id.toolbar_adding_activity);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         initComponent();
         fabButtonAction();
     }
@@ -116,8 +122,8 @@ public class AddingActivityActivity extends AppCompatActivity {
                 activityModelItems.add(item);
             }
             Intent intent = new Intent();
-            intent.putParcelableArrayListExtra("hobbies", (ArrayList<? extends Parcelable>) activityModelItems);
-            setResult(CODE_RESULT,intent);
+//            intent.putParcelableArrayListExtra("hobbies", (ArrayList<? extends Parcelable>) activityModelItems);
+            setResult(Activity.RESULT_OK,intent);
             finish();
         }
     }
@@ -537,5 +543,11 @@ public class AddingActivityActivity extends AppCompatActivity {
         npMin.setMaxValue(mins5.length - 1);
         npMin.setValue(0);
         npMin.setDisplayedValues(mins5);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

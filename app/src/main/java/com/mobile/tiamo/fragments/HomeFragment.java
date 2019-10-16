@@ -309,11 +309,12 @@ public class HomeFragment extends Fragment {
             getDailyActivitiesFromSelectedDate.execute(selectedDate);
         }
 
-        if(requestCode == AddingActivityActivity.CODE_RESULT){
+        if(requestCode == AddingActivityActivity.CODE_RESULT && resultCode == Activity.RESULT_OK){
+            Log.d("TAG","Back From Activity");
             GetAllDailyActivityAysnc getAllDailyActivityAysnc = new GetAllDailyActivityAysnc();
             getAllDailyActivityAysnc.execute();
         }
-        if(requestCode == AddingRoutineActivity.CODE_RESULT){
+        if(requestCode == AddingRoutineActivity.CODE_RESULT && resultCode == Activity.RESULT_OK){
             Log.d("TAG","Result");
             GetAllDailyActivityResultAysnc getAllDailyActivityAysnc = new GetAllDailyActivityResultAysnc();
             getAllDailyActivityAysnc.execute();
@@ -505,6 +506,8 @@ public class HomeFragment extends Fragment {
             super.onPostExecute(dailyActivityItems);
             if(dailyActivityItems.size() > 0){
                 datasets.clear();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
                 datasets = dailyActivityItems;
                 adapter = new DailyActivityAdapter(datasets, getActivity());
                 listViewRoutine.setAdapter(adapter);

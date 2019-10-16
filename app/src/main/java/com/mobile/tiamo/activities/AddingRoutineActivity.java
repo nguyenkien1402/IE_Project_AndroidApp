@@ -157,6 +157,8 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
             super.onPostExecute(aLong);
             if(aLong != null){
                 Toast.makeText(getApplicationContext(),"Add Routine Successfully",Toast.LENGTH_SHORT).show();
+                Intent returnIntent = new Intent();
+                setResult(AboutUsActivity.RESULT_OK,returnIntent);
                 finish();
             }
         }
@@ -283,8 +285,8 @@ public class AddingRoutineActivity extends AppCompatActivity implements RangeTim
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent returnIntent = new Intent();
-        setResult(CODE_RESULT,returnIntent);
+//        Intent returnIntent = new Intent();
+//        setResult(CODE_RESULT,returnIntent);
         finish();
         return true;
     }
