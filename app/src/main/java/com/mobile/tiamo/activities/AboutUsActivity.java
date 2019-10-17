@@ -22,7 +22,7 @@ public class AboutUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-                .setDescription("Liberzy")
+                .setDescription("64% employees in the workplace indicated a poor work-life balance, decreased work efficiency and increased individual stress levels. \"Liberzy\" provides better balance between work and life by efficient time management.")
                 .setImage(R.drawable.liberzy_logo4)
                 .addItem(new Element().setTitle("Version 1.7"))
                 .addGroup("Connect with us")
@@ -30,7 +30,6 @@ public class AboutUsActivity extends AppCompatActivity {
                 .addWebsite("https://liberzy.bss.design/index.html")
                 .addYoutube("UC2P7ZdPvmU2uE0vI0C6PsvA", "Watch our product video")
                 .addGitHub("nguyenkien1402/IE_Project_AndroidApp")
-                .addItem(getCopyRightsElement())
                 .create();
 
         setContentView(aboutPage);
